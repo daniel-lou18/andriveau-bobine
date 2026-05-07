@@ -1,0 +1,55 @@
+{
+  "version": "7",
+  "dialect": "sqlite",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "6",
+      "when": 1778075086424,
+      "tag": "0000_vengeful_professor_monster",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "6",
+      "when": 1778076969522,
+      "tag": "0001_cultured_ezekiel",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1778076980721,
+      "tag": "0002_glorious_jimmy_woo",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "6",
+      "when": 1778082426169,
+      "tag": "0003_groovy_giant_man",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "6",
+      "when": 1778138031632,
+      "tag": "0004_long_landau",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "6",
+      "when": 1778143687367,
+      "tag": "0005_refine_segments_model",
+      "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "6",
+      "when": 1778144210570,
+      "tag": "0006_normalize_source_entries",
+      "breakpoints": true
+    }
+  ]
+}

@@ -1,0 +1,1 @@
+CREATE INDEX `rues_name_normalized_idx` ON `rues` (`name_normalized`);

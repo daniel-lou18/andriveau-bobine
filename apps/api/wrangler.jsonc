@@ -2,5 +2,14 @@
   "$schema": "./node_modules/wrangler/config-schema.json",
   "name": "andriveau-bobine-api",
   "main": "src/index.ts",
-  "compatibility_date": "2026-05-06"
+  "compatibility_date": "2026-05-06",
+  // Create DB: `cd apps/api && npx wrangler d1 create andriveau-bobine`, then paste database_id here.
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "andriveau-bobine",
+      "database_id": "REPLACE_ME_AFTER_WRANGLER_D1_CREATE",
+      "migrations_dir": "drizzle"
+    }
+  ]
 }
