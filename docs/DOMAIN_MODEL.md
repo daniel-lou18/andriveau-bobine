@@ -94,17 +94,25 @@ Constraint:
 
 Role:
 
-- canonical street entity
+- canonical voie entity (any type: `Rue`, `Avenue`, `Boulevard`, ...)
 
 Core fields:
 
 - `id`
-- `name`
-- `name_normalized`
+- `type` — canonical voie type (`Rue`, `Avenue`, `Boulevard`, `Place`, `Quai`, `Cours`, `Allée`, `Impasse`, `Passage`, `Square`, `Villa`, `Cité`, `Galerie`, `Pont`, `Esplanade`)
+- `libelle` — canonical libellé (e.g. `de Vaugirard`, `du Cherche-Midi`)
+- `libelle_normalized` — match form of the libellé (see Normalized form below)
 
-Constraint:
+Constraints and indexes:
 
-- unique on `name_normalized`
+- unique on `(type, libelle_normalized)`
+- non-unique index on `libelle_normalized` for libellé-only autocomplete
+
+Display name:
+
+- not stored; derived as `${type} ${libelle}` at the API serialization layer
+
+See `docs/adr/0001-rue-as-type-libelle.md` for the rationale of the split.
 
 ## `source_entries`
 
@@ -172,6 +180,24 @@ Why this table exists:
 - one source segment can legitimately map to 2-3 ilots
 - avoids duplicating segment rows per ilot
 
+## Normalized form
+
+`libelle_normalized` and `quartiers.name_normalized` use the same Aggressive transform:
+
+- lowercase
+- strip accents (NFD, drop combining marks)
+- replace `'` and `-` with space
+- collapse whitespace
+
+Examples:
+
+- `de Vaugirard` → `de vaugirard`
+- `du Cherche-Midi` → `du cherche midi`
+- `d'Assas` → `d assas`
+- `Notre-Dame-des-Champs` → `notre dame des champs`
+
+Single source of truth: `apps/api/src/lib/normalize.ts`.
+
 ## Suffix Axis Model
 
 Suffixes are modeled as ordered sub-positions on a house-number axis.
@@ -212,7 +238,7 @@ Output:
 
 Shape:
 
-1. filter street by `rues.name_normalized`
+1. filter street by `rues.type` and `rues.libelle_normalized`
 2. filter segments by parity and ordered range
 3. join `segment_ilots` to resolve ilot(s)
 4. join up hierarchy (`ilots` -> `quartiers` -> `arrondissements`)
@@ -242,7 +268,8 @@ JOIN segment_ilots si  ON si.segment_id = s.id
 JOIN ilots i           ON i.id = si.ilot_id
 JOIN quartiers q       ON q.id = i.quartier_id
 JOIN arrondissements a ON a.id = q.arrondissement_id
-WHERE r.name_normalized = :street
+WHERE r.type = :type
+  AND r.libelle_normalized = :libelle
   AND s.parity = :parity
   AND (s.from_number, s.from_suffix_rank) <= (:n, :n_rank)
   AND (:n, :n_rank) <= (s.to_number, s.to_suffix_rank)
@@ -251,8 +278,11 @@ ORDER BY se.bobine, se.page, COALESCE(se.sequence, 0), i.number;
 
 ## Design Decisions And Rationale
 
-- keep street entity independent from quartier/arrondissement:
-  - streets can span multiple administrative areas
+- keep voie entity independent from quartier/arrondissement:
+  - voies can span multiple administrative areas
+- decompose voie name into `(type, libellé)`:
+  - the source data carries this distinction; homonyms exist across types; libellé-only autocomplete is the primary search UX
+  - see `docs/adr/0001-rue-as-type-libelle.md`
 - keep source notation as canonical provenance:
   - `source_entries` represents what was written
 - keep segments normalized and reusable:

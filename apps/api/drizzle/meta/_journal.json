@@ -50,6 +50,13 @@
       "when": 1778144210570,
       "tag": "0006_normalize_source_entries",
       "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "6",
+      "when": 1778162476297,
+      "tag": "0007_rues_type_libelle",
+      "breakpoints": true
     }
   ]
 }

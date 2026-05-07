@@ -66,6 +66,37 @@ Search parsing must use the same utility; no duplicate mapping logic.
 
 If an extracted range has mismatched endpoint parity, the extractor must treat it as invalid and skip/log it.
 
+## Rue Canonicalization
+
+The source `ADRESSE` column is parsed in two stages: **canonicalization** (semantic), then **normalization** (string shape). Both happen in the extractor; the DB only stores canonical and normalized forms.
+
+### Stage 1 — canonicalization
+
+Input: a literal source string, e.g. `Bd Raspail`, `av. de l'Observatoire`, `Rue St Denis`, `Rue Notre Dame des Champs`.
+
+1. Identify the **type token** (first word, possibly abbreviated):
+   - `Rue` → `Rue`
+   - `Bd`, `Bld` → `Boulevard`
+   - `Av.`, `av.`, `Av` → `Avenue`
+   - `Pl.` → `Place`
+   - (full canonical forms pass through)
+2. The **libellé** is the remainder of the string.
+3. Inside the libellé, expand abbreviations to canonical forms:
+   - `St` → `Saint`, `Ste` → `Sainte`
+4. Preserve canonical hyphenation in the libellé where appropriate (e.g. `Notre-Dame-des-Champs`, `Cherche-Midi`, `Saint-Honoré`).
+
+The single source of truth for the type enum and abbreviation map is `apps/api/src/lib/voie-type.ts`.
+
+If the first token is not a known type or alias, the entry is **rejected** (skip + log) — the source always carries a type.
+
+### Stage 2 — normalization
+
+The canonical libellé is run through the shared normalize function (see `docs/DOMAIN_MODEL.md` → Normalized form) to produce `libelle_normalized`.
+
+### Lookup or insert
+
+Look up `rues` by `(type, libelle_normalized)`. Insert if missing. The same row is reused across all source entries that resolve to the same canonical `(type, libellé)`.
+
 ## Source Entry To Row Mapping
 
 A source entry may produce one or many rows.
@@ -146,7 +177,8 @@ The extractor must reject (skip + log) and never invent encodings for:
 
 Search parsing should produce:
 
-- `street_normalized`
+- `type` (canonical voie type, after applying the same canonicalization as extraction)
+- `libelle_normalized` (libellé run through the shared normalize function)
 - `n` (house number integer)
 - `n_rank` (`rankOfSuffix(userSuffix)`)
 - `parity` (`even`/`odd` from `n`)
@@ -165,7 +197,8 @@ JOIN segment_ilots si  ON si.segment_id = s.id
 JOIN ilots i           ON i.id = si.ilot_id
 JOIN quartiers q       ON q.id = i.quartier_id
 JOIN arrondissements a ON a.id = q.arrondissement_id
-WHERE r.normalized_name = :street
+WHERE r.type = :type
+  AND r.libelle_normalized = :libelle
   AND s.parity = :parity
   AND (s.from_number, s.from_suffix_rank) <= (:n, :n_rank)
   AND (:n, :n_rank) <= (s.to_number, s.to_suffix_rank);
@@ -190,7 +223,8 @@ JOIN segment_ilots si  ON si.segment_id = s.id
 JOIN ilots i           ON i.id = si.ilot_id
 JOIN quartiers q       ON q.id = i.quartier_id
 JOIN arrondissements a ON a.id = q.arrondissement_id
-WHERE r.normalized_name = :street
+WHERE r.type = :type
+  AND r.libelle_normalized = :libelle
   AND s.parity = :parity
   AND (s.from_number, s.from_suffix_rank) <= (:n, :n_rank)
   AND (:n, :n_rank) <= (s.to_number, s.to_suffix_rank)
