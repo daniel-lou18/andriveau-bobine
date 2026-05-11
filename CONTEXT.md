@@ -28,6 +28,7 @@ Subdivision of an arrondissement. Page-level metadata in the bobines (the page h
 
 **Îlot**:
 Numbered block inside a quartier. **Row-level data** in the bobines: each source entry names its îlot directly. Not derived from anything else.
+**Numbering**: globally unique across all 20 arrondissements of Paris, in the integer range `0..5000`. Historical Paris administrative entity, since superseded by INSEE `IRIS` zones (out of scope here). This is an external domain fact, not a property the schema needs to defend; it is the reason `ilots.number` carries a global `UNIQUE` and not a `UNIQUE(quartier_id, number)`.
 _Avoid_: block, parcel.
 
 ### Address mapping
@@ -37,7 +38,7 @@ A canonical Paris voie. Decomposed into `type` and `libellé` (see below). The t
 _Avoid_: street, voie (as a column or table name; only used informally).
 
 **Type** (of voie):
-The canonical first-token classifier of a rue: one of a fixed enum (`Rue`, `Avenue`, `Boulevard`, `Place`, `Quai`, `Cours`, `Allée`, `Impasse`, `Passage`, `Square`, `Villa`, `Cité`, `Galerie`, `Pont`, `Esplanade`). Stored canonical; abbreviation expansion (`Bd → Boulevard`, `av. → Avenue`) happens once in the extractor.
+The canonical classifier of a rue, drawn from the official French voie-type vocabulary (~220 values, e.g. `Rue`, `Avenue`, `Boulevard`, `Place`, `Quai`, `Allée`, `Impasse`, `Passage`, `Square`, `Villa`, `Cité`, `Galerie`, `Pont`, `Esplanade`, `Chemin`, `Sentier`, `Hameau`, `Faubourg`, `Voie`, …). Types are **not always one word**: `Petite Rue`, `Grande Rue`, `Petit Chemin`, `Ancien Chemin`, `Nouvelle Route`, `Centre Commercial`, `Grand Boulevard`, etc. are themselves type values. Stored canonical; abbreviation expansion (`Bd → Boulevard`, `av. → Avenue`, `R. → Rue`) and inference of missing-type rows (`Pierre Lescot` → `Rue Pierre-Lescot`, `ST Denis` → `Rue Saint-Denis`) happen in the extractor.
 _Avoid_: kind, category, prefix.
 
 **Libellé**:
@@ -74,8 +75,12 @@ Ordered sub-position on the house-number axis: none `0`, `bis 1`, `ter 2`, `quat
 > **Dev:** "What if the same page later has `Boulevard Raspail 97`?"
 > **Domain expert:** "Same **Rue**, because `(Boulevard, raspail)` is the unique key. New **Source entry** (different `raw_text`), new **Street segment**."
 
+**Conflict** (lookup-time):
+A response is in conflict when the matched ilots come from **more than one `source_entry`** for the same `(rue, n, parity)` input. A single source entry asserting multiple ilots via `segment_ilots` (shared edge / correction) is **not** a conflict — it's a legitimate intent of the source. The API computes this at query time; no schema column carries it.
+_Avoid_: ambiguous, mismatch.
+
 ## Flagged ambiguities
 
 - **"Rue" is overloaded.** It means both (a) the table name for all voies, regardless of type, and (b) one specific `type` value. Resolution: the table `rues` covers all voies; the column `type` carries the kind. When a domain expert says "rue", treat it as (a) unless context narrows it.
 - **"Adresse" in the source.** The bobine's `ADRESSE` column header refers to the rue name only, not the full address. Number ranges live in the `N°` column. We've split this into `rues` + `street_segments` and never use "adresse" as a domain term.
-- **"Faubourg" is not a type.** It's part of the libellé (e.g., `Rue du Faubourg-Saint-Honoré` has `type='Rue'`, `libellé='du Faubourg-Saint-Honoré'`). Same for `Petite`, `Grande`, `Vieux`, `Abbé`, `Père`.
+- **"Faubourg", "Petite", "Grande", … are context-dependent.** They can appear *inside a libellé* (`Rue du Faubourg-Saint-Honoré` → `type='Rue'`, `libellé='du Faubourg-Saint-Honoré'`) OR as *part of a multi-word type* (`Petite Rue de la Truanderie` → `type='Petite Rue'`, `libellé='de la Truanderie'`; `Faubourg Saint-Antoine` without a preceding `Rue` → `type='Faubourg'`, `libellé='Saint-Antoine'`). Resolution requires a longest-match against the official voie-type list — not a "first-token" rule.

@@ -63,39 +63,39 @@ Search parsing must use the same utility; no duplicate mapping logic.
 - A segment never uses `both`.
 - For ranges, endpoints must share parity.
 - For singletons, parity is derived from the number itself.
+- Suffixes do not change parity (`8bis` is even, `11ter` is odd).
 
 If an extracted range has mismatched endpoint parity, the extractor must treat it as invalid and skip/log it.
 
+**Schema-enforced.** `street_segments` carries two named CHECK constraints — `street_segments_range_order_ok` (ordering on `(number, suffix_rank)`) and `street_segments_parity_ok` (both endpoints share parity, and that parity matches the `parity` column). Wrong-parity rows are rejected by D1 at insert time so the lookup can trust the stored value.
+
 ## Rue Canonicalization
 
-The source `ADRESSE` column is parsed in two stages: **canonicalization** (semantic), then **normalization** (string shape). Both happen in the extractor; the DB only stores canonical and normalized forms.
+Extraction is **LLM-driven**: a frontier model reads the raw bobine scan and emits structured `{type, libelle}` per address cell. The application then **normalizes** and **validates** that output before persisting. There is no in-app regex parser or alias map for the rue type; abbreviation expansion (`Bd → Boulevard`, `R. → Rue`), missing-type inference (`ST Denis` → `Rue Saint-Denis`; `Pierre Lescot` → `Rue Pierre-Lescot`), canonical hyphenation (`Notre Dame des Champs` → `Notre-Dame-des-Champs`), and saint-form expansion (`St → Saint`, `Ste → Sainte`) are all the LLM's responsibility.
 
-### Stage 1 — canonicalization
+### Stage 1 — LLM emits canonical `{type, libelle}`
 
-Input: a literal source string, e.g. `Bd Raspail`, `av. de l'Observatoire`, `Rue St Denis`, `Rue Notre Dame des Champs`.
+Example outputs:
 
-1. Identify the **type token** (first word, possibly abbreviated):
-   - `Rue` → `Rue`
-   - `Bd`, `Bld` → `Boulevard`
-   - `Av.`, `av.`, `Av` → `Avenue`
-   - `Pl.` → `Place`
-   - (full canonical forms pass through)
-2. The **libellé** is the remainder of the string.
-3. Inside the libellé, expand abbreviations to canonical forms:
-   - `St` → `Saint`, `Ste` → `Sainte`
-4. Preserve canonical hyphenation in the libellé where appropriate (e.g. `Notre-Dame-des-Champs`, `Cherche-Midi`, `Saint-Honoré`).
+- source `Bd Raspail` → `{ type: "boulevard", libelle: "Raspail" }`
+- source `Rue Notre Dame des Champs` → `{ type: "rue", libelle: "Notre-Dame-des-Champs" }`
+- source `ST Denis` (no explicit `Rue`) → `{ type: "rue", libelle: "Saint-Denis", inferred: true }`
+- source `Petite Rue de la Truanderie` → `{ type: "petite rue", libelle: "de la Truanderie" }`
 
-The single source of truth for the type enum and abbreviation map is `apps/api/src/lib/voie-type.ts`.
+The `type` value is the **lowercase canonical code** matching a row in `voie_types`. Multi-word types are emitted verbatim with a single space separator.
 
-If the first token is not a known type or alias, the entry is **rejected** (skip + log) — the source always carries a type.
+### Stage 2 — application validates and normalizes
 
-### Stage 2 — normalization
+1. Look up `type` in `voie_types` by `code`. If no match, the row is rejected (skip + log).
+2. Run `libelle` through the shared normalize function (see `docs/DOMAIN_MODEL.md` → Normalized form) to produce `libelle_normalized`.
 
-The canonical libellé is run through the shared normalize function (see `docs/DOMAIN_MODEL.md` → Normalized form) to produce `libelle_normalized`.
+### Stage 3 — lookup or insert
 
-### Lookup or insert
+Look up `rues` by `(type_id, libelle_normalized)`. Insert if missing. The same row is reused across all source entries that resolve to the same canonical `(type, libellé)`.
 
-Look up `rues` by `(type, libelle_normalized)`. Insert if missing. The same row is reused across all source entries that resolve to the same canonical `(type, libellé)`.
+### Inferred-type rows
+
+When the LLM has to infer the type (the source had no explicit type token), the `inferred: true` signal should be preserved in `street_segments.notes` or a dedicated column so QA can review these rows. The schema currently uses `notes` as a free-form field; a structured `type_inferred` boolean column on `street_segments` (or on a per-source-entry quality table) is a future option once the LLM extraction surfaces real volume.
 
 ## Source Entry To Row Mapping
 
@@ -151,14 +151,19 @@ Constraint from domain decisions:
 - a multi-ilot source entry must remain within the same quartier
 - cross-quartier grouping is invalid and should be skipped/logged
 
+**Schema-enforced.** `source_entries.quartier_id` carries the page-header quartier as first-class metadata. A `BEFORE INSERT` trigger `segment_ilots_quartier_consistency` on `segment_ilots` rejects any `(segment_id, ilot_id)` pair whose `ilots.quartier_id` differs from the segment's `source_entries.quartier_id`. Cross-quartier multi-ilot groupings cannot reach the database.
+
 ## Provenance Model
 
 Provenance is normalized into `source_entries`:
 
+- `quartier_id` (FK -> `quartiers.id`, the quartier named in the bobine page header)
 - `bobine`
 - `page`
 - `raw_text` (literal source notation)
 - optional `sequence` and `notes`
+
+`quartier_id` is page-level metadata: every row on a bobine page inherits the same quartier from the page header, so it sits on `source_entries` (one row per source notation, all rows on a page share it).
 
 Each `street_segments` row references one `source_entries` row via `source_entry_id`.
 If one source entry yields multiple segments, those segments share the same `source_entry_id`.
@@ -175,15 +180,34 @@ The extractor must reject (skip + log) and never invent encodings for:
 
 ## Search-Time Mirror
 
-Search parsing should produce:
+The lookup API is **strict**: it never parses free text. Disambiguation between rues that share a libellé (e.g. `Rue de Vaugirard` vs `Boulevard de Vaugirard`) happens **client-side**, via an autocomplete suggest endpoint backed by `rues_libelle_normalized_idx`. See `docs/adr/0002-strict-lookup-api-with-rue-id.md`.
 
-- `type` (canonical voie type, after applying the same canonicalization as extraction)
-- `libelle_normalized` (libellé run through the shared normalize function)
+The two endpoints share a normalization contract with extraction:
+
+### Suggest endpoint
+
+Input:
+
+- a libellé fragment (≥ 2 characters), normalized client-side using the shared normalize function
+
+Output:
+
+- a list of `{ rue_id, type, libelle }` rows matched against `rues.libelle_normalized` (prefix or substring; index-backed)
+
+The client uses this to populate an autocomplete; the user picks a suggestion before submitting the main lookup.
+
+### Lookup endpoint
+
+Input parameters, all already resolved by the client:
+
+- `rue_id` (the autocomplete selection — opaque integer FK into `rues`)
 - `n` (house number integer)
 - `n_rank` (`rankOfSuffix(userSuffix)`)
-- `parity` (`even`/`odd` from `n`)
+- `parity` (`even`/`odd` derived from `n`)
 
-Querying must use the same ordering semantics as extraction.
+The API does **not** accept a free-text rue string, a `type` token, or a libellé. If the client wants to submit a raw string, it must first call the suggest endpoint and resolve a `rue_id`.
+
+Querying must use the same `(number, suffix_rank)` ordering semantics as extraction.
 
 When you need provenance in results, join `source_entries` on `s.source_entry_id`.
 
@@ -192,17 +216,17 @@ When you need provenance in results, join `source_entries` on `s.source_entry_id
 ```sql
 SELECT a.number AS arr, q.name AS quartier, i.number AS ilot
 FROM street_segments s
-JOIN rues r            ON r.id = s.rue_id
 JOIN segment_ilots si  ON si.segment_id = s.id
 JOIN ilots i           ON i.id = si.ilot_id
 JOIN quartiers q       ON q.id = i.quartier_id
 JOIN arrondissements a ON a.id = q.arrondissement_id
-WHERE r.type = :type
-  AND r.libelle_normalized = :libelle
+WHERE s.rue_id = :rue_id
   AND s.parity = :parity
   AND (s.from_number, s.from_suffix_rank) <= (:n, :n_rank)
   AND (:n, :n_rank) <= (s.to_number, s.to_suffix_rank);
 ```
+
+`rues` is not joined: the client already resolved `rue_id` via the suggest endpoint, so the rue's `type` and `libelle` are already known on the client side.
 
 ## QA Lookup SQL With Provenance
 
@@ -218,13 +242,11 @@ SELECT a.number AS arr,
        se.raw_text
 FROM street_segments s
 JOIN source_entries se ON se.id = s.source_entry_id
-JOIN rues r            ON r.id = s.rue_id
 JOIN segment_ilots si  ON si.segment_id = s.id
 JOIN ilots i           ON i.id = si.ilot_id
 JOIN quartiers q       ON q.id = i.quartier_id
 JOIN arrondissements a ON a.id = q.arrondissement_id
-WHERE r.type = :type
-  AND r.libelle_normalized = :libelle
+WHERE s.rue_id = :rue_id
   AND s.parity = :parity
   AND (s.from_number, s.from_suffix_rank) <= (:n, :n_rank)
   AND (:n, :n_rank) <= (s.to_number, s.to_suffix_rank)

@@ -2,6 +2,7 @@
 export { arrondissements } from "./schemas/arrondissements";
 export { quartiers } from "./schemas/quartiers";
 export { ilots } from "./schemas/ilots";
+export { voieTypes } from "./schemas/voie_types";
 export { rues } from "./schemas/rues";
 export { sourceEntries } from "./schemas/source_entries";
 export { streetSegments } from "./schemas/street_segments";

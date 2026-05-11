@@ -37,7 +37,8 @@ Provenance hierarchy:
 flowchart LR
   A[arrondissements] -->|1..N| Q[quartiers]
   Q -->|1..N| I[ilots]
-  R[rues] -->|1..N| S[street_segments]
+  VT[voie_types] -->|1..N| R[rues]
+  R -->|1..N| S[street_segments]
   SE[source_entries] -->|1..N| S
   S -->|1..N| SI[segment_ilots]
   SI -->|N..1| I
@@ -79,50 +80,73 @@ Constraint:
 Role:
 
 - globally-numbered historic block, attached to one quartier
+- historical Paris administrative entity (later superseded by INSEE `IRIS` zones; out of scope here)
 
 Core fields:
 
 - `id`
 - `quartier_id` (FK -> `quartiers.id`)
-- `number`
+- `number` — globally unique across all 20 arrondissements of Paris, integer range `0..5000`
 
 Constraint:
 
-- unique on `number` (global across Paris dataset)
+- unique on `number` (global across Paris dataset) — backed by an external domain fact, not a defensive choice
+
+## `voie_types`
+
+Role:
+
+- reference table of the official French voie-type vocabulary (~220 values)
+- seeded once from the canonical list; new values added by `INSERT`, not schema migration
+
+Core fields:
+
+- `id`
+- `code` — canonical lowercase form (e.g. `rue`, `avenue`, `boulevard`, `petite rue`, `centre commercial`)
+
+Constraint:
+
+- unique on `code`
+
+Display:
+
+- the display-cased form (e.g. `Rue`, `Petite Rue`) is derived at the API serialization layer; the table stores only the lowercase canonical.
 
 ## `rues`
 
 Role:
 
-- canonical voie entity (any type: `Rue`, `Avenue`, `Boulevard`, ...)
+- canonical voie entity, decomposed into `(type, libellé)`
 
 Core fields:
 
 - `id`
-- `type` — canonical voie type (`Rue`, `Avenue`, `Boulevard`, `Place`, `Quai`, `Cours`, `Allée`, `Impasse`, `Passage`, `Square`, `Villa`, `Cité`, `Galerie`, `Pont`, `Esplanade`)
+- `type_id` (FK -> `voie_types.id`)
 - `libelle` — canonical libellé (e.g. `de Vaugirard`, `du Cherche-Midi`)
 - `libelle_normalized` — match form of the libellé (see Normalized form below)
 
 Constraints and indexes:
 
-- unique on `(type, libelle_normalized)`
+- unique on `(type_id, libelle_normalized)`
 - non-unique index on `libelle_normalized` for libellé-only autocomplete
 
 Display name:
 
-- not stored; derived as `${type} ${libelle}` at the API serialization layer
+- not stored; derived at the API serialization layer as `${voie_types.code, display-cased} ${libelle}`
 
-See `docs/adr/0001-rue-as-type-libelle.md` for the rationale of the split.
+See `docs/adr/0001-rue-as-type-libelle.md` for the rationale of the split and the FK reference table.
 
 ## `source_entries`
 
 Role:
 
 - one normalized provenance row for one source notation line
+- carries page-level metadata (quartier, bobine, page) as first-class columns
 
 Core fields:
 
 - `id`
+- `quartier_id` (FK -> `quartiers.id`) — the quartier named in the bobine page header; **anchors the cross-quartier integrity rule** for all segments derived from this source entry
 - `bobine`
 - `page`
 - `raw_text`
@@ -133,6 +157,7 @@ Why this table exists:
 
 - avoids provenance duplication across many segments
 - allows easy QA trace-back from lookup result to source notation
+- gives the schema a place to anchor the page-level `quartier` so the cross-quartier rule can be enforced (see Triggers below)
 
 ## `street_segments`
 
@@ -180,6 +205,31 @@ Why this table exists:
 - one source segment can legitimately map to 2-3 ilots
 - avoids duplicating segment rows per ilot
 
+## Triggers
+
+### `segment_ilots_quartier_consistency`
+
+`BEFORE INSERT ON segment_ilots` — rejects any pair whose `ilots.quartier_id` differs from the segment's `source_entries.quartier_id`. Enforces the "a multi-ilot source entry must remain within the same quartier" rule at the schema level.
+
+```sql
+CREATE TRIGGER segment_ilots_quartier_consistency
+BEFORE INSERT ON segment_ilots
+FOR EACH ROW
+WHEN (
+  (SELECT se.quartier_id
+     FROM street_segments s
+     JOIN source_entries se ON se.id = s.source_entry_id
+    WHERE s.id = NEW.segment_id)
+  !=
+  (SELECT i.quartier_id FROM ilots i WHERE i.id = NEW.ilot_id)
+)
+BEGIN
+  SELECT RAISE(ABORT, 'segment_ilots: ilot must share the source entry''s quartier');
+END;
+```
+
+Drizzle Kit does not generate triggers from schema; this trigger lives in a hand-written migration file under `apps/api/drizzle/`.
+
 ## Normalized form
 
 `libelle_normalized` and `quartiers.name_normalized` use the same Aggressive transform:
@@ -224,25 +274,54 @@ Example ordering:
 
 ## Read Patterns
 
+Disambiguation between rues that share a libellé is a **client-side** concern (autocomplete), so the lookup itself is strict on `rue_id`. See `docs/adr/0002-strict-lookup-api-with-rue-id.md`.
+
+### Scope
+
+- **v1** ships the **suggest** endpoint and the **number-bearing lookup**. The number is required on the v1 form; the form refuses submit otherwise.
+- The **street-only lookup** (`rue_id` without a number) is **planned but deferred**. The data model already supports it; only the endpoint and its richer response shape (per-ilot segment ranges) are deferred. It will live on its own endpoint when it ships — not as a polymorphic `n?` overload of the v1 lookup — to keep each endpoint's response type single-shape.
+
+## Suggest (autocomplete)
+
+Input:
+
+- libellé fragment (normalized client-side)
+
+Output:
+
+- list of `{ rue_id, type, libelle }` matching `rues.libelle_normalized`
+
+Index: `rues_libelle_normalized_idx (libelle_normalized)`.
+
 ## Primary lookup (optimized)
 
 Input:
 
-- normalized street name
+- `rue_id` (resolved by the suggest endpoint)
 - number + optional suffix
 
 Output:
 
-- one or more tuples of `(arrondissement, quartier, ilot)`
-- optional provenance details for QA
+- a list of `(arrondissement, quartier, ilot)` triples, **deduped** on `(arr, quartier, ilot)`
+- a top-level `conflict: boolean` flag (see below)
+- optional provenance details for QA when the client requests them via `?provenance=1`
 
 Shape:
 
-1. filter street by `rues.type` and `rues.libelle_normalized`
-2. filter segments by parity and ordered range
-3. join `segment_ilots` to resolve ilot(s)
-4. join up hierarchy (`ilots` -> `quartiers` -> `arrondissements`)
-5. optional join `source_entries` for traceability
+1. filter segments by `rue_id`, parity, and ordered range
+2. join `segment_ilots` to resolve ilot(s)
+3. join up hierarchy (`ilots` -> `quartiers` -> `arrondissements`)
+4. dedupe by `(arr, quartier, ilot)` before returning to the client
+5. compute `conflict` (see below)
+6. optional join `source_entries` for traceability when `?provenance=1`
+
+### `conflict` semantics
+
+Multi-result is legitimate in one specific shape: a **single source entry** asserts the address belongs to multiple ilots via `segment_ilots` — the "shared edge / correction" case from the source documents (one row in `source_entries`, one row in `street_segments`, multiple rows in `segment_ilots`).
+
+Any other multi-ilot result indicates that **distinct `source_entries` rows** disagree on the ilot for the same `(rue_id, n, parity)`. That's a data-quality signal, not a feature. The API surfaces it as `conflict: true` so the client (or a QA reviewer) can flag it.
+
+Computation (cheap, no schema change): group the matching segments by `source_entry_id`. If the matched ilots span more than one source entry, set `conflict: true`.
 
 ## Why this is fast enough
 
@@ -263,13 +342,11 @@ SELECT a.number AS arr,
        se.raw_text
 FROM street_segments s
 JOIN source_entries se ON se.id = s.source_entry_id
-JOIN rues r            ON r.id = s.rue_id
 JOIN segment_ilots si  ON si.segment_id = s.id
 JOIN ilots i           ON i.id = si.ilot_id
 JOIN quartiers q       ON q.id = i.quartier_id
 JOIN arrondissements a ON a.id = q.arrondissement_id
-WHERE r.type = :type
-  AND r.libelle_normalized = :libelle
+WHERE s.rue_id = :rue_id
   AND s.parity = :parity
   AND (s.from_number, s.from_suffix_rank) <= (:n, :n_rank)
   AND (:n, :n_rank) <= (s.to_number, s.to_suffix_rank)

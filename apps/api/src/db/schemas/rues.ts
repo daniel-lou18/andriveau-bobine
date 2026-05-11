@@ -5,14 +5,15 @@ import {
   text,
   uniqueIndex,
 } from "drizzle-orm/sqlite-core";
-import { VOIE_TYPES } from "../../lib/voie-type";
+import { voieTypes } from "./voie_types";
 
 export const rues = sqliteTable(
   "rues",
   {
     id: integer("id").primaryKey({ autoIncrement: true }),
-    /** Canonical voie type (e.g. Rue, Avenue, Boulevard). */
-    type: text("type", { enum: VOIE_TYPES }).notNull(),
+    typeId: integer("type_id")
+      .references(() => voieTypes.id)
+      .notNull(),
     /** Canonical libelle in display form (keeps apostrophes/hyphens). */
     libelle: text("libelle").notNull(),
     /** Aggressive normalized form for matching user input. */
@@ -20,7 +21,7 @@ export const rues = sqliteTable(
   },
   (table) => [
     uniqueIndex("rues_type_libelle_normalized_unique").on(
-      table.type,
+      table.typeId,
       table.libelleNormalized
     ),
     index("rues_libelle_normalized_idx").on(table.libelleNormalized),

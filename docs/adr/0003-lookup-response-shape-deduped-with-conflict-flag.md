@@ -1,0 +1,10 @@
+# Lookup response is a deduped list of `(arr, quartier, ilot)` with a `conflict` flag
+
+The primary lookup endpoint returns a list of `(arrondissement, quartier, ilot)` triples deduplicated on `(arr, quartier, ilot)`, plus a top-level `conflict: boolean`. Provenance (bobine, page, raw_text) is **opt-in** via `?provenance=1`. `conflict` is `true` when the matched ilots are backed by more than one `source_entry` for the same `(rue_id, n, parity)`; it is `false` when a single source entry asserts multiple ilots through `segment_ilots` (the "shared edge / correction" case is a legitimate single-source assertion and is not a conflict). This shape keeps the 99% happy path quiet — one or two clean rows — while still surfacing the rare cases where two sources disagree on the same address. The dedup happens at the API layer; the schema stays clean and the computation is cheap (`GROUP BY` over `segment_ilots.segment_id → source_entry_id`). Provenance lives on a separate flag because the audit trail is QA-only and would bloat the default payload for the common case.
+
+## Considered Options
+
+- **Always-grouped response with `sources: [...]` on every ilot.** Rejected: inflates the default payload for the 99% case where there's only one source and one ilot, and forces every UI to handle a nested structure even when it just wants "the ilot".
+- **Raw rows: one item per matching segment, no dedupe.** Rejected: visually duplicates an ilot when two bobines agree on it, leaks the segment-as-implementation through the API, and forces the client to dedupe.
+- **Silent multi-result with no `conflict` flag.** Rejected: makes the "shared edge" case (Source 1) and the "two sources disagree" case (Source 2) indistinguishable on the wire. The moment extraction-quality review starts, you wish you'd flagged it from day one — and the data needed to compute it is already on hand.
+- **Reject conflicting results with a 4xx error.** Rejected: hides real data from the user trying to find their address; bad UX even when the data is suspect.

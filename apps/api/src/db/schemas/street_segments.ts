@@ -36,10 +36,19 @@ export const streetSegments = sqliteTable(
       table.fromSuffixRank
     ),
     check(
-      "street_segments_range_ok",
+      "street_segments_range_order_ok",
       sql`${table.fromNumber} < ${table.toNumber}
           OR (${table.fromNumber} = ${table.toNumber}
               AND ${table.fromSuffixRank} <= ${table.toSuffixRank})`
+    ),
+    check(
+      "street_segments_parity_ok",
+      sql`(${table.parity} = 'even'
+              AND ${table.fromNumber} % 2 = 0
+              AND ${table.toNumber} % 2 = 0)
+          OR (${table.parity} = 'odd'
+              AND ${table.fromNumber} % 2 = 1
+              AND ${table.toNumber} % 2 = 1)`
     ),
   ]
 );
