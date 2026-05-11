@@ -4,6 +4,8 @@ export const SUFFIX_RANK = {
   ter: 2,
   quater: 3,
   quinquies: 4,
+  sexies: 5,
+  septies: 6,
 } as const;
 
 export type SuffixToken = keyof typeof SUFFIX_RANK;

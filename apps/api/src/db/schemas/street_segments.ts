@@ -26,6 +26,9 @@ export const streetSegments = sqliteTable(
     toSuffixRank: integer("to_suffix_rank").notNull().default(0),
     fromSuffix: text("from_suffix"),
     toSuffix: text("to_suffix"),
+    typeInferred: integer("type_inferred", { mode: "boolean" })
+      .notNull()
+      .default(false),
     notes: text("notes"),
   },
   (table) => [

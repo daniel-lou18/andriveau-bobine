@@ -1,0 +1,561 @@
+{
+  "version": "6",
+  "dialect": "sqlite",
+  "id": "4c8a6293-5bf5-47bf-a583-cb761133e907",
+  "prevId": "52c086bf-345f-4102-a7f0-c579e5ad0950",
+  "tables": {
+    "arrondissements": {
+      "name": "arrondissements",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": true
+        },
+        "number": {
+          "name": "number",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "name": {
+          "name": "name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        }
+      },
+      "indexes": {
+        "arrondissements_number_unique": {
+          "name": "arrondissements_number_unique",
+          "columns": [
+            "number"
+          ],
+          "isUnique": true
+        }
+      },
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {}
+    },
+    "ilots": {
+      "name": "ilots",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": true
+        },
+        "quartier_id": {
+          "name": "quartier_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "number": {
+          "name": "number",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        }
+      },
+      "indexes": {
+        "ilots_number_unique": {
+          "name": "ilots_number_unique",
+          "columns": [
+            "number"
+          ],
+          "isUnique": true
+        }
+      },
+      "foreignKeys": {
+        "ilots_quartier_id_quartiers_id_fk": {
+          "name": "ilots_quartier_id_quartiers_id_fk",
+          "tableFrom": "ilots",
+          "tableTo": "quartiers",
+          "columnsFrom": [
+            "quartier_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {}
+    },
+    "quartiers": {
+      "name": "quartiers",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": true
+        },
+        "arrondissement_id": {
+          "name": "arrondissement_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "name": {
+          "name": "name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "name_normalized": {
+          "name": "name_normalized",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        }
+      },
+      "indexes": {
+        "quartiers_arr_normalized_unique": {
+          "name": "quartiers_arr_normalized_unique",
+          "columns": [
+            "arrondissement_id",
+            "name_normalized"
+          ],
+          "isUnique": true
+        }
+      },
+      "foreignKeys": {
+        "quartiers_arrondissement_id_arrondissements_id_fk": {
+          "name": "quartiers_arrondissement_id_arrondissements_id_fk",
+          "tableFrom": "quartiers",
+          "tableTo": "arrondissements",
+          "columnsFrom": [
+            "arrondissement_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {}
+    },
+    "rues": {
+      "name": "rues",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": true
+        },
+        "type_id": {
+          "name": "type_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "libelle": {
+          "name": "libelle",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "libelle_normalized": {
+          "name": "libelle_normalized",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        }
+      },
+      "indexes": {
+        "rues_type_libelle_normalized_unique": {
+          "name": "rues_type_libelle_normalized_unique",
+          "columns": [
+            "type_id",
+            "libelle_normalized"
+          ],
+          "isUnique": true
+        },
+        "rues_libelle_normalized_idx": {
+          "name": "rues_libelle_normalized_idx",
+          "columns": [
+            "libelle_normalized"
+          ],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {
+        "rues_type_id_voie_types_id_fk": {
+          "name": "rues_type_id_voie_types_id_fk",
+          "tableFrom": "rues",
+          "tableTo": "voie_types",
+          "columnsFrom": [
+            "type_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {}
+    },
+    "segment_ilots": {
+      "name": "segment_ilots",
+      "columns": {
+        "segment_id": {
+          "name": "segment_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "ilot_id": {
+          "name": "ilot_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        }
+      },
+      "indexes": {
+        "segment_ilots_ilot_idx": {
+          "name": "segment_ilots_ilot_idx",
+          "columns": [
+            "ilot_id"
+          ],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {
+        "segment_ilots_segment_id_street_segments_id_fk": {
+          "name": "segment_ilots_segment_id_street_segments_id_fk",
+          "tableFrom": "segment_ilots",
+          "tableTo": "street_segments",
+          "columnsFrom": [
+            "segment_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "segment_ilots_ilot_id_ilots_id_fk": {
+          "name": "segment_ilots_ilot_id_ilots_id_fk",
+          "tableFrom": "segment_ilots",
+          "tableTo": "ilots",
+          "columnsFrom": [
+            "ilot_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {
+        "segment_ilots_segment_id_ilot_id_pk": {
+          "columns": [
+            "segment_id",
+            "ilot_id"
+          ],
+          "name": "segment_ilots_segment_id_ilot_id_pk"
+        }
+      },
+      "uniqueConstraints": {},
+      "checkConstraints": {}
+    },
+    "source_entries": {
+      "name": "source_entries",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": true
+        },
+        "quartier_id": {
+          "name": "quartier_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "bobine": {
+          "name": "bobine",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "page": {
+          "name": "page",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "raw_text": {
+          "name": "raw_text",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "sequence": {
+          "name": "sequence",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "notes": {
+          "name": "notes",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "source_entries_quartier_id_quartiers_id_fk": {
+          "name": "source_entries_quartier_id_quartiers_id_fk",
+          "tableFrom": "source_entries",
+          "tableTo": "quartiers",
+          "columnsFrom": [
+            "quartier_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {}
+    },
+    "street_segments": {
+      "name": "street_segments",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": true
+        },
+        "source_entry_id": {
+          "name": "source_entry_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "rue_id": {
+          "name": "rue_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "parity": {
+          "name": "parity",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "from_number": {
+          "name": "from_number",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "from_suffix_rank": {
+          "name": "from_suffix_rank",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": 0
+        },
+        "to_number": {
+          "name": "to_number",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "to_suffix_rank": {
+          "name": "to_suffix_rank",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": 0
+        },
+        "from_suffix": {
+          "name": "from_suffix",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "to_suffix": {
+          "name": "to_suffix",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "type_inferred": {
+          "name": "type_inferred",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": 0
+        },
+        "notes": {
+          "name": "notes",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        }
+      },
+      "indexes": {
+        "street_segments_source_entry_idx": {
+          "name": "street_segments_source_entry_idx",
+          "columns": [
+            "source_entry_id"
+          ],
+          "isUnique": false
+        },
+        "street_segments_rue_range_idx": {
+          "name": "street_segments_rue_range_idx",
+          "columns": [
+            "rue_id",
+            "from_number",
+            "from_suffix_rank"
+          ],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {
+        "street_segments_source_entry_id_source_entries_id_fk": {
+          "name": "street_segments_source_entry_id_source_entries_id_fk",
+          "tableFrom": "street_segments",
+          "tableTo": "source_entries",
+          "columnsFrom": [
+            "source_entry_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "street_segments_rue_id_rues_id_fk": {
+          "name": "street_segments_rue_id_rues_id_fk",
+          "tableFrom": "street_segments",
+          "tableTo": "rues",
+          "columnsFrom": [
+            "rue_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {
+        "street_segments_range_order_ok": {
+          "name": "street_segments_range_order_ok",
+          "value": "\"street_segments\".\"from_number\" < \"street_segments\".\"to_number\"\n          OR (\"street_segments\".\"from_number\" = \"street_segments\".\"to_number\"\n              AND \"street_segments\".\"from_suffix_rank\" <= \"street_segments\".\"to_suffix_rank\")"
+        },
+        "street_segments_parity_ok": {
+          "name": "street_segments_parity_ok",
+          "value": "(\"street_segments\".\"parity\" = 'even'\n              AND \"street_segments\".\"from_number\" % 2 = 0\n              AND \"street_segments\".\"to_number\" % 2 = 0)\n          OR (\"street_segments\".\"parity\" = 'odd'\n              AND \"street_segments\".\"from_number\" % 2 = 1\n              AND \"street_segments\".\"to_number\" % 2 = 1)"
+        }
+      }
+    },
+    "voie_types": {
+      "name": "voie_types",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": true
+        },
+        "code": {
+          "name": "code",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        }
+      },
+      "indexes": {
+        "voie_types_code_unique": {
+          "name": "voie_types_code_unique",
+          "columns": [
+            "code"
+          ],
+          "isUnique": true
+        }
+      },
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {}
+    }
+  },
+  "views": {},
+  "enums": {},
+  "_meta": {
+    "schemas": {},
+    "tables": {},
+    "columns": {}
+  },
+  "internal": {
+    "indexes": {}
+  }
+}

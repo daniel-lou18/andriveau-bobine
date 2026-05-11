@@ -8,6 +8,7 @@ Address-based lookup over historical Paris registers ("bobines"). Given a street
 
 **Bobine**:
 An archival reel of scanned register pages from the Paris archives. Each bobine covers a specific area of the city.
+**Identifier in data**: `source_entries.bobine` is the reel number as a **plain integer** only. Other strings that appear on scans or in finding aids (e.g. archival series like `2MI 24`, composite labels) are **audit-only** — they may live in scans, notes, or upstream tooling, but are not modeled as structured columns alongside `bobine`.
 _Avoid_: reel, microfilm.
 
 **Page**:
@@ -50,13 +51,13 @@ The match-time projection of a name. Aggressive rule: lowercase, strip accents (
 _Avoid_: slug, key.
 
 **Street segment**:
-A `(rue, parity, ordered range)` unit. Multiple segments of the same `rue` map to different ilots over different number ranges. Singletons are represented by equal endpoints.
+A `(rue, parity, ordered range)` unit. Multiple segments of the same `rue` map to different ilots over different number ranges. Singletons are represented by equal endpoints. **`type_inferred`**: when `true`, the voie type was inferred by the extractor because the source line had no explicit type token; stored on `street_segments` for QA filters.
 
 **Parity**:
 Strictly `odd` or `even`. Range endpoints share parity; singletons inherit from the number. Never `both`.
 
 **Suffix**:
-Ordered sub-position on the house-number axis: none `0`, `bis 1`, `ter 2`, `quater 3`, `quinquies 4`. Single source of truth in `apps/api/src/lib/suffix.ts`.
+Ordered sub-position on the house-number axis: none `0`, `bis 1`, `ter 2`, `quater 3`, `quinquies 4`, `sexies 5`, `septies 6`. Tokens beyond `septies` are **not** modeled; if they appear in a source, extraction **skips and logs** (same policy as other unsupported notations). Single source of truth in `apps/api/src/lib/suffix.ts`.
 
 ## Relationships
 

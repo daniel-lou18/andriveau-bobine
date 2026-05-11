@@ -147,7 +147,7 @@ Core fields:
 
 - `id`
 - `quartier_id` (FK -> `quartiers.id`) — the quartier named in the bobine page header; **anchors the cross-quartier integrity rule** for all segments derived from this source entry
-- `bobine`
+- `bobine` — reel number as an integer; other archival reference strings from the source are not stored in this column (audit-only outside the normalized row)
 - `page`
 - `raw_text`
 - `sequence` (optional ordering on a page)
@@ -174,6 +174,7 @@ Core fields:
 - `from_number`, `from_suffix_rank`
 - `to_number`, `to_suffix_rank`
 - `from_suffix`, `to_suffix` (display/source fidelity)
+- `type_inferred` — SQLite integer boolean (`0`/`1`); `1` when the extractor inferred the voie type because the source had no explicit type token (see `docs/EXTRACTION.md` → Inferred-type rows)
 - `notes` (segment-level note)
 
 Range semantics:

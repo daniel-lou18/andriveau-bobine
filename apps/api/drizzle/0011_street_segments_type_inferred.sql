@@ -1,0 +1,1 @@
+ALTER TABLE `street_segments` ADD `type_inferred` integer DEFAULT 0 NOT NULL;

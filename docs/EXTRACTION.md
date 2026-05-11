@@ -25,7 +25,7 @@ This document does not specify OCR/parsing implementation details.
 
 ## Glossary
 
-- `bobine`: archival reel identifier from source documents
+- `bobine`: reel number as an integer in `source_entries`; other archival strings (series codes, composite labels) are audit-only, not structured fields
 - `page`: source page number within a bobine
 - `arrondissement`: top-level administrative division
 - `quartier`: subdivision inside an arrondissement
@@ -44,10 +44,14 @@ Suffixes are ordered positions on the house-number axis.
 - `ter` -> `2`
 - `quater` -> `3`
 - `quinquies` -> `4`
+- `sexies` -> `5`
+- `septies` -> `6`
 
 Ordering example:
 
-`8 < 8bis < 8ter < 8quater < 8quinquies < 10`
+`8 < 8bis < … < 8septies < 10`
+
+Suffixes beyond `septies` are out of scope; treat like any unknown token — **skip + log**, do not persist.
 
 The single source of truth is `apps/api/src/lib/suffix.ts`:
 
@@ -95,7 +99,7 @@ Look up `rues` by `(type_id, libelle_normalized)`. Insert if missing. The same r
 
 ### Inferred-type rows
 
-When the LLM has to infer the type (the source had no explicit type token), the `inferred: true` signal should be preserved in `street_segments.notes` or a dedicated column so QA can review these rows. The schema currently uses `notes` as a free-form field; a structured `type_inferred` boolean column on `street_segments` (or on a per-source-entry quality table) is a future option once the LLM extraction surfaces real volume.
+When the LLM has to infer the type (the source had no explicit type token), it emits `inferred: true` on the structured extraction. Persist that on every resulting `street_segments` row as **`type_inferred`** (SQLite stores it as integer `0`/`1`, `NOT NULL`, default `0`). QA can filter on `type_inferred = 1` without parsing `notes`.
 
 ## Source Entry To Row Mapping
 
@@ -176,7 +180,7 @@ The extractor must reject (skip + log) and never invent encodings for:
 - segments without house numbers
 - cross-quartier multi-ilot groupings
 - parity value outside `odd`/`even`
-- unknown suffix tokens not in `SUFFIX_RANK`
+- unknown suffix tokens not in `SUFFIX_RANK` (ranks `0`–`6` only; nothing past `septies`)
 
 ## Search-Time Mirror
 
