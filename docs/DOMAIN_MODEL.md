@@ -78,7 +78,7 @@ Constraint:
 
 Role:
 
-- numbered block inside a quartier
+- globally-numbered historic block, attached to one quartier
 
 Core fields:
 
@@ -88,7 +88,7 @@ Core fields:
 
 Constraint:
 
-- unique on `(quartier_id, number)`
+- unique on `number` (global across Paris dataset)
 
 ## `rues`
 

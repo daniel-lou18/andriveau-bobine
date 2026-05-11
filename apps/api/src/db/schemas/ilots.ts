@@ -10,5 +10,5 @@ export const ilots = sqliteTable(
       .notNull(),
     number: integer("number").notNull(),
   },
-  (table) => [uniqueIndex("ilots_quartier_number_unique").on(table.quartierId, table.number)]
+  (table) => [uniqueIndex("ilots_number_unique").on(table.number)]
 );
