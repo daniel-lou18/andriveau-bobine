@@ -132,6 +132,7 @@ A source entry may produce one or many rows.
 ### Mixed singleton + range list
 
 - `10, 16, 24 > 34` -> three segment rows linked to one `source_entries` row:
+
   - `10..10`
   - `16..16`
   - `24..34`
@@ -141,6 +142,7 @@ A source entry may produce one or many rows.
 ### Explicit enumeration (no compression)
 
 - `12, 14, 16` -> three singleton rows:
+
   - `12..12`
   - `14..14`
   - `16..16`
@@ -193,7 +195,7 @@ Provenance is normalized into `source_entries`:
 - `quartier_id` (FK -> `quartiers.id`, the quartier named in the bobine page header)
 - `bobine`
 - `page`
-- `raw_text` — **one string for one logical register row** (street + îlot + house numbers). The printed grid is only a guide: **Street** — almost always inside the address cell (wrap-in-place). **Îlot** — usually in cell; rare spill when many îlot numbers are listed. **House numbers** — may **overflow** the printed cell and **continue downward** across the grid (beside ADRESSE; “sticky” street + tall N° block). Pipeline **stitches** into one `raw_text`. **v1:** no separate `raw_scanned`; revisit only if QA shows systematic reconstruction errors.
+- `raw_text` — **one string for one logical register row** (street + îlot + house numbers). The printed grid is only a guide: **Street** — almost always inside the address cell (wrap-in-place). **Îlot** — usually in cell; rare spill when many îlot numbers are listed. **House numbers** — may **overflow** the printed cell and **continue downward** across the grid (beside ADRESSE; “sticky” street + tall N° block). Pipeline **stitches** into one `raw_text`. **Interchange convention:** LLM payloads often use **`Ilot … | <voie> | <numeros>`** (space-pipe-space) for human QA; loaders may persist that string as-is. **v1:** no separate `raw_scanned`; revisit only if QA shows systematic reconstruction errors. **Review:** vision-assisted rows should be triaged with `low_confidence` / `scan_note` per **`docs/LLM_EXTRACTION_INTERCHANGE.md`** → _Human review and model caveats_.
 - optional `sequence` and `notes`
 
 `quartier_id` is page-level metadata: every row on a bobine page inherits the same quartier from the page header, so it sits on `source_entries` (one row per logical source notation, all rows on a page share it).

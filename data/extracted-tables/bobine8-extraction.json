@@ -1,0 +1,2790 @@
+{
+  "document_scope": {
+    "quartier": "Notre-Dame-des-Champs",
+    "arrondissement": 6,
+    "bobine": 8,
+    "audit": {
+      "period": "1946/8",
+      "series": "2MI 24",
+      "source_filename": "Bobine 8 - 6ème - NOTRE-DAME-DES-CHAMPS.pdf",
+      "extraction_note": "Raster render 2x; header series varies slightly by page on scan (e.g. 2MI 27 p.6)."
+    }
+  },
+  "logical_records": [
+    {
+      "reading_order_index": 0,
+      "pdf_page": 1,
+      "ilot_numbers": [818],
+      "raw_text": "Ilot 818 | Rue Madame | 8 -> 10",
+      "rue": {
+        "type": "rue",
+        "libelle": "Madame"
+      },
+      "numeros_raw": "8 -> 10"
+    },
+    {
+      "reading_order_index": 1,
+      "pdf_page": 1,
+      "ilot_numbers": [818],
+      "raw_text": "Ilot 818 | Rue de Rennes | 65",
+      "rue": {
+        "type": "rue",
+        "libelle": "de Rennes"
+      },
+      "numeros_raw": "65"
+    },
+    {
+      "reading_order_index": 2,
+      "pdf_page": 1,
+      "ilot_numbers": [818],
+      "raw_text": "Ilot 818 | Rue Madame | 10",
+      "rue": {
+        "type": "rue",
+        "libelle": "Madame"
+      },
+      "numeros_raw": "10"
+    },
+    {
+      "reading_order_index": 3,
+      "pdf_page": 1,
+      "ilot_numbers": [818],
+      "raw_text": "Ilot 818 | Rue de Rennes | 65",
+      "rue": {
+        "type": "rue",
+        "libelle": "de Rennes"
+      },
+      "numeros_raw": "65"
+    },
+    {
+      "reading_order_index": 4,
+      "pdf_page": 1,
+      "ilot_numbers": [818],
+      "raw_text": "Ilot 818 | Rue du Vieux-Colombier | 10/12",
+      "rue": {
+        "type": "rue",
+        "libelle": "du Vieux-Colombier"
+      },
+      "numeros_raw": "10/12"
+    },
+    {
+      "reading_order_index": 5,
+      "pdf_page": 1,
+      "ilot_numbers": [818],
+      "raw_text": "Ilot 818 | Rue de Rennes | 65, 57 -> 63",
+      "rue": {
+        "type": "rue",
+        "libelle": "de Rennes"
+      },
+      "numeros_raw": "65, 57 -> 63"
+    },
+    {
+      "reading_order_index": 6,
+      "pdf_page": 1,
+      "ilot_numbers": [819],
+      "raw_text": "Ilot 819 | Rue du Vieux-Colombier | 9 -> 13",
+      "rue": {
+        "type": "rue",
+        "libelle": "du Vieux-Colombier"
+      },
+      "numeros_raw": "9 -> 13"
+    },
+    {
+      "reading_order_index": 7,
+      "pdf_page": 1,
+      "ilot_numbers": [819],
+      "raw_text": "Ilot 819 | Rue Cassette | 1",
+      "rue": {
+        "type": "rue",
+        "libelle": "Cassette"
+      },
+      "numeros_raw": "1"
+    },
+    {
+      "reading_order_index": 8,
+      "pdf_page": 1,
+      "ilot_numbers": [819],
+      "raw_text": "Ilot 819 | Rue de Rennes | 69 -> 71",
+      "rue": {
+        "type": "rue",
+        "libelle": "de Rennes"
+      },
+      "numeros_raw": "69 -> 71"
+    },
+    {
+      "reading_order_index": 9,
+      "pdf_page": 1,
+      "ilot_numbers": [820],
+      "raw_text": "Ilot 820 | Rue Pape Carpentier | 5",
+      "rue": {
+        "type": "rue",
+        "libelle": "Pape Carpentier"
+      },
+      "numeros_raw": "5"
+    },
+    {
+      "reading_order_index": 10,
+      "pdf_page": 1,
+      "ilot_numbers": [820],
+      "raw_text": "Ilot 820 | Rue Mézières | 6 -> 10",
+      "rue": {
+        "type": "rue",
+        "libelle": "Mézières"
+      },
+      "numeros_raw": "6 -> 10"
+    },
+    {
+      "reading_order_index": 11,
+      "pdf_page": 1,
+      "ilot_numbers": [820, 821],
+      "raw_text": "Ilot 820,821 | Rue Cassette | 5 -> 7 / 6",
+      "rue": {
+        "type": "rue",
+        "libelle": "Cassette"
+      },
+      "numeros_raw": "5 -> 7 / 6"
+    },
+    {
+      "reading_order_index": 12,
+      "pdf_page": 1,
+      "ilot_numbers": [820, 821],
+      "raw_text": "Ilot 820,821 | Rue de Rennes | 73 -> 79",
+      "rue": {
+        "type": "rue",
+        "libelle": "de Rennes"
+      },
+      "numeros_raw": "73 -> 79"
+    },
+    {
+      "reading_order_index": 13,
+      "pdf_page": 1,
+      "ilot_numbers": [821, 822],
+      "raw_text": "Ilot 821,822 | Rue Mézières | 7 -> 9",
+      "rue": {
+        "type": "rue",
+        "libelle": "Mézières"
+      },
+      "numeros_raw": "7 -> 9"
+    },
+    {
+      "reading_order_index": 14,
+      "pdf_page": 1,
+      "ilot_numbers": [821, 822],
+      "raw_text": "Ilot 821,822 | Rue Madame | 28 -> 38",
+      "rue": {
+        "type": "rue",
+        "libelle": "Madame"
+      },
+      "numeros_raw": "28 -> 38"
+    },
+    {
+      "reading_order_index": 15,
+      "pdf_page": 1,
+      "ilot_numbers": [821, 822],
+      "raw_text": "Ilot 821,822 | Rue Honoré Chevalier | 10",
+      "rue": {
+        "type": "rue",
+        "libelle": "Honoré Chevalier"
+      },
+      "numeros_raw": "10"
+    },
+    {
+      "reading_order_index": 16,
+      "pdf_page": 1,
+      "ilot_numbers": [821, 822],
+      "raw_text": "Ilot 821,822 | Rue Cassette | 11 -> 21",
+      "rue": {
+        "type": "rue",
+        "libelle": "Cassette"
+      },
+      "numeros_raw": "11 -> 21"
+    },
+    {
+      "reading_order_index": 17,
+      "pdf_page": 1,
+      "ilot_numbers": [823],
+      "raw_text": "Ilot 823 | Rue Mézières | 13 -> 15",
+      "rue": {
+        "type": "rue",
+        "libelle": "Mézières"
+      },
+      "numeros_raw": "13 -> 15"
+    },
+    {
+      "reading_order_index": 18,
+      "pdf_page": 1,
+      "ilot_numbers": [823],
+      "raw_text": "Ilot 823 | Rue de Rennes | 81",
+      "rue": {
+        "type": "rue",
+        "libelle": "de Rennes"
+      },
+      "numeros_raw": "81"
+    },
+    {
+      "reading_order_index": 19,
+      "pdf_page": 1,
+      "ilot_numbers": [823],
+      "raw_text": "Ilot 823 | Rue Mézières | 15",
+      "rue": {
+        "type": "rue",
+        "libelle": "Mézières"
+      },
+      "numeros_raw": "15"
+    },
+    {
+      "reading_order_index": 20,
+      "pdf_page": 1,
+      "ilot_numbers": [823],
+      "raw_text": "Ilot 823 | Rue Cassette | 10 -> 22",
+      "rue": {
+        "type": "rue",
+        "libelle": "Cassette"
+      },
+      "numeros_raw": "10 -> 22"
+    },
+    {
+      "reading_order_index": 21,
+      "pdf_page": 1,
+      "ilot_numbers": [822, 823],
+      "raw_text": "Ilot 822,823 | Rue Cassette | 13, 10, 18 -> 26, 32",
+      "rue": {
+        "type": "rue",
+        "libelle": "Cassette"
+      },
+      "numeros_raw": "13, 10, 18 -> 26, 32",
+      "scan_note": "PAGE cell listed îlots 822,823 with repeats; distinct order preserved"
+    },
+    {
+      "reading_order_index": 22,
+      "pdf_page": 1,
+      "ilot_numbers": [823],
+      "raw_text": "Ilot 823 | Rue de Vaugirard | 68 -> 70",
+      "rue": {
+        "type": "rue",
+        "libelle": "de Vaugirard"
+      },
+      "numeros_raw": "68 -> 70"
+    },
+    {
+      "reading_order_index": 23,
+      "pdf_page": 1,
+      "ilot_numbers": [823],
+      "raw_text": "Ilot 823 | Rue d'Assas | 15, 17, 21",
+      "rue": {
+        "type": "rue",
+        "libelle": "d'Assas"
+      },
+      "numeros_raw": "15, 17, 21"
+    },
+    {
+      "reading_order_index": 24,
+      "pdf_page": 1,
+      "ilot_numbers": [823],
+      "raw_text": "Ilot 823 | Rue de Rennes | 83 -> 103",
+      "rue": {
+        "type": "rue",
+        "libelle": "de Rennes"
+      },
+      "numeros_raw": "83 -> 103"
+    },
+    {
+      "reading_order_index": 25,
+      "pdf_page": 1,
+      "ilot_numbers": [824],
+      "raw_text": "Ilot 824 | Rue Madame | 40 -> 46",
+      "rue": {
+        "type": "rue",
+        "libelle": "Madame"
+      },
+      "numeros_raw": "40 -> 46"
+    },
+    {
+      "reading_order_index": 26,
+      "pdf_page": 1,
+      "ilot_numbers": [824],
+      "raw_text": "Ilot 824 | Rue de Vaugirard | 64-66",
+      "rue": {
+        "type": "rue",
+        "libelle": "de Vaugirard"
+      },
+      "numeros_raw": "64 -> 66"
+    },
+    {
+      "reading_order_index": 27,
+      "pdf_page": 1,
+      "ilot_numbers": [824],
+      "raw_text": "Ilot 824 | Rue Cassette | 25 -> 29",
+      "rue": {
+        "type": "rue",
+        "libelle": "Cassette"
+      },
+      "numeros_raw": "25 -> 29"
+    },
+    {
+      "reading_order_index": 28,
+      "pdf_page": 1,
+      "ilot_numbers": [825],
+      "raw_text": "Ilot 825 | Rue Madame | 48",
+      "rue": {
+        "type": "rue",
+        "libelle": "Madame"
+      },
+      "numeros_raw": "48"
+    },
+    {
+      "reading_order_index": 29,
+      "pdf_page": 1,
+      "ilot_numbers": [825],
+      "raw_text": "Ilot 825 | Rue de Vaugirard | 27",
+      "rue": {
+        "type": "rue",
+        "libelle": "de Vaugirard"
+      },
+      "numeros_raw": "27"
+    },
+    {
+      "reading_order_index": 30,
+      "pdf_page": 1,
+      "ilot_numbers": [825],
+      "raw_text": "Ilot 825 | Rue Madame | 48",
+      "rue": {
+        "type": "rue",
+        "libelle": "Madame"
+      },
+      "numeros_raw": "48"
+    },
+    {
+      "reading_order_index": 31,
+      "pdf_page": 1,
+      "ilot_numbers": [825],
+      "raw_text": "Ilot 825 | Rue de Vaugirard | 29",
+      "rue": {
+        "type": "rue",
+        "libelle": "de Vaugirard"
+      },
+      "numeros_raw": "29"
+    },
+    {
+      "reading_order_index": 32,
+      "pdf_page": 1,
+      "ilot_numbers": [825],
+      "raw_text": "Ilot 825 | Rue Madame | 50 -> 60",
+      "rue": {
+        "type": "rue",
+        "libelle": "Madame"
+      },
+      "numeros_raw": "50 -> 60"
+    },
+    {
+      "reading_order_index": 33,
+      "pdf_page": 1,
+      "ilot_numbers": [825],
+      "raw_text": "Ilot 825 | Rue Jean Bart | 2, 5 -> 9",
+      "rue": {
+        "type": "rue",
+        "libelle": "Jean Bart"
+      },
+      "numeros_raw": "2, 5 -> 9"
+    },
+    {
+      "reading_order_index": 34,
+      "pdf_page": 1,
+      "ilot_numbers": [826],
+      "raw_text": "Ilot 826 | Rue de Rennes | 7",
+      "rue": {
+        "type": "rue",
+        "libelle": "de Rennes"
+      },
+      "numeros_raw": "7"
+    },
+    {
+      "reading_order_index": 35,
+      "pdf_page": 1,
+      "ilot_numbers": [826],
+      "raw_text": "Ilot 826 | Rue Madame | 62 -> 72",
+      "rue": {
+        "type": "rue",
+        "libelle": "Madame"
+      },
+      "numeros_raw": "62 -> 72"
+    },
+    {
+      "reading_order_index": 36,
+      "pdf_page": 1,
+      "ilot_numbers": [826],
+      "raw_text": "Ilot 826 | Rue d'Assas | 47, 39 -> 43",
+      "rue": {
+        "type": "rue",
+        "libelle": "d'Assas"
+      },
+      "numeros_raw": "47, 39 -> 43"
+    },
+    {
+      "reading_order_index": 37,
+      "pdf_page": 1,
+      "ilot_numbers": [826],
+      "raw_text": "Ilot 826 | Rue Madame | 74",
+      "rue": {
+        "type": "rue",
+        "libelle": "Madame"
+      },
+      "numeros_raw": "74"
+    },
+    {
+      "reading_order_index": 38,
+      "pdf_page": 1,
+      "ilot_numbers": [827],
+      "raw_text": "Ilot 827 | Rue d'Assas | 49",
+      "rue": {
+        "type": "rue",
+        "libelle": "d'Assas"
+      },
+      "numeros_raw": "49"
+    },
+    {
+      "reading_order_index": 39,
+      "pdf_page": 1,
+      "ilot_numbers": [827],
+      "raw_text": "Ilot 827 | Rue Jean Bart | 4 -> 10, 1",
+      "rue": {
+        "type": "rue",
+        "libelle": "Jean Bart"
+      },
+      "numeros_raw": "4 -> 10, 1"
+    },
+    {
+      "reading_order_index": 40,
+      "pdf_page": 1,
+      "ilot_numbers": [827],
+      "raw_text": "Ilot 827 | Rue de Fleurus | 16 -> 18",
+      "rue": {
+        "type": "rue",
+        "libelle": "de Fleurus"
+      },
+      "numeros_raw": "16 -> 18"
+    },
+    {
+      "reading_order_index": 41,
+      "pdf_page": 1,
+      "ilot_numbers": [827],
+      "raw_text": "Ilot 827 | Rue de la Clef | 32",
+      "rue": {
+        "type": "rue",
+        "libelle": "de la Clef"
+      },
+      "numeros_raw": "32"
+    },
+    {
+      "reading_order_index": 42,
+      "pdf_page": 1,
+      "ilot_numbers": [827],
+      "raw_text": "Ilot 827 | Rue d'Assas | 27 -> 33",
+      "rue": {
+        "type": "rue",
+        "libelle": "d'Assas"
+      },
+      "numeros_raw": "27 -> 33"
+    },
+    {
+      "reading_order_index": 43,
+      "pdf_page": 1,
+      "ilot_numbers": [827],
+      "raw_text": "Ilot 827 | Rue Saint-Denis | 163",
+      "rue": {
+        "type": "rue",
+        "libelle": "Saint-Denis"
+      },
+      "numeros_raw": "163",
+      "low_confidence": true,
+      "scan_note": "Unusual voie for NDDC context; verify scan reading"
+    },
+    {
+      "reading_order_index": 44,
+      "pdf_page": 2,
+      "ilot_numbers": [827],
+      "raw_text": "Ilot 827 | Rue d'Assas | 33 -> 35",
+      "rue": {
+        "type": "rue",
+        "libelle": "d'Assas"
+      },
+      "numeros_raw": "33 -> 35"
+    },
+    {
+      "reading_order_index": 45,
+      "pdf_page": 2,
+      "ilot_numbers": [827],
+      "raw_text": "Ilot 827 | Rue de Vaugirard | 31 -> 39",
+      "rue": {
+        "type": "rue",
+        "libelle": "de Vaugirard"
+      },
+      "numeros_raw": "31 -> 39"
+    },
+    {
+      "reading_order_index": 46,
+      "pdf_page": 2,
+      "ilot_numbers": [828],
+      "raw_text": "Ilot 828 | Rue d'Assas | 20 -> 28",
+      "rue": {
+        "type": "rue",
+        "libelle": "d'Assas"
+      },
+      "numeros_raw": "20 -> 28"
+    },
+    {
+      "reading_order_index": 47,
+      "pdf_page": 2,
+      "ilot_numbers": [827],
+      "raw_text": "Ilot 827 | Rue d'Assas | 35",
+      "rue": {
+        "type": "rue",
+        "libelle": "d'Assas"
+      },
+      "numeros_raw": "35"
+    },
+    {
+      "reading_order_index": 48,
+      "pdf_page": 2,
+      "ilot_numbers": [828],
+      "raw_text": "Ilot 828 | Rue d'Assas | 28",
+      "rue": {
+        "type": "rue",
+        "libelle": "d'Assas"
+      },
+      "numeros_raw": "28"
+    },
+    {
+      "reading_order_index": 49,
+      "pdf_page": 2,
+      "ilot_numbers": [828],
+      "raw_text": "Ilot 828 | Rue de Vaugirard | 78",
+      "rue": {
+        "type": "rue",
+        "libelle": "de Vaugirard"
+      },
+      "numeros_raw": "78"
+    },
+    {
+      "reading_order_index": 50,
+      "pdf_page": 2,
+      "ilot_numbers": [828],
+      "raw_text": "Ilot 828 | Bd Raspail | 85",
+      "rue": {
+        "type": "boulevard",
+        "libelle": "Raspail"
+      },
+      "numeros_raw": "85"
+    },
+    {
+      "reading_order_index": 51,
+      "pdf_page": 2,
+      "ilot_numbers": [828],
+      "raw_text": "Ilot 828 | Rue de Rennes | 105 -> 117",
+      "rue": {
+        "type": "rue",
+        "libelle": "de Rennes"
+      },
+      "numeros_raw": "105 -> 117"
+    },
+    {
+      "reading_order_index": 52,
+      "pdf_page": 2,
+      "ilot_numbers": [828],
+      "raw_text": "Ilot 828 | Bd Raspail | 83",
+      "rue": {
+        "type": "boulevard",
+        "libelle": "Raspail"
+      },
+      "numeros_raw": "83"
+    },
+    {
+      "reading_order_index": 53,
+      "pdf_page": 2,
+      "ilot_numbers": [828],
+      "raw_text": "Ilot 828 | Rue de Rennes | 117",
+      "rue": {
+        "type": "rue",
+        "libelle": "de Rennes"
+      },
+      "numeros_raw": "117"
+    },
+    {
+      "reading_order_index": 54,
+      "pdf_page": 2,
+      "ilot_numbers": [829],
+      "raw_text": "Ilot 829 | Rue de Vaugirard | 47 -> 55",
+      "rue": {
+        "type": "rue",
+        "libelle": "de Vaugirard"
+      },
+      "numeros_raw": "47 -> 55"
+    },
+    {
+      "reading_order_index": 55,
+      "pdf_page": 2,
+      "ilot_numbers": [829],
+      "raw_text": "Ilot 829 | Rue d'Assas | 40, 36, 40, 38, 36, 38, 42 -> 44",
+      "rue": {
+        "type": "rue",
+        "libelle": "d'Assas"
+      },
+      "numeros_raw": "40, 36, 40, 38, 36, 38, 42 -> 44"
+    },
+    {
+      "reading_order_index": 56,
+      "pdf_page": 2,
+      "ilot_numbers": [829],
+      "raw_text": "Ilot 829 | Rue de Fleurus | 22 -> 28, 36",
+      "rue": {
+        "type": "rue",
+        "libelle": "de Fleurus"
+      },
+      "numeros_raw": "22 -> 28, 36"
+    },
+    {
+      "reading_order_index": 57,
+      "pdf_page": 2,
+      "ilot_numbers": [829],
+      "raw_text": "Ilot 829 | Bd Raspail | 95",
+      "rue": {
+        "type": "boulevard",
+        "libelle": "Raspail"
+      },
+      "numeros_raw": "95"
+    },
+    {
+      "reading_order_index": 58,
+      "pdf_page": 2,
+      "ilot_numbers": [830],
+      "raw_text": "Ilot 830 | Rue de Fleurus | 21 -> 27, 31 -> 35",
+      "rue": {
+        "type": "rue",
+        "libelle": "de Fleurus"
+      },
+      "numeros_raw": "21 -> 27, 31 -> 35"
+    },
+    {
+      "reading_order_index": 59,
+      "pdf_page": 2,
+      "ilot_numbers": [830],
+      "raw_text": "Ilot 830 | Rue Duguay-Trouin | 11, 15",
+      "rue": {
+        "type": "rue",
+        "libelle": "Duguay-Trouin"
+      },
+      "numeros_raw": "11, 15"
+    },
+    {
+      "reading_order_index": 60,
+      "pdf_page": 2,
+      "ilot_numbers": [830],
+      "raw_text": "Ilot 830 | Rue de Fleurus | 15",
+      "rue": {
+        "type": "rue",
+        "libelle": "de Fleurus"
+      },
+      "numeros_raw": "15"
+    },
+    {
+      "reading_order_index": 61,
+      "pdf_page": 2,
+      "ilot_numbers": [830],
+      "raw_text": "Ilot 830 | Rue Duguay-Trouin | 17",
+      "rue": {
+        "type": "rue",
+        "libelle": "Duguay-Trouin"
+      },
+      "numeros_raw": "17"
+    },
+    {
+      "reading_order_index": 62,
+      "pdf_page": 2,
+      "ilot_numbers": [830],
+      "raw_text": "Ilot 830 | Rue de Fleurus | 31",
+      "rue": {
+        "type": "rue",
+        "libelle": "de Fleurus"
+      },
+      "numeros_raw": "31"
+    },
+    {
+      "reading_order_index": 63,
+      "pdf_page": 2,
+      "ilot_numbers": [830],
+      "raw_text": "Ilot 830 | Rue Duguay-Trouin | 17 -> 19",
+      "rue": {
+        "type": "rue",
+        "libelle": "Duguay-Trouin"
+      },
+      "numeros_raw": "17 -> 19"
+    },
+    {
+      "reading_order_index": 64,
+      "pdf_page": 2,
+      "ilot_numbers": [830],
+      "raw_text": "Ilot 830 | Rue Huysmans | 2 -> 10",
+      "rue": {
+        "type": "rue",
+        "libelle": "Huysmans"
+      },
+      "numeros_raw": "2 -> 10"
+    },
+    {
+      "reading_order_index": 65,
+      "pdf_page": 2,
+      "ilot_numbers": [830],
+      "raw_text": "Ilot 830 | Bd Raspail | 97 -> 101, 105 -> 107",
+      "rue": {
+        "type": "boulevard",
+        "libelle": "Raspail"
+      },
+      "numeros_raw": "97 -> 101, 105 -> 107"
+    },
+    {
+      "reading_order_index": 66,
+      "pdf_page": 2,
+      "ilot_numbers": [830, 831],
+      "raw_text": "Ilot 830,831 | Rue d'Assas | 56, 54, 52, 50, 48, 46",
+      "rue": {
+        "type": "rue",
+        "libelle": "d'Assas"
+      },
+      "numeros_raw": "56, 54, 52, 50, 48, 46"
+    },
+    {
+      "reading_order_index": 67,
+      "pdf_page": 2,
+      "ilot_numbers": [831, 832],
+      "raw_text": "Ilot 831,832 | Rue Duguay-Trouin | 8 -> 12, 3 -> 07",
+      "rue": {
+        "type": "rue",
+        "libelle": "Duguay-Trouin"
+      },
+      "numeros_raw": "8 -> 12, 3 -> 07"
+    },
+    {
+      "reading_order_index": 68,
+      "pdf_page": 2,
+      "ilot_numbers": [832],
+      "raw_text": "Ilot 832 | Rue d'Assas | 58 -> 76",
+      "rue": {
+        "type": "rue",
+        "libelle": "d'Assas"
+      },
+      "numeros_raw": "58 -> 76"
+    },
+    {
+      "reading_order_index": 69,
+      "pdf_page": 2,
+      "ilot_numbers": [832],
+      "raw_text": "Ilot 832 | Rue Jadin | 6 -> 16",
+      "rue": {
+        "type": "rue",
+        "libelle": "Jadin"
+      },
+      "numeros_raw": "6 -> 16"
+    },
+    {
+      "reading_order_index": 70,
+      "pdf_page": 2,
+      "ilot_numbers": [832],
+      "raw_text": "Ilot 832 | Rue Notre-Dame-des-Champs | 39, 51, 53",
+      "rue": {
+        "type": "rue",
+        "libelle": "Notre-Dame-des-Champs"
+      },
+      "numeros_raw": "39, 51, 53"
+    },
+    {
+      "reading_order_index": 71,
+      "pdf_page": 2,
+      "ilot_numbers": [832],
+      "raw_text": "Ilot 832 | Bd Raspail | 121",
+      "rue": {
+        "type": "boulevard",
+        "libelle": "Raspail"
+      },
+      "numeros_raw": "121"
+    },
+    {
+      "reading_order_index": 72,
+      "pdf_page": 2,
+      "ilot_numbers": [832],
+      "raw_text": "Ilot 832 | Rue Huysmans | 1 -> 9",
+      "rue": {
+        "type": "rue",
+        "libelle": "Huysmans"
+      },
+      "numeros_raw": "1 -> 9"
+    },
+    {
+      "reading_order_index": 73,
+      "pdf_page": 2,
+      "ilot_numbers": [833],
+      "raw_text": "Ilot 833 | Rue Jadin | 5 -> 17",
+      "rue": {
+        "type": "rue",
+        "libelle": "Jadin"
+      },
+      "numeros_raw": "5 -> 17"
+    },
+    {
+      "reading_order_index": 74,
+      "pdf_page": 2,
+      "ilot_numbers": [833],
+      "raw_text": "Ilot 833 | Rue d'Assas | 78 -> 86, 90, 98 -> 104",
+      "rue": {
+        "type": "rue",
+        "libelle": "d'Assas"
+      },
+      "numeros_raw": "78 -> 86, 90, 98 -> 104"
+    },
+    {
+      "reading_order_index": 75,
+      "pdf_page": 2,
+      "ilot_numbers": [833],
+      "raw_text": "Ilot 833 | Rue Joseph Bara | 2 -> 8",
+      "rue": {
+        "type": "rue",
+        "libelle": "Joseph Bara"
+      },
+      "numeros_raw": "2 -> 8"
+    },
+    {
+      "reading_order_index": 76,
+      "pdf_page": 2,
+      "ilot_numbers": [833],
+      "raw_text": "Ilot 833 | Rue Notre-Dame-des-Champs | 59 -> 61 bis, 73 -> 79, 83 -> 87",
+      "rue": {
+        "type": "rue",
+        "libelle": "Notre-Dame-des-Champs"
+      },
+      "numeros_raw": "59 -> 61 bis, 73 -> 79, 83 -> 87"
+    },
+    {
+      "reading_order_index": 77,
+      "pdf_page": 2,
+      "ilot_numbers": [834],
+      "raw_text": "Ilot 834 | Rue d'Assas | 112",
+      "rue": {
+        "type": "rue",
+        "libelle": "d'Assas"
+      },
+      "numeros_raw": "112"
+    },
+    {
+      "reading_order_index": 78,
+      "pdf_page": 2,
+      "ilot_numbers": [834],
+      "raw_text": "Ilot 834 | Rue Le Verrier | 2 -> 20",
+      "rue": {
+        "type": "rue",
+        "libelle": "Le Verrier"
+      },
+      "numeros_raw": "2 -> 20"
+    },
+    {
+      "reading_order_index": 79,
+      "pdf_page": 2,
+      "ilot_numbers": [834],
+      "raw_text": "Ilot 834 | Rue Notre-Dame-des-Champs | 97 bis -> 99",
+      "rue": {
+        "type": "rue",
+        "libelle": "Notre-Dame-des-Champs"
+      },
+      "numeros_raw": "97 bis -> 99"
+    },
+    {
+      "reading_order_index": 80,
+      "pdf_page": 2,
+      "ilot_numbers": [834],
+      "raw_text": "Ilot 834 | Rue Joseph Bara | 1 -> 9, 15",
+      "rue": {
+        "type": "rue",
+        "libelle": "Joseph Bara"
+      },
+      "numeros_raw": "1 -> 9, 15"
+    },
+    {
+      "reading_order_index": 81,
+      "pdf_page": 2,
+      "ilot_numbers": [835],
+      "raw_text": "Ilot 835 | Rue d'Assas | 116, 118, 55, 118 -> 132, 136",
+      "rue": {
+        "type": "rue",
+        "libelle": "d'Assas"
+      },
+      "numeros_raw": "116, 118, 55, 118 -> 132, 136",
+      "low_confidence": true,
+      "scan_note": "Dense corrections in N° cell"
+    },
+    {
+      "reading_order_index": 82,
+      "pdf_page": 2,
+      "ilot_numbers": [835],
+      "raw_text": "Ilot 835 | Avenue de l'Observatoire | 12 -> 16, 14, 16, 14, 18",
+      "rue": {
+        "type": "avenue",
+        "libelle": "de l'Observatoire"
+      },
+      "numeros_raw": "12 -> 16, 14, 16, 14, 18",
+      "low_confidence": true
+    },
+    {
+      "reading_order_index": 83,
+      "pdf_page": 3,
+      "ilot_numbers": [835],
+      "raw_text": "Ilot 835 | Rue Notre-Dame-des-Champs | 103 -> 111, 115, 113, 115 -> 125",
+      "rue": {
+        "type": "rue",
+        "libelle": "Notre-Dame-des-Champs"
+      },
+      "numeros_raw": "103 -> 111, 115, 113, 115 -> 125"
+    },
+    {
+      "reading_order_index": 84,
+      "pdf_page": 3,
+      "ilot_numbers": [835],
+      "raw_text": "Ilot 835 | Rue d'Assas | 118 -> 120",
+      "rue": {
+        "type": "rue",
+        "libelle": "d'Assas"
+      },
+      "numeros_raw": "118 -> 120"
+    },
+    {
+      "reading_order_index": 85,
+      "pdf_page": 3,
+      "ilot_numbers": [835],
+      "raw_text": "Ilot 835 | Rue Notre-Dame-des-Champs | 127",
+      "rue": {
+        "type": "rue",
+        "libelle": "Notre-Dame-des-Champs"
+      },
+      "numeros_raw": "127"
+    },
+    {
+      "reading_order_index": 86,
+      "pdf_page": 3,
+      "ilot_numbers": [835],
+      "raw_text": "Ilot 835 | Rue Le Verrier | 3, 7 -> 23",
+      "rue": {
+        "type": "rue",
+        "libelle": "Le Verrier"
+      },
+      "numeros_raw": "3, 7 -> 23"
+    },
+    {
+      "reading_order_index": 87,
+      "pdf_page": 3,
+      "ilot_numbers": [836],
+      "raw_text": "Ilot 836 | Rue René Pauline | 1",
+      "rue": {
+        "type": "rue",
+        "libelle": "René Pauline"
+      },
+      "numeros_raw": "1"
+    },
+    {
+      "reading_order_index": 88,
+      "pdf_page": 3,
+      "ilot_numbers": [836],
+      "raw_text": "Ilot 836 | Rue Notre-Dame-des-Champs | 86",
+      "rue": {
+        "type": "rue",
+        "libelle": "Notre-Dame-des-Champs"
+      },
+      "numeros_raw": "86"
+    },
+    {
+      "reading_order_index": 89,
+      "pdf_page": 3,
+      "ilot_numbers": [836],
+      "raw_text": "Ilot 836 | Bd du Montparnasse | 133 -> 167, 171",
+      "rue": {
+        "type": "boulevard",
+        "libelle": "du Montparnasse"
+      },
+      "numeros_raw": "133 -> 167, 171"
+    },
+    {
+      "reading_order_index": 90,
+      "pdf_page": 3,
+      "ilot_numbers": [837],
+      "raw_text": "Ilot 837 | Rue Notre-Dame-des-Champs | 82",
+      "rue": {
+        "type": "rue",
+        "libelle": "Notre-Dame-des-Champs"
+      },
+      "numeros_raw": "82"
+    },
+    {
+      "reading_order_index": 91,
+      "pdf_page": 3,
+      "ilot_numbers": [837],
+      "raw_text": "Ilot 837 | Bd du Montparnasse | 129",
+      "rue": {
+        "type": "boulevard",
+        "libelle": "du Montparnasse"
+      },
+      "numeros_raw": "129"
+    },
+    {
+      "reading_order_index": 92,
+      "pdf_page": 3,
+      "ilot_numbers": [837],
+      "raw_text": "Ilot 837 | Rue de Chevreuse | 3 -> 5",
+      "rue": {
+        "type": "rue",
+        "libelle": "de Chevreuse"
+      },
+      "numeros_raw": "3 -> 5"
+    },
+    {
+      "reading_order_index": 93,
+      "pdf_page": 3,
+      "ilot_numbers": [838],
+      "raw_text": "Ilot 838 | Rue de la Grande-Chaumière | 3, 7 -> 15",
+      "rue": {
+        "type": "rue",
+        "libelle": "de la Grande-Chaumière"
+      },
+      "numeros_raw": "3, 7 -> 15"
+    },
+    {
+      "reading_order_index": 94,
+      "pdf_page": 3,
+      "ilot_numbers": [838],
+      "raw_text": "Ilot 838 | Rue Notre-Dame-des-Champs | 74 -> 78",
+      "rue": {
+        "type": "rue",
+        "libelle": "Notre-Dame-des-Champs"
+      },
+      "numeros_raw": "74 -> 78"
+    },
+    {
+      "reading_order_index": 95,
+      "pdf_page": 3,
+      "ilot_numbers": [838],
+      "raw_text": "Ilot 838 | Rue de Chevreuse | 4 -> 6",
+      "rue": {
+        "type": "rue",
+        "libelle": "de Chevreuse"
+      },
+      "numeros_raw": "4 -> 6"
+    },
+    {
+      "reading_order_index": 96,
+      "pdf_page": 3,
+      "ilot_numbers": [838],
+      "raw_text": "Ilot 838 | Bd du Montparnasse | 117, 119, 123 -> 125",
+      "rue": {
+        "type": "boulevard",
+        "libelle": "du Montparnasse"
+      },
+      "numeros_raw": "117, 119, 123 -> 125"
+    },
+    {
+      "reading_order_index": 97,
+      "pdf_page": 3,
+      "ilot_numbers": [839],
+      "raw_text": "Ilot 839 | Rue Jules Chaplain | 5, 7, 11, 11 bis, 17",
+      "rue": {
+        "type": "rue",
+        "libelle": "Jules Chaplain"
+      },
+      "numeros_raw": "5, 7, 11, 11 bis, 17"
+    },
+    {
+      "reading_order_index": 98,
+      "pdf_page": 3,
+      "ilot_numbers": [839],
+      "raw_text": "Ilot 839 | Rue Notre-Dame-des-Champs | 66 -> 72",
+      "rue": {
+        "type": "rue",
+        "libelle": "Notre-Dame-des-Champs"
+      },
+      "numeros_raw": "66 -> 72"
+    },
+    {
+      "reading_order_index": 99,
+      "pdf_page": 3,
+      "ilot_numbers": [839],
+      "raw_text": "Ilot 839 | Rue de la Grande-Chaumière | 4, 4 bis, 8 -> 18",
+      "rue": {
+        "type": "rue",
+        "libelle": "de la Grande-Chaumière"
+      },
+      "numeros_raw": "4, 4 bis, 8 -> 18"
+    },
+    {
+      "reading_order_index": 100,
+      "pdf_page": 3,
+      "ilot_numbers": [839],
+      "raw_text": "Ilot 839 | Bd Raspail | 145 -> 147",
+      "rue": {
+        "type": "boulevard",
+        "libelle": "Raspail"
+      },
+      "numeros_raw": "145 -> 147"
+    },
+    {
+      "reading_order_index": 101,
+      "pdf_page": 3,
+      "ilot_numbers": [840],
+      "raw_text": "Ilot 840 | Rue Bréa | 23 -> 27",
+      "rue": {
+        "type": "rue",
+        "libelle": "Bréa"
+      },
+      "numeros_raw": "23 -> 27"
+    },
+    {
+      "reading_order_index": 102,
+      "pdf_page": 3,
+      "ilot_numbers": [840],
+      "raw_text": "Ilot 840 | Rue Notre-Dame-des-Champs | 54 -> 56",
+      "rue": {
+        "type": "rue",
+        "libelle": "Notre-Dame-des-Champs"
+      },
+      "numeros_raw": "54 -> 56"
+    },
+    {
+      "reading_order_index": 103,
+      "pdf_page": 3,
+      "ilot_numbers": [840],
+      "raw_text": "Ilot 840 | Rue Jules Chaplain | 4 -> 8",
+      "rue": {
+        "type": "rue",
+        "libelle": "Jules Chaplain"
+      },
+      "numeros_raw": "4 -> 8"
+    },
+    {
+      "reading_order_index": 104,
+      "pdf_page": 3,
+      "ilot_numbers": [840],
+      "raw_text": "Ilot 840 | Rue Bréa | 1 -> 21",
+      "rue": {
+        "type": "rue",
+        "libelle": "Bréa"
+      },
+      "numeros_raw": "1 -> 21"
+    },
+    {
+      "reading_order_index": 105,
+      "pdf_page": 3,
+      "ilot_numbers": [841],
+      "raw_text": "Ilot 841 | Rue Vavin | 19 -> 27, 31 -> 33",
+      "rue": {
+        "type": "rue",
+        "libelle": "Vavin"
+      },
+      "numeros_raw": "19 -> 27, 31 -> 33"
+    },
+    {
+      "reading_order_index": 106,
+      "pdf_page": 3,
+      "ilot_numbers": [841],
+      "raw_text": "Ilot 841 | Bd Raspail | 139 -> 143",
+      "rue": {
+        "type": "boulevard",
+        "libelle": "Raspail"
+      },
+      "numeros_raw": "139 -> 143"
+    },
+    {
+      "reading_order_index": 107,
+      "pdf_page": 3,
+      "ilot_numbers": [841],
+      "raw_text": "Ilot 841 | Rue Bréa | 4 -> 14",
+      "rue": {
+        "type": "rue",
+        "libelle": "Bréa"
+      },
+      "numeros_raw": "4 -> 14"
+    },
+    {
+      "reading_order_index": 108,
+      "pdf_page": 3,
+      "ilot_numbers": [842],
+      "raw_text": "Ilot 842 | Rue Sainte-Beuve | 3 -> 9",
+      "rue": {
+        "type": "rue",
+        "libelle": "Sainte-Beuve"
+      },
+      "numeros_raw": "3 -> 9"
+    },
+    {
+      "reading_order_index": 109,
+      "pdf_page": 3,
+      "ilot_numbers": [842],
+      "raw_text": "Ilot 842 | Rue Notre-Dame-des-Champs | 46",
+      "rue": {
+        "type": "rue",
+        "libelle": "Notre-Dame-des-Champs"
+      },
+      "numeros_raw": "46"
+    },
+    {
+      "reading_order_index": 110,
+      "pdf_page": 3,
+      "ilot_numbers": [842],
+      "raw_text": "Ilot 842 | Rue Vavin | 18, 22, 26",
+      "rue": {
+        "type": "rue",
+        "libelle": "Vavin"
+      },
+      "numeros_raw": "18, 22, 26"
+    },
+    {
+      "reading_order_index": 111,
+      "pdf_page": 3,
+      "ilot_numbers": [842],
+      "raw_text": "Ilot 842 | Bd Raspail | 133 -> 137",
+      "rue": {
+        "type": "boulevard",
+        "libelle": "Raspail"
+      },
+      "numeros_raw": "133 -> 137"
+    },
+    {
+      "reading_order_index": 112,
+      "pdf_page": 3,
+      "ilot_numbers": [843],
+      "raw_text": "Ilot 843 | Rue Notre-Dame-des-Champs | 42 -> 44",
+      "rue": {
+        "type": "rue",
+        "libelle": "Notre-Dame-des-Champs"
+      },
+      "numeros_raw": "42 -> 44"
+    },
+    {
+      "reading_order_index": 113,
+      "pdf_page": 3,
+      "ilot_numbers": [843],
+      "raw_text": "Ilot 843 | Rue Sainte-Beuve | 4 -> 8",
+      "rue": {
+        "type": "rue",
+        "libelle": "Sainte-Beuve"
+      },
+      "numeros_raw": "4 -> 8"
+    },
+    {
+      "reading_order_index": 114,
+      "pdf_page": 3,
+      "ilot_numbers": [843],
+      "raw_text": "Ilot 843 | Bd Raspail | 127 -> 131",
+      "rue": {
+        "type": "boulevard",
+        "libelle": "Raspail"
+      },
+      "numeros_raw": "127 -> 131"
+    },
+    {
+      "reading_order_index": 115,
+      "pdf_page": 3,
+      "ilot_numbers": [844],
+      "raw_text": "Ilot 844 | Rue Vavin | 15 -> 17",
+      "rue": {
+        "type": "rue",
+        "libelle": "Vavin"
+      },
+      "numeros_raw": "15 -> 17"
+    },
+    {
+      "reading_order_index": 116,
+      "pdf_page": 3,
+      "ilot_numbers": [844],
+      "raw_text": "Ilot 844 | Bd Raspail | 132 -> 136",
+      "rue": {
+        "type": "boulevard",
+        "libelle": "Raspail"
+      },
+      "numeros_raw": "132 -> 136"
+    },
+    {
+      "reading_order_index": 117,
+      "pdf_page": 3,
+      "ilot_numbers": [844],
+      "raw_text": "Ilot 844 | Bd du Montparnasse | 101, 120",
+      "rue": {
+        "type": "boulevard",
+        "libelle": "du Montparnasse"
+      },
+      "numeros_raw": "101, 120",
+      "low_confidence": true,
+      "scan_note": "Crossed-out îlot revision adjacent on scan; îlot 844 kept"
+    },
+    {
+      "reading_order_index": 118,
+      "pdf_page": 3,
+      "ilot_numbers": [845],
+      "raw_text": "Ilot 845 | Bd Raspail | 122 -> 126",
+      "rue": {
+        "type": "boulevard",
+        "libelle": "Raspail"
+      },
+      "numeros_raw": "122 -> 126"
+    },
+    {
+      "reading_order_index": 119,
+      "pdf_page": 3,
+      "ilot_numbers": [845],
+      "raw_text": "Ilot 845 | Rue Vavin | 46 -> 54",
+      "rue": {
+        "type": "rue",
+        "libelle": "Vavin"
+      },
+      "numeros_raw": "46 -> 54"
+    },
+    {
+      "reading_order_index": 120,
+      "pdf_page": 3,
+      "ilot_numbers": [845],
+      "raw_text": "Ilot 845 | Bd du Montparnasse | 97",
+      "rue": {
+        "type": "boulevard",
+        "libelle": "du Montparnasse"
+      },
+      "numeros_raw": "97"
+    },
+    {
+      "reading_order_index": 121,
+      "pdf_page": 3,
+      "ilot_numbers": [845],
+      "raw_text": "Ilot 845 | Rue Péguy | 3",
+      "rue": {
+        "type": "rue",
+        "libelle": "Péguy"
+      },
+      "numeros_raw": "3"
+    },
+    {
+      "reading_order_index": 122,
+      "pdf_page": 3,
+      "ilot_numbers": [845],
+      "raw_text": "Ilot 845 | Bd du Montparnasse | 91",
+      "rue": {
+        "type": "boulevard",
+        "libelle": "du Montparnasse"
+      },
+      "numeros_raw": "91"
+    },
+    {
+      "reading_order_index": 123,
+      "pdf_page": 3,
+      "ilot_numbers": [845],
+      "raw_text": "Ilot 845 | Rue Péguy | 5 -> 7",
+      "rue": {
+        "type": "rue",
+        "libelle": "Péguy"
+      },
+      "numeros_raw": "5 -> 7"
+    },
+    {
+      "reading_order_index": 124,
+      "pdf_page": 3,
+      "ilot_numbers": [845],
+      "raw_text": "Ilot 845 | Rue Stanislas | 5 -> 7",
+      "rue": {
+        "type": "rue",
+        "libelle": "Stanislas"
+      },
+      "numeros_raw": "5 -> 7"
+    },
+    {
+      "reading_order_index": 125,
+      "pdf_page": 3,
+      "ilot_numbers": [845],
+      "raw_text": "Ilot 845 | Bd Raspail | 128",
+      "rue": {
+        "type": "boulevard",
+        "libelle": "Raspail"
+      },
+      "numeros_raw": "128"
+    },
+    {
+      "reading_order_index": 126,
+      "pdf_page": 3,
+      "ilot_numbers": [845],
+      "raw_text": "Ilot 845 | Rue Vavin | 44",
+      "rue": {
+        "type": "rue",
+        "libelle": "Vavin"
+      },
+      "numeros_raw": "44"
+    },
+    {
+      "reading_order_index": 127,
+      "pdf_page": 4,
+      "ilot_numbers": [845],
+      "raw_text": "Ilot 845 | Rue Stanislas | 9 -> 11",
+      "rue": {
+        "type": "rue",
+        "libelle": "Stanislas"
+      },
+      "numeros_raw": "9 -> 11"
+    },
+    {
+      "reading_order_index": 128,
+      "pdf_page": 4,
+      "ilot_numbers": [846, 847, 848],
+      "raw_text": "Ilot 846,847,848 | Bd du Montparnasse | 93, 91",
+      "rue": {
+        "type": "boulevard",
+        "libelle": "du Montparnasse"
+      },
+      "numeros_raw": "93, 91",
+      "scan_note": "Bracket îlots 846–848; vertical wrap in ADRESSE/N°"
+    },
+    {
+      "reading_order_index": 129,
+      "pdf_page": 4,
+      "ilot_numbers": [848],
+      "raw_text": "Ilot 848 | Rue Notre-Dame-des-Champs | 30",
+      "rue": {
+        "type": "rue",
+        "libelle": "Notre-Dame-des-Champs"
+      },
+      "numeros_raw": "30"
+    },
+    {
+      "reading_order_index": 130,
+      "pdf_page": 4,
+      "ilot_numbers": [848],
+      "raw_text": "Ilot 848 | Bd Raspail | 110 -> 118",
+      "rue": {
+        "type": "boulevard",
+        "libelle": "Raspail"
+      },
+      "numeros_raw": "110 -> 118"
+    },
+    {
+      "reading_order_index": 131,
+      "pdf_page": 4,
+      "ilot_numbers": [848],
+      "raw_text": "Ilot 848 | Rue Stanislas | 6 -> 16",
+      "rue": {
+        "type": "rue",
+        "libelle": "Stanislas"
+      },
+      "numeros_raw": "6 -> 16"
+    },
+    {
+      "reading_order_index": 132,
+      "pdf_page": 4,
+      "ilot_numbers": [848],
+      "raw_text": "Ilot 848 | Rue de la Cité | 4",
+      "rue": {
+        "type": "rue",
+        "libelle": "de la Cité"
+      },
+      "numeros_raw": "4",
+      "low_confidence": true,
+      "scan_note": "Hand as 'Rue de Cité'; normalized libellé"
+    },
+    {
+      "reading_order_index": 133,
+      "pdf_page": 4,
+      "ilot_numbers": [848],
+      "raw_text": "Ilot 848 | Rue du Montparnasse | 3 -> 7, 11, 15 -> 25",
+      "rue": {
+        "type": "rue",
+        "libelle": "du Montparnasse"
+      },
+      "numeros_raw": "3 -> 7, 11, 15 -> 25",
+      "scan_note": "Bracket îlots 846–848"
+    },
+    {
+      "reading_order_index": 134,
+      "pdf_page": 4,
+      "ilot_numbers": [849],
+      "raw_text": "Ilot 849 | Rue Notre-Dame-des-Champs | 8, 12, 22, 12, 20, 36, 38",
+      "rue": {
+        "type": "rue",
+        "libelle": "Notre-Dame-des-Champs"
+      },
+      "numeros_raw": "8, 12, 22, 12, 20, 36, 38",
+      "scan_note": "Explicit îlot 849 line on scan after bracket"
+    },
+    {
+      "reading_order_index": 135,
+      "pdf_page": 4,
+      "ilot_numbers": [849],
+      "raw_text": "Ilot 849 | Bd du Montparnasse | 71 -> 79",
+      "rue": {
+        "type": "boulevard",
+        "libelle": "du Montparnasse"
+      },
+      "numeros_raw": "71 -> 79"
+    },
+    {
+      "reading_order_index": 136,
+      "pdf_page": 4,
+      "ilot_numbers": [849],
+      "raw_text": "Ilot 849 | Impasse Robiquet | 7",
+      "rue": {
+        "type": "impasse",
+        "libelle": "Robiquet"
+      },
+      "numeros_raw": "7"
+    },
+    {
+      "reading_order_index": 137,
+      "pdf_page": 4,
+      "ilot_numbers": [849],
+      "raw_text": "Ilot 849 | Bd du Montparnasse | 81",
+      "rue": {
+        "type": "boulevard",
+        "libelle": "du Montparnasse"
+      },
+      "numeros_raw": "81"
+    },
+    {
+      "reading_order_index": 138,
+      "pdf_page": 4,
+      "ilot_numbers": [849],
+      "raw_text": "Ilot 849 | Impasse Robiquet | 7",
+      "rue": {
+        "type": "impasse",
+        "libelle": "Robiquet"
+      },
+      "numeros_raw": "7"
+    },
+    {
+      "reading_order_index": 139,
+      "pdf_page": 4,
+      "ilot_numbers": [849],
+      "raw_text": "Ilot 849 | Bd du Montparnasse | 83 -> 89",
+      "rue": {
+        "type": "boulevard",
+        "libelle": "du Montparnasse"
+      },
+      "numeros_raw": "83 -> 89"
+    },
+    {
+      "reading_order_index": 140,
+      "pdf_page": 4,
+      "ilot_numbers": [849],
+      "raw_text": "Ilot 849 | Place de Rennes | 3 -> 5",
+      "rue": {
+        "type": "place",
+        "libelle": "de Rennes"
+      },
+      "numeros_raw": "3 -> 5"
+    },
+    {
+      "reading_order_index": 141,
+      "pdf_page": 4,
+      "ilot_numbers": [849],
+      "raw_text": "Ilot 849 | Rue de Rennes | 127 -> 137, 141, 169, 167, 165, 163, 161, 141, 143, 147, 149, 151, 151 bis, 153, 159, 169",
+      "rue": {
+        "type": "rue",
+        "libelle": "de Rennes"
+      },
+      "numeros_raw": "127 -> 137, 141, 169, 167, 165, 163, 161, 141, 143, 147, 149, 151, 151 bis, 153, 159, 169",
+      "low_confidence": true,
+      "scan_note": "Tall N° block; stitched from multi-line cell"
+    },
+    {
+      "reading_order_index": 142,
+      "pdf_page": 4,
+      "ilot_numbers": [849],
+      "raw_text": "Ilot 849 | Rue Notre-Dame-des-Champs | 169",
+      "rue": {
+        "type": "rue",
+        "libelle": "Notre-Dame-des-Champs"
+      },
+      "numeros_raw": "169"
+    },
+    {
+      "reading_order_index": 143,
+      "pdf_page": 4,
+      "ilot_numbers": [849],
+      "raw_text": "Ilot 849 | Rue de Rennes | 171",
+      "rue": {
+        "type": "rue",
+        "libelle": "de Rennes"
+      },
+      "numeros_raw": "171"
+    },
+    {
+      "reading_order_index": 144,
+      "pdf_page": 4,
+      "ilot_numbers": [850],
+      "raw_text": "Ilot 850 | Rue de Fleurus | 43",
+      "rue": {
+        "type": "rue",
+        "libelle": "de Fleurus"
+      },
+      "numeros_raw": "43"
+    },
+    {
+      "reading_order_index": 145,
+      "pdf_page": 4,
+      "ilot_numbers": [851],
+      "raw_text": "Ilot 851 | Bd Raspail | 92, 96",
+      "rue": {
+        "type": "boulevard",
+        "libelle": "Raspail"
+      },
+      "numeros_raw": "92, 96"
+    },
+    {
+      "reading_order_index": 146,
+      "pdf_page": 4,
+      "ilot_numbers": [851],
+      "raw_text": "Ilot 851 | Rue Notre-Dame-des-Champs | 11, 17",
+      "rue": {
+        "type": "rue",
+        "libelle": "Notre-Dame-des-Champs"
+      },
+      "numeros_raw": "11, 17"
+    },
+    {
+      "reading_order_index": 147,
+      "pdf_page": 4,
+      "ilot_numbers": [851],
+      "raw_text": "Ilot 851 | Bd Raspail | 84, 90, 26",
+      "rue": {
+        "type": "boulevard",
+        "libelle": "Raspail"
+      },
+      "numeros_raw": "84, 90, 26"
+    },
+    {
+      "reading_order_index": 148,
+      "pdf_page": 4,
+      "ilot_numbers": [851],
+      "raw_text": "Ilot 851 | Rue de Fleurus | 44",
+      "rue": {
+        "type": "rue",
+        "libelle": "de Fleurus"
+      },
+      "numeros_raw": "44"
+    },
+    {
+      "reading_order_index": 149,
+      "pdf_page": 4,
+      "ilot_numbers": [852],
+      "raw_text": "Ilot 852 | Rue Notre-Dame-des-Champs | 3 -> 05",
+      "rue": {
+        "type": "rue",
+        "libelle": "Notre-Dame-des-Champs"
+      },
+      "numeros_raw": "3 -> 05"
+    },
+    {
+      "reading_order_index": 150,
+      "pdf_page": 4,
+      "ilot_numbers": [852],
+      "raw_text": "Ilot 852 | Rue de Vaugirard | 61 -> 63",
+      "rue": {
+        "type": "rue",
+        "libelle": "de Vaugirard"
+      },
+      "numeros_raw": "61 -> 63"
+    },
+    {
+      "reading_order_index": 151,
+      "pdf_page": 4,
+      "ilot_numbers": [852],
+      "raw_text": "Ilot 852 | Rue de Rennes | 80, 121, 123",
+      "rue": {
+        "type": "rue",
+        "libelle": "de Rennes"
+      },
+      "numeros_raw": "80, 121, 123"
+    },
+    {
+      "reading_order_index": 152,
+      "pdf_page": 4,
+      "ilot_numbers": [852],
+      "raw_text": "Ilot 852 | Bd Raspail | 58, 66, 72, 74",
+      "rue": {
+        "type": "boulevard",
+        "libelle": "Raspail"
+      },
+      "numeros_raw": "58, 66, 72, 74"
+    },
+    {
+      "reading_order_index": 153,
+      "pdf_page": 4,
+      "ilot_numbers": [853],
+      "raw_text": "Ilot 853 | Rue de Rennes | 112 bis -> 116",
+      "rue": {
+        "type": "rue",
+        "libelle": "de Rennes"
+      },
+      "numeros_raw": "112 bis -> 116"
+    },
+    {
+      "reading_order_index": 154,
+      "pdf_page": 4,
+      "ilot_numbers": [853],
+      "raw_text": "Ilot 853 | Rue du Regard | 1 -> 11, 15",
+      "rue": {
+        "type": "rue",
+        "libelle": "du Regard"
+      },
+      "numeros_raw": "1 -> 11, 15"
+    },
+    {
+      "reading_order_index": 155,
+      "pdf_page": 4,
+      "ilot_numbers": [853],
+      "raw_text": "Ilot 853 | Rue du Cherche-Midi | 37",
+      "rue": {
+        "type": "rue",
+        "libelle": "du Cherche-Midi"
+      },
+      "numeros_raw": "37"
+    },
+    {
+      "reading_order_index": 156,
+      "pdf_page": 4,
+      "ilot_numbers": [853],
+      "raw_text": "Ilot 853 | Rue du Regard | 4, 6, 10, 12 -> 24",
+      "rue": {
+        "type": "rue",
+        "libelle": "du Regard"
+      },
+      "numeros_raw": "4, 6, 10, 12 -> 24"
+    },
+    {
+      "reading_order_index": 157,
+      "pdf_page": 4,
+      "ilot_numbers": [853],
+      "raw_text": "Ilot 853 | Rue de Rennes | 120",
+      "rue": {
+        "type": "rue",
+        "libelle": "de Rennes"
+      },
+      "numeros_raw": "120"
+    },
+    {
+      "reading_order_index": 158,
+      "pdf_page": 4,
+      "ilot_numbers": [854],
+      "raw_text": "Ilot 854 | Rue Saint-Placide | 29 -> 53",
+      "rue": {
+        "type": "rue",
+        "libelle": "Saint-Placide"
+      },
+      "numeros_raw": "29 -> 53"
+    },
+    {
+      "reading_order_index": 159,
+      "pdf_page": 4,
+      "ilot_numbers": [854],
+      "raw_text": "Ilot 854 | Rue du Cherche-Midi | 39 -> 45",
+      "rue": {
+        "type": "rue",
+        "libelle": "du Cherche-Midi"
+      },
+      "numeros_raw": "39 -> 45"
+    },
+    {
+      "reading_order_index": 160,
+      "pdf_page": 4,
+      "ilot_numbers": [854],
+      "raw_text": "Ilot 854 | Rue Saint-Placide | 30 -> 62",
+      "rue": {
+        "type": "rue",
+        "libelle": "Saint-Placide"
+      },
+      "numeros_raw": "30 -> 62"
+    },
+    {
+      "reading_order_index": 161,
+      "pdf_page": 4,
+      "ilot_numbers": [854],
+      "raw_text": "Ilot 854 | Rue de Vaugirard | 90",
+      "rue": {
+        "type": "rue",
+        "libelle": "de Vaugirard"
+      },
+      "numeros_raw": "90"
+    },
+    {
+      "reading_order_index": 162,
+      "pdf_page": 4,
+      "ilot_numbers": [855],
+      "raw_text": "Ilot 855 | Rue Abbé Grégoire | 21 -> 45",
+      "rue": {
+        "type": "rue",
+        "libelle": "Abbé Grégoire"
+      },
+      "numeros_raw": "21 -> 45"
+    },
+    {
+      "reading_order_index": 163,
+      "pdf_page": 4,
+      "ilot_numbers": [855],
+      "raw_text": "Ilot 855 | Rue du Cherche-Midi | 22 -> 24",
+      "rue": {
+        "type": "rue",
+        "libelle": "du Cherche-Midi"
+      },
+      "numeros_raw": "22 -> 24"
+    },
+    {
+      "reading_order_index": 164,
+      "pdf_page": 4,
+      "ilot_numbers": [855],
+      "raw_text": "Ilot 855 | Rue Abbé Grégoire | 53 -> 57",
+      "rue": {
+        "type": "rue",
+        "libelle": "Abbé Grégoire"
+      },
+      "numeros_raw": "53 -> 57"
+    },
+    {
+      "reading_order_index": 165,
+      "pdf_page": 4,
+      "ilot_numbers": [855],
+      "raw_text": "Ilot 855 | Rue Régis | 4 -> 08",
+      "rue": {
+        "type": "rue",
+        "libelle": "Régis"
+      },
+      "numeros_raw": "4 -> 08"
+    },
+    {
+      "reading_order_index": 166,
+      "pdf_page": 5,
+      "ilot_numbers": [856],
+      "raw_text": "Ilot 856 | Rue du Cherche-Midi | 67, 65, 63, 61",
+      "rue": {
+        "type": "rue",
+        "libelle": "du Cherche-Midi"
+      },
+      "numeros_raw": "67, 65, 63, 61"
+    },
+    {
+      "reading_order_index": 167,
+      "pdf_page": 5,
+      "ilot_numbers": [857],
+      "raw_text": "Ilot 857 | Rue Abbé Grégoire | 24 bis",
+      "rue": {
+        "type": "rue",
+        "libelle": "Abbé Grégoire"
+      },
+      "numeros_raw": "24 bis"
+    },
+    {
+      "reading_order_index": 168,
+      "pdf_page": 5,
+      "ilot_numbers": [857],
+      "raw_text": "Ilot 857 | Rue Gerbillon | 2",
+      "rue": {
+        "type": "rue",
+        "libelle": "Gerbillon"
+      },
+      "numeros_raw": "2"
+    },
+    {
+      "reading_order_index": 169,
+      "pdf_page": 5,
+      "ilot_numbers": [857],
+      "raw_text": "Ilot 857 | Rue Bérite | 5",
+      "rue": {
+        "type": "rue",
+        "libelle": "Bérite"
+      },
+      "numeros_raw": "5"
+    },
+    {
+      "reading_order_index": 170,
+      "pdf_page": 5,
+      "ilot_numbers": [857],
+      "raw_text": "Ilot 857 | Rue Régis | 1 -> 3",
+      "rue": {
+        "type": "rue",
+        "libelle": "Régis"
+      },
+      "numeros_raw": "1 -> 3"
+    },
+    {
+      "reading_order_index": 171,
+      "pdf_page": 5,
+      "ilot_numbers": [858],
+      "raw_text": "Ilot 858 | Rue Bérite | 4",
+      "rue": {
+        "type": "rue",
+        "libelle": "Bérite"
+      },
+      "numeros_raw": "4"
+    },
+    {
+      "reading_order_index": 172,
+      "pdf_page": 5,
+      "ilot_numbers": [858],
+      "raw_text": "Ilot 858 | Rue Gerbillon | 3 -> 9",
+      "rue": {
+        "type": "rue",
+        "libelle": "Gerbillon"
+      },
+      "numeros_raw": "3 -> 9"
+    },
+    {
+      "reading_order_index": 173,
+      "pdf_page": 5,
+      "ilot_numbers": [858],
+      "raw_text": "Ilot 858 | Rue Abbé Grégoire | 26",
+      "rue": {
+        "type": "rue",
+        "libelle": "Abbé Grégoire"
+      },
+      "numeros_raw": "26"
+    },
+    {
+      "reading_order_index": 174,
+      "pdf_page": 5,
+      "ilot_numbers": [858],
+      "raw_text": "Ilot 858 | Rue de Vaugirard | 92",
+      "rue": {
+        "type": "rue",
+        "libelle": "de Vaugirard"
+      },
+      "numeros_raw": "92"
+    },
+    {
+      "reading_order_index": 175,
+      "pdf_page": 5,
+      "ilot_numbers": [858],
+      "raw_text": "Ilot 858 | Rue Chapon | 40",
+      "rue": {
+        "type": "rue",
+        "libelle": "Chapon"
+      },
+      "numeros_raw": "40"
+    },
+    {
+      "reading_order_index": 176,
+      "pdf_page": 5,
+      "ilot_numbers": [858],
+      "raw_text": "Ilot 858 | Rue de Vaugirard | 98 -> 100",
+      "rue": {
+        "type": "rue",
+        "libelle": "de Vaugirard"
+      },
+      "numeros_raw": "98 -> 100"
+    },
+    {
+      "reading_order_index": 177,
+      "pdf_page": 5,
+      "ilot_numbers": [858],
+      "raw_text": "Ilot 858 | Rue Jean Ferrandi | 3, 3 bis, 7, 9, 11, 15",
+      "rue": {
+        "type": "rue",
+        "libelle": "Jean Ferrandi"
+      },
+      "numeros_raw": "3, 3 bis, 7, 9, 11, 15"
+    },
+    {
+      "reading_order_index": 178,
+      "pdf_page": 5,
+      "ilot_numbers": [858],
+      "raw_text": "Ilot 858 | Rue du Cherche-Midi | 71 -> 83",
+      "rue": {
+        "type": "rue",
+        "libelle": "du Cherche-Midi"
+      },
+      "numeros_raw": "71 -> 83"
+    },
+    {
+      "reading_order_index": 179,
+      "pdf_page": 5,
+      "ilot_numbers": [859],
+      "raw_text": "Ilot 859 | Rue de Vaugirard | 69 bis -> 73",
+      "rue": {
+        "type": "rue",
+        "libelle": "de Vaugirard"
+      },
+      "numeros_raw": "69 bis -> 73"
+    },
+    {
+      "reading_order_index": 180,
+      "pdf_page": 5,
+      "ilot_numbers": [859],
+      "raw_text": "Ilot 859 | Rue Notre-Dame-des-Champs | 75",
+      "rue": {
+        "type": "rue",
+        "libelle": "Notre-Dame-des-Champs"
+      },
+      "numeros_raw": "75"
+    },
+    {
+      "reading_order_index": 181,
+      "pdf_page": 5,
+      "ilot_numbers": [859],
+      "raw_text": "Ilot 859 | Rue de Vaugirard | 75 - 77",
+      "rue": {
+        "type": "rue",
+        "libelle": "de Vaugirard"
+      },
+      "numeros_raw": "75 - 77"
+    },
+    {
+      "reading_order_index": 182,
+      "pdf_page": 5,
+      "ilot_numbers": [859],
+      "raw_text": "Ilot 859 | Rue de Rennes | 122 -> 134",
+      "rue": {
+        "type": "rue",
+        "libelle": "de Rennes"
+      },
+      "numeros_raw": "122 -> 134"
+    },
+    {
+      "reading_order_index": 183,
+      "pdf_page": 5,
+      "ilot_numbers": [859, 860],
+      "raw_text": "Ilot 859,860 | Rue Blaise Desgoffe | 1 -> 3, 2 -> 10",
+      "rue": {
+        "type": "rue",
+        "libelle": "Blaise Desgoffe"
+      },
+      "numeros_raw": "1 -> 3, 2 -> 10"
+    },
+    {
+      "reading_order_index": 184,
+      "pdf_page": 5,
+      "ilot_numbers": [859, 860],
+      "raw_text": "Ilot 859,860 | Rue de Rennes | 140 bis -> 148",
+      "rue": {
+        "type": "rue",
+        "libelle": "de Rennes"
+      },
+      "numeros_raw": "140 bis -> 148"
+    },
+    {
+      "reading_order_index": 185,
+      "pdf_page": 5,
+      "ilot_numbers": [859, 860],
+      "raw_text": "Ilot 859,860 | Rue Littré | 1 -> 19",
+      "rue": {
+        "type": "rue",
+        "libelle": "Littré"
+      },
+      "numeros_raw": "1 -> 19"
+    },
+    {
+      "reading_order_index": 186,
+      "pdf_page": 5,
+      "ilot_numbers": [861],
+      "raw_text": "Ilot 861 | Rue de Vaugirard | 85 -> 105, 109 -> 111",
+      "rue": {
+        "type": "rue",
+        "libelle": "de Vaugirard"
+      },
+      "numeros_raw": "85 -> 105, 109 -> 111"
+    },
+    {
+      "reading_order_index": 187,
+      "pdf_page": 5,
+      "ilot_numbers": [861],
+      "raw_text": "Ilot 861 | Rue Littré | 6 -> 12, 6, 12 -> 20",
+      "rue": {
+        "type": "rue",
+        "libelle": "Littré"
+      },
+      "numeros_raw": "6 -> 12, 6, 12 -> 20",
+      "low_confidence": true,
+      "scan_note": "Overwrite/corrections in N°"
+    },
+    {
+      "reading_order_index": 188,
+      "pdf_page": 5,
+      "ilot_numbers": [861],
+      "raw_text": "Ilot 861 | Rue de Rennes | 150 -> 152",
+      "rue": {
+        "type": "rue",
+        "libelle": "de Rennes"
+      },
+      "numeros_raw": "150 -> 152"
+    },
+    {
+      "reading_order_index": 189,
+      "pdf_page": 5,
+      "ilot_numbers": [861],
+      "raw_text": "Ilot 861 | Place de Rennes | 4 - 6",
+      "rue": {
+        "type": "place",
+        "libelle": "de Rennes"
+      },
+      "numeros_raw": "4 - 6"
+    },
+    {
+      "reading_order_index": 190,
+      "pdf_page": 5,
+      "ilot_numbers": [861],
+      "raw_text": "Ilot 861 | Bd du Montparnasse | 33 -> 61",
+      "rue": {
+        "type": "boulevard",
+        "libelle": "du Montparnasse"
+      },
+      "numeros_raw": "33 -> 61"
+    },
+    {
+      "reading_order_index": 191,
+      "pdf_page": 5,
+      "ilot_numbers": [862],
+      "raw_text": "Ilot 862 | Rue Jean Ferrandi | 4 -> 16",
+      "rue": {
+        "type": "rue",
+        "libelle": "Jean Ferrandi"
+      },
+      "numeros_raw": "4 -> 16"
+    },
+    {
+      "reading_order_index": 192,
+      "pdf_page": 5,
+      "ilot_numbers": [862],
+      "raw_text": "Ilot 862 | Rue de Vaugirard | 102, 108 -> 118, 122 -> 130",
+      "rue": {
+        "type": "rue",
+        "libelle": "de Vaugirard"
+      },
+      "numeros_raw": "102, 108 -> 118, 122 -> 130"
+    },
+    {
+      "reading_order_index": 193,
+      "pdf_page": 5,
+      "ilot_numbers": [862],
+      "raw_text": "Ilot 862 | Bd du Montparnasse | 23, 27, 25",
+      "rue": {
+        "type": "boulevard",
+        "libelle": "du Montparnasse"
+      },
+      "numeros_raw": "23, 27, 25"
+    },
+    {
+      "reading_order_index": 194,
+      "pdf_page": 5,
+      "ilot_numbers": [862],
+      "raw_text": "Ilot 862 | Rue du Cherche-Midi | 85 -> 91 bis, 95 -> 119",
+      "rue": {
+        "type": "rue",
+        "libelle": "du Cherche-Midi"
+      },
+      "numeros_raw": "85 -> 91 bis, 95 -> 119",
+      "scan_note": "Stitched blank ADRESSE continuation row"
+    },
+    {
+      "reading_order_index": 195,
+      "pdf_page": 5,
+      "ilot_numbers": [863],
+      "raw_text": "Ilot 863 | Rue Mayet | 4 -> 6, 10, 14 -> 24",
+      "rue": {
+        "type": "rue",
+        "libelle": "Mayet"
+      },
+      "numeros_raw": "4 -> 6, 10, 14 -> 24"
+    },
+    {
+      "reading_order_index": 196,
+      "pdf_page": 5,
+      "ilot_numbers": [863],
+      "raw_text": "Ilot 863 | Rue du Cherche-Midi | 124 -> 128",
+      "rue": {
+        "type": "rue",
+        "libelle": "du Cherche-Midi"
+      },
+      "numeros_raw": "124 -> 128"
+    },
+    {
+      "reading_order_index": 197,
+      "pdf_page": 5,
+      "ilot_numbers": [863],
+      "raw_text": "Ilot 863 | Bd du Montparnasse | 1",
+      "rue": {
+        "type": "boulevard",
+        "libelle": "du Montparnasse"
+      },
+      "numeros_raw": "1"
+    },
+    {
+      "reading_order_index": 198,
+      "pdf_page": 5,
+      "ilot_numbers": [863],
+      "raw_text": "Ilot 863 | Rue Saint-Placide | 58",
+      "rue": {
+        "type": "rue",
+        "libelle": "Saint-Placide"
+      },
+      "numeros_raw": "58"
+    },
+    {
+      "reading_order_index": 199,
+      "pdf_page": 5,
+      "ilot_numbers": [863],
+      "raw_text": "Ilot 863 | Bd du Montparnasse | 45 -> 13, 17 -> 19",
+      "rue": {
+        "type": "boulevard",
+        "libelle": "du Montparnasse"
+      },
+      "numeros_raw": "45 -> 13, 17 -> 19",
+      "low_confidence": true,
+      "scan_note": "Non-monotonic range; transcribed verbatim"
+    },
+    {
+      "reading_order_index": 200,
+      "pdf_page": 5,
+      "ilot_numbers": [863],
+      "raw_text": "Ilot 863 | Rue de Sèvres | 133 -> 139",
+      "rue": {
+        "type": "rue",
+        "libelle": "de Sèvres"
+      },
+      "numeros_raw": "133 -> 139"
+    },
+    {
+      "reading_order_index": 201,
+      "pdf_page": 5,
+      "ilot_numbers": [864],
+      "raw_text": "Ilot 864 | Rue de la Barouillère | 2, 6 -> 12, 16",
+      "rue": {
+        "type": "rue",
+        "libelle": "de la Barouillère"
+      },
+      "numeros_raw": "2, 6 -> 12, 16"
+    },
+    {
+      "reading_order_index": 202,
+      "pdf_page": 5,
+      "ilot_numbers": [864],
+      "raw_text": "Ilot 864 | Rue du Cherche-Midi | 112, 120",
+      "rue": {
+        "type": "rue",
+        "libelle": "du Cherche-Midi"
+      },
+      "numeros_raw": "112, 120"
+    },
+    {
+      "reading_order_index": 203,
+      "pdf_page": 5,
+      "ilot_numbers": [864],
+      "raw_text": "Ilot 864 | Rue Mayet | 1 -> 17, 21 -> 23, 27 -> 29",
+      "rue": {
+        "type": "rue",
+        "libelle": "Mayet"
+      },
+      "numeros_raw": "1 -> 17, 21 -> 23, 27 -> 29"
+    },
+    {
+      "reading_order_index": 204,
+      "pdf_page": 5,
+      "ilot_numbers": [864],
+      "raw_text": "Ilot 864 | Rue de Sèvres | 121 -> 129",
+      "rue": {
+        "type": "rue",
+        "libelle": "de Sèvres"
+      },
+      "numeros_raw": "121 -> 129"
+    },
+    {
+      "reading_order_index": 205,
+      "pdf_page": 5,
+      "ilot_numbers": [865],
+      "raw_text": "Ilot 865 | Rue Saint-Romain | 8, 16 -> 20",
+      "rue": {
+        "type": "rue",
+        "libelle": "Saint-Romain"
+      },
+      "numeros_raw": "8, 16 -> 20"
+    },
+    {
+      "reading_order_index": 206,
+      "pdf_page": 5,
+      "ilot_numbers": [865],
+      "raw_text": "Ilot 865 | Rue du Cherche-Midi | 106 -> 110",
+      "rue": {
+        "type": "rue",
+        "libelle": "du Cherche-Midi"
+      },
+      "numeros_raw": "106 -> 110"
+    },
+    {
+      "reading_order_index": 207,
+      "pdf_page": 5,
+      "ilot_numbers": [865],
+      "raw_text": "Ilot 865 | Rue de la Barouillère | 1",
+      "rue": {
+        "type": "rue",
+        "libelle": "de la Barouillère"
+      },
+      "numeros_raw": "1"
+    },
+    {
+      "reading_order_index": 208,
+      "pdf_page": 6,
+      "ilot_numbers": [865],
+      "raw_text": "Ilot 865 | Rue de Sèvres | 111 -> 115",
+      "rue": {
+        "type": "rue",
+        "libelle": "de Sèvres"
+      },
+      "numeros_raw": "111 -> 115"
+    },
+    {
+      "reading_order_index": 209,
+      "pdf_page": 6,
+      "ilot_numbers": [866],
+      "raw_text": "Ilot 866 | Rue Abbé Grégoire | 2 -> 6",
+      "rue": {
+        "type": "rue",
+        "libelle": "Abbé Grégoire"
+      },
+      "numeros_raw": "2 -> 6"
+    },
+    {
+      "reading_order_index": 210,
+      "pdf_page": 6,
+      "ilot_numbers": [866],
+      "raw_text": "Ilot 866 | Rue du Cherche-Midi | 66-086, 98 bis -> 100, 86 -> 92, 98 -> 102",
+      "rue": {
+        "type": "rue",
+        "libelle": "du Cherche-Midi"
+      },
+      "numeros_raw": "66-086, 98 bis -> 100, 86 -> 92, 98 -> 102",
+      "low_confidence": true,
+      "scan_note": "Possible misread '66-086'; transcribed from scan"
+    },
+    {
+      "reading_order_index": 211,
+      "pdf_page": 6,
+      "ilot_numbers": [866],
+      "raw_text": "Ilot 866 | Rue Saint-Romain | 5, 9 -> 17",
+      "rue": {
+        "type": "rue",
+        "libelle": "Saint-Romain"
+      },
+      "numeros_raw": "5, 9 -> 17"
+    },
+    {
+      "reading_order_index": 212,
+      "pdf_page": 6,
+      "ilot_numbers": [866],
+      "raw_text": "Ilot 866 | Rue de Sèvres | 79 -> 81, 85 -> 91, 97 -> 103, 107 -> 109",
+      "rue": {
+        "type": "rue",
+        "libelle": "de Sèvres"
+      },
+      "numeros_raw": "79 -> 81, 85 -> 91, 97 -> 103, 107 -> 109"
+    },
+    {
+      "reading_order_index": 213,
+      "pdf_page": 6,
+      "ilot_numbers": [867],
+      "raw_text": "Ilot 867 | Rue Saint-Placide | 2, 6 -> 22, 26 -> 28",
+      "rue": {
+        "type": "rue",
+        "libelle": "Saint-Placide"
+      },
+      "numeros_raw": "2, 6 -> 22, 26 -> 28"
+    },
+    {
+      "reading_order_index": 214,
+      "pdf_page": 6,
+      "ilot_numbers": [867],
+      "raw_text": "Ilot 867 | Rue du Cherche-Midi | 58, 60, 64",
+      "rue": {
+        "type": "rue",
+        "libelle": "du Cherche-Midi"
+      },
+      "numeros_raw": "58, 60, 64"
+    },
+    {
+      "reading_order_index": 215,
+      "pdf_page": 6,
+      "ilot_numbers": [867],
+      "raw_text": "Ilot 867 | Rue Abbé Grégoire | 1 -> 05, 11 -> 15",
+      "rue": {
+        "type": "rue",
+        "libelle": "Abbé Grégoire"
+      },
+      "numeros_raw": "1 -> 05, 11 -> 15"
+    },
+    {
+      "reading_order_index": 216,
+      "pdf_page": 6,
+      "ilot_numbers": [867],
+      "raw_text": "Ilot 867 | Rue de Sèvres | 61 -> 71",
+      "rue": {
+        "type": "rue",
+        "libelle": "de Sèvres"
+      },
+      "numeros_raw": "61 -> 71"
+    },
+    {
+      "reading_order_index": 217,
+      "pdf_page": 6,
+      "ilot_numbers": [868],
+      "raw_text": "Ilot 868 | Rue Dupin | 2, 6, 14, 20, 22, 28",
+      "rue": {
+        "type": "rue",
+        "libelle": "Dupin"
+      },
+      "numeros_raw": "2, 6, 14, 20, 22, 28"
+    },
+    {
+      "reading_order_index": 218,
+      "pdf_page": 6,
+      "ilot_numbers": [868],
+      "raw_text": "Ilot 868 | Rue du Cherche-Midi | 52 -> 54",
+      "rue": {
+        "type": "rue",
+        "libelle": "du Cherche-Midi"
+      },
+      "numeros_raw": "52 -> 54"
+    },
+    {
+      "reading_order_index": 219,
+      "pdf_page": 6,
+      "ilot_numbers": [868],
+      "raw_text": "Ilot 868 | Rue Saint-Placide | 1, 3, 7 -> 25",
+      "rue": {
+        "type": "rue",
+        "libelle": "Saint-Placide"
+      },
+      "numeros_raw": "1, 3, 7 -> 25"
+    },
+    {
+      "reading_order_index": 220,
+      "pdf_page": 6,
+      "ilot_numbers": [868],
+      "raw_text": "Ilot 868 | Rue Littré | 51 -> 55",
+      "rue": {
+        "type": "rue",
+        "libelle": "Littré"
+      },
+      "numeros_raw": "51 -> 55"
+    },
+    {
+      "reading_order_index": 221,
+      "pdf_page": 6,
+      "ilot_numbers": [869],
+      "raw_text": "Ilot 869 | Bd Raspail | 48",
+      "rue": {
+        "type": "boulevard",
+        "libelle": "Raspail"
+      },
+      "numeros_raw": "48"
+    },
+    {
+      "reading_order_index": 222,
+      "pdf_page": 6,
+      "ilot_numbers": [869],
+      "raw_text": "Ilot 869 | Rue du Cherche-Midi | 38 -> 44, 48",
+      "rue": {
+        "type": "rue",
+        "libelle": "du Cherche-Midi"
+      },
+      "numeros_raw": "38 -> 44, 48"
+    },
+    {
+      "reading_order_index": 223,
+      "pdf_page": 6,
+      "ilot_numbers": [869],
+      "raw_text": "Ilot 869 | Rue Dupin | 5 -> 19",
+      "rue": {
+        "type": "rue",
+        "libelle": "Dupin"
+      },
+      "numeros_raw": "5 -> 19"
+    },
+    {
+      "reading_order_index": 224,
+      "pdf_page": 6,
+      "ilot_numbers": [869],
+      "raw_text": "Ilot 869 | Rue Littré | 29, 35, 39, 29, 33, 39, 43 -> 47",
+      "rue": {
+        "type": "rue",
+        "libelle": "Littré"
+      },
+      "numeros_raw": "29, 35, 39, 29, 33, 39, 43 -> 47",
+      "low_confidence": true
+    },
+    {
+      "reading_order_index": 225,
+      "pdf_page": 6,
+      "ilot_numbers": [870],
+      "raw_text": "Ilot 870 | Rue d'Assas | 4 -> 16",
+      "rue": {
+        "type": "rue",
+        "libelle": "d'Assas"
+      },
+      "numeros_raw": "4 -> 16"
+    },
+    {
+      "reading_order_index": 226,
+      "pdf_page": 6,
+      "ilot_numbers": [870],
+      "raw_text": "Ilot 870 | Rue de Rennes | 106 -> 118",
+      "rue": {
+        "type": "rue",
+        "libelle": "de Rennes"
+      },
+      "numeros_raw": "106 -> 118"
+    },
+    {
+      "reading_order_index": 227,
+      "pdf_page": 6,
+      "ilot_numbers": [870],
+      "raw_text": "Ilot 870 | Bd Raspail | 59, 63, 61, 67, 71 -> 79",
+      "rue": {
+        "type": "boulevard",
+        "libelle": "Raspail"
+      },
+      "numeros_raw": "59, 63, 61, 67, 71 -> 79"
+    },
+    {
+      "reading_order_index": 228,
+      "pdf_page": 6,
+      "ilot_numbers": [870],
+      "raw_text": "Ilot 870 | Rue du Cherche-Midi | 27",
+      "rue": {
+        "type": "rue",
+        "libelle": "du Cherche-Midi"
+      },
+      "numeros_raw": "27"
+    },
+    {
+      "reading_order_index": 229,
+      "pdf_page": 6,
+      "ilot_numbers": [871],
+      "raw_text": "Ilot 871 | Rue Coëtlogon | 3 -> 9",
+      "rue": {
+        "type": "rue",
+        "libelle": "Coëtlogon"
+      },
+      "numeros_raw": "3 -> 9"
+    },
+    {
+      "reading_order_index": 230,
+      "pdf_page": 6,
+      "ilot_numbers": [871],
+      "raw_text": "Ilot 871 | Rue de Rennes | 94 -> 104",
+      "rue": {
+        "type": "rue",
+        "libelle": "de Rennes"
+      },
+      "numeros_raw": "94 -> 104"
+    },
+    {
+      "reading_order_index": 231,
+      "pdf_page": 6,
+      "ilot_numbers": [871],
+      "raw_text": "Ilot 871 | Rue d'Assas | 7 -> 11",
+      "rue": {
+        "type": "rue",
+        "libelle": "d'Assas"
+      },
+      "numeros_raw": "7 -> 11"
+    },
+    {
+      "reading_order_index": 232,
+      "pdf_page": 6,
+      "ilot_numbers": [872],
+      "raw_text": "Ilot 872 | Rue de Sèvres | 3 -> 17",
+      "rue": {
+        "type": "rue",
+        "libelle": "de Sèvres"
+      },
+      "numeros_raw": "3 -> 17"
+    },
+    {
+      "reading_order_index": 233,
+      "pdf_page": 6,
+      "ilot_numbers": [872],
+      "raw_text": "Ilot 872 | Rue de Rennes | 110",
+      "rue": {
+        "type": "rue",
+        "libelle": "de Rennes"
+      },
+      "numeros_raw": "110"
+    },
+    {
+      "reading_order_index": 234,
+      "pdf_page": 6,
+      "ilot_numbers": [872],
+      "raw_text": "Ilot 872 | Rue de Sèvres | 17, 6, 17 -> 21",
+      "rue": {
+        "type": "rue",
+        "libelle": "de Sèvres"
+      },
+      "numeros_raw": "17, 6, 17 -> 21",
+      "low_confidence": true
+    },
+    {
+      "reading_order_index": 235,
+      "pdf_page": 6,
+      "ilot_numbers": [872],
+      "raw_text": "Ilot 872 | Rue du Cherche-Midi | 2 -> 4 ter",
+      "rue": {
+        "type": "rue",
+        "libelle": "du Cherche-Midi"
+      },
+      "numeros_raw": "2 -> 4 ter"
+    },
+    {
+      "reading_order_index": 236,
+      "pdf_page": 6,
+      "ilot_numbers": [872],
+      "raw_text": "Ilot 872 | Rue Coëtlogon | 9",
+      "rue": {
+        "type": "rue",
+        "libelle": "Coëtlogon"
+      },
+      "numeros_raw": "9"
+    },
+    {
+      "reading_order_index": 237,
+      "pdf_page": 6,
+      "ilot_numbers": [874],
+      "raw_text": "Ilot 874 | Rue du Vieux-Colombier | 18/20",
+      "rue": {
+        "type": "rue",
+        "libelle": "du Vieux-Colombier"
+      },
+      "numeros_raw": "18/20"
+    },
+    {
+      "reading_order_index": 238,
+      "pdf_page": 6,
+      "ilot_numbers": [874],
+      "raw_text": "Ilot 874 | Carrefour Croix Rouge | 1",
+      "rue": {
+        "type": "carrefour",
+        "libelle": "Croix Rouge"
+      },
+      "numeros_raw": "1"
+    },
+    {
+      "reading_order_index": 239,
+      "pdf_page": 6,
+      "ilot_numbers": [872],
+      "raw_text": "Ilot 872 | Rue du Cherche-Midi | 4 ter -> 26",
+      "rue": {
+        "type": "rue",
+        "libelle": "du Cherche-Midi"
+      },
+      "numeros_raw": "4 ter -> 26",
+      "scan_note": "PAGE shows îlot 872 again after îlot 874 block"
+    },
+    {
+      "reading_order_index": 240,
+      "pdf_page": 6,
+      "ilot_numbers": [872],
+      "raw_text": "Ilot 872 | Place Alphonse Deville | 1",
+      "rue": {
+        "type": "place",
+        "libelle": "Alphonse Deville"
+      },
+      "numeros_raw": "1"
+    },
+    {
+      "reading_order_index": 241,
+      "pdf_page": 6,
+      "ilot_numbers": [872],
+      "raw_text": "Ilot 872 | Bd Raspail | 43",
+      "rue": {
+        "type": "boulevard",
+        "libelle": "Raspail"
+      },
+      "numeros_raw": "43"
+    },
+    {
+      "reading_order_index": 242,
+      "pdf_page": 6,
+      "ilot_numbers": [873],
+      "raw_text": "Ilot 873 | Rue du Vieux-Colombier | 17 -> 25",
+      "rue": {
+        "type": "rue",
+        "libelle": "du Vieux-Colombier"
+      },
+      "numeros_raw": "17 -> 25"
+    },
+    {
+      "reading_order_index": 243,
+      "pdf_page": 6,
+      "ilot_numbers": [873],
+      "raw_text": "Ilot 873 | Rue de Rennes | 72 -> 76, 80 -> 92",
+      "rue": {
+        "type": "rue",
+        "libelle": "de Rennes"
+      },
+      "numeros_raw": "72 -> 76, 80 -> 92"
+    },
+    {
+      "reading_order_index": 244,
+      "pdf_page": 6,
+      "ilot_numbers": [873],
+      "raw_text": "Ilot 873 | Rue Coëtlogon | 4 -> 10",
+      "rue": {
+        "type": "rue",
+        "libelle": "Coëtlogon"
+      },
+      "numeros_raw": "4 -> 10"
+    },
+    {
+      "reading_order_index": 245,
+      "pdf_page": 6,
+      "ilot_numbers": [873],
+      "raw_text": "Ilot 873 | Rue d'Assas | 1 -> 5",
+      "rue": {
+        "type": "rue",
+        "libelle": "d'Assas"
+      },
+      "numeros_raw": "1 -> 5"
+    },
+    {
+      "reading_order_index": 246,
+      "pdf_page": 6,
+      "ilot_numbers": [873],
+      "raw_text": "Ilot 873 | Rue du Cherche-Midi | 3 -> 23",
+      "rue": {
+        "type": "rue",
+        "libelle": "du Cherche-Midi"
+      },
+      "numeros_raw": "3 -> 23"
+    },
+    {
+      "reading_order_index": 247,
+      "pdf_page": 6,
+      "ilot_numbers": [874],
+      "raw_text": "Ilot 874 | Rue du Four | 49 -> 53",
+      "rue": {
+        "type": "rue",
+        "libelle": "du Four"
+      },
+      "numeros_raw": "49 -> 53"
+    },
+    {
+      "reading_order_index": 248,
+      "pdf_page": 6,
+      "ilot_numbers": [874],
+      "raw_text": "Ilot 874 | Rue de Rennes | 66 -> 70",
+      "rue": {
+        "type": "rue",
+        "libelle": "de Rennes"
+      },
+      "numeros_raw": "66 -> 70"
+    },
+    {
+      "reading_order_index": 249,
+      "pdf_page": 6,
+      "ilot_numbers": [874],
+      "raw_text": "Ilot 874 | Rue du Vieux-Colombier | 16 -> 18",
+      "rue": {
+        "type": "rue",
+        "libelle": "du Vieux-Colombier"
+      },
+      "numeros_raw": "16 -> 18"
+    }
+  ]
+}

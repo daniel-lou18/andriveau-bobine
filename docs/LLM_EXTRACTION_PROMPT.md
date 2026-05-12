@@ -6,7 +6,7 @@
 
 **Downstream validity:** The JSON is **interchange** input, not a guarantee that every row loads into D1 unchanged. A separate validator/loader applies **`docs/EXTRACTION.md`** (e.g. `type` must exist in `voie_types`, finite ranges, suffix ranks, parity). Set `low_confidence: true` when the scan is ambiguous.
 
-For each run, attach **(1)** the page image(s) or PDF, **(2)** the full text of the matching **source layout** doc (`docs/SOURCE_BOBINE8_NDDC_TABLE_MODEL.md` *or* `docs/SOURCE_BOBINE43_GRANDES_CARRIERES_TABLE_MODEL.md`), and **(3)** optional: `docs/LLM_EXTRACTION_INTERCHANGE.md` (or rely on the schema below).
+For each run, attach **(1)** the page image(s) or PDF, **(2)** the full text of the matching **source layout** doc (`docs/SOURCE_BOBINE8_NDDC_TABLE_MODEL.md` _or_ `docs/SOURCE_BOBINE43_GRANDES_CARRIERES_TABLE_MODEL.md`), and **(3)** optional: `docs/LLM_EXTRACTION_INTERCHANGE.md` (or rely on the schema below).
 
 ---
 
@@ -22,8 +22,8 @@ You are transcribing a historical Paris bobine register page into structured JSO
 
 2. **Output contract:** Emit exactly ONE JSON object. No commentary before or after. No markdown code fences. Valid JSON only.
 
-## SOURCE LAYOUT NOTE (paste full file for this bobine)
-<<<PASTE docs/SOURCE_BOBINE8_NDDC_TABLE_MODEL.md OR docs/SOURCE_BOBINE43_GRANDES_CARRIERES_TABLE_MODEL.md HERE>>>
+## SOURCE LAYOUT NOTE
+see referenced documentation .md file
 
 ## Global rules (always)
 - **Linear reading order** for two-pane pages: top→bottom in the LEFT four-column block, then top→bottom in the RIGHT block on the same sheet; one stream, not two independent tables.
@@ -57,7 +57,7 @@ Each element of `logical_records`:
 - `pdf_page` (integer, required)
 - `page` (integer, optional): if omitted, downstream may set `page` = `pdf_page`.
 - `ilot_numbers` (array of integers, required): length ≥ 1.
-- `raw_text` (string, required): one stitched provenance line (îlot + street + numbers as read, or your clearest single-line reconstruction).
+- `raw_text` (string, required): one stitched provenance line. **Recommended:** `Ilot … | <voie as read> | <numeros as transcribed>` using space-pipe-space (` | `) between the three segments (see `docs/LLM_EXTRACTION_INTERCHANGE.md`). Multi-îlot: comma-separate ids in the first segment (e.g. `Ilot 820, 821 | …`).
 - `rue` (object, required): `{ "type": string, "libelle": string, "inferred"?: boolean }`
 - `numeros_raw` (string, required): **N°** cell transcribed **verbatim** (keep `,` and `;` as written; keep `->` or equivalent arrow; keep `bis`; normalize internal line breaks to single spaces if needed).
 - `sequence` (integer, optional)
@@ -65,9 +65,9 @@ Each element of `logical_records`:
 - `low_confidence` (boolean, optional): true if handwriting, overwrite, or notation is uncertain.
 
 ## Task for this request
-- **Scope:** <<<one page | pages 3–5 | whole PDF>>>
+- **Scope:** whole PDF
 - **Images/PDF:** (you have them in this chat / attachment)
-- Produce the single JSON object for <<<describe scope>>>.
+- Produce the single JSON object for whole pdf.
 
 Begin the JSON with `{` and end with `}`.
 ```

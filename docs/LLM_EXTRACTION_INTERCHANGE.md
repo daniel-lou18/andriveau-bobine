@@ -4,7 +4,7 @@ This document defines the **structured payload** a frontier model (plus any layo
 
 It is **not** the persistence contract: numeric suffixes, parity, segment splitting, rejections, and lookup mirroring remain canonical in **`docs/EXTRACTION.md`**. Entities and FK shapes are in **`docs/DOMAIN_MODEL.md`**. **Printed-layout** variants by bobine/scribe are documented in **`docs/SOURCE_BOBINE8_NDDC_TABLE_MODEL.md`** (6ᵉ NDDC) and **`docs/SOURCE_BOBINE43_GRANDES_CARRIERES_TABLE_MODEL.md`** (18ᵉ Grandes Carrières).
 
-**Out of scope here:** OCR engine choice, geometric table detection, and human-review workflow.
+**Out of scope here:** OCR engine choice, geometric table detection, and the **operational** human-review workflow (ticketing, assignment). The interchange still **encodes review signals** (`low_confidence`, `scan_note`) so reviewers know where visual ambiguity remains; see § Human review and model caveats.
 
 **Prompt template:** a copy-paste user/system prompt aligned with this schema lives in **`docs/LLM_EXTRACTION_PROMPT.md`**.
 
@@ -21,12 +21,12 @@ It is **not** the persistence contract: numeric suffixes, parity, segment splitt
 
 ## Disambiguation: `bobine`, PDF page, and the printed îlot column
 
-| Concept | Meaning | Maps to |
-| -------- | -------- | -------- |
-| **Reel / bobine (data)** | Archival reel identifier as a **plain integer** for storage. | `source_entries.bobine` |
-| **`pdf_page`** | 1-based page index in the **PDF file** (or image bundle) being processed. | Provenance and QA ordering; often equals `source_entries.page` when one PDF is one bobine. |
-| **`source_entries.page`** | Page number **within the bobine** in your pipeline’s convention. | Usually align with `pdf_page` for a single-PDF bobine; if the scan’s Bobine cell says “page *k*” / `p.k` and your project uses that as the canonical sheet index, use *k* here and still put the reel integer in `bobine`. |
-| **Printed îlot column** | On some sheets the header is **`PAGE`** (mislabel), on others **`Ilot`** — both hold **îlot ids**, not PDF pagination. | **Never** use this column as `pdf_page`. Resolve to **`ilot_numbers`** (after sticky rules). |
+| Concept                   | Meaning                                                                                                                | Maps to                                                                                                                                                                                                                    |
+| ------------------------- | ---------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Reel / bobine (data)**  | Archival reel identifier as a **plain integer** for storage.                                                           | `source_entries.bobine`                                                                                                                                                                                                    |
+| **`pdf_page`**            | 1-based page index in the **PDF file** (or image bundle) being processed.                                              | Provenance and QA ordering; often equals `source_entries.page` when one PDF is one bobine.                                                                                                                                 |
+| **`source_entries.page`** | Page number **within the bobine** in your pipeline’s convention.                                                       | Usually align with `pdf_page` for a single-PDF bobine; if the scan’s Bobine cell says “page _k_” / `p.k` and your project uses that as the canonical sheet index, use _k_ here and still put the reel integer in `bobine`. |
+| **Printed îlot column**   | On some sheets the header is **`PAGE`** (mislabel), on others **`Ilot`** — both hold **îlot ids**, not PDF pagination. | **Never** use this column as `pdf_page`. Resolve to **`ilot_numbers`** (after sticky rules).                                                                                                                               |
 
 Optional **audit-only** strings (series codes such as `2MI 24`, circled reel glyphs, freehand margin notes) may appear in `scan_note` or `document_scope.audit`; they are **not** extra structured columns in D1 unless you extend the schema deliberately.
 
@@ -43,7 +43,7 @@ Apply these **after** fixing **document scope** from the page header (`quartier`
 5. **One logical register row** — Street + îlot + house numbers that belong together count as **one** interchange object, even when:
    - the **N°** ink **wraps inside** the cell, or
    - **N° continues downward** across ruled lines with **blank ADRESSE** beside it (“sticky” street + tall number block).
-   In those cases produce **one** object with a single **`raw_text`** that **stitches** the full inscription the clerk intended as one notation (`CONTEXT.md`, `docs/EXTRACTION.md` → Provenance Model).
+     In those cases produce **one** object with a single **`raw_text`** that **stitches** the full inscription the clerk intended as one notation (`CONTEXT.md`, `docs/EXTRACTION.md` → Provenance Model).
 6. **Multi-line ADRESSE** — Wrapping **inside** the address cell is still one voie line; do not split into two logical records on that basis alone.
 7. **`NEANT` rows** — When **Adresse** is **`NEANT`** (no housing inventory for that îlot span), **omit** the row from **`logical_records[]`** entirely — no `source_entries`, no segments. A slash **`/`** in **N°** often accompanies **`NEANT`**; still skip. Prose such as **`4121 à 4126`** in the same row is clerical scope, not a parse target.
 8. **Skip rejected ink** — Lines or blocks that are **crossed out** or otherwise rejected on the source are **omitted** from `logical_records` in v1 (`docs/EXTRACTION.md` → Segment quality flags / provenance policy).
@@ -57,35 +57,48 @@ The batch root has **document-level** scope (shared across the file when the who
 
 ### `document_scope` (required)
 
-| Field | Type | Required | Notes |
-| ----- | ---- | -------- | ----- |
-| `quartier` | string | yes | Must match the page header for the pages in this batch (per-page override below if ever needed). |
-| `arrondissement` | integer | yes | e.g. `6` for 6ᵉ. |
-| `bobine` | integer | yes | Value for `source_entries.bobine`. |
-| `audit` | object | no | Optional provenance not stored as first-class columns: e.g. `period`, `series`, `source_filename`. |
+| Field            | Type    | Required | Notes                                                                                              |
+| ---------------- | ------- | -------- | -------------------------------------------------------------------------------------------------- |
+| `quartier`       | string  | yes      | Must match the page header for the pages in this batch (per-page override below if ever needed).   |
+| `arrondissement` | integer | yes      | e.g. `6` for 6ᵉ.                                                                                   |
+| `bobine`         | integer | yes      | Value for `source_entries.bobine`.                                                                 |
+| `audit`          | object  | no       | Optional provenance not stored as first-class columns: e.g. `period`, `series`, `source_filename`. |
 
 ### `logical_records[]` (required)
 
 Each element is **one** logical register row after sticky îlot resolution, **Adresse** ditto resolution, and stitching. **Exclude** any printed row marked **`NEANT`**. The array may be **empty** for an upload that has no extractable housing rows (rare); loaders should accept an empty list as a no-op for that file.
 
-| Field | Type | Required | Notes |
-| ----- | ---- | -------- | ----- |
-| `reading_order_index` | integer | yes | Stable **0-based** order in the linear traversal (§ Physical reading rules). Used for QA and deterministic `sequence`. |
-| `pdf_page` | integer | yes | 1-based page in the PDF/image bundle. |
-| `page` | integer | no | Explicit value for `source_entries.page` if it **differs** from `pdf_page`; otherwise the loader may copy `pdf_page`. |
-| `ilot_numbers` | integer[] | yes | One or more globally unique îlot numbers (`ilots.number`). |
-| `raw_text` | string | yes | Single stitched inscription for `source_entries.raw_text` (street + îlot context + numbers as read, or your pipeline’s agreed provenance string). |
-| `rue` | object | yes | Canonical voie split for validation: `type` (lowercase `voie_types.code`), `libelle` (canonical form per `docs/EXTRACTION.md`), optional `inferred`: `true` when the model inferred the type from an abbreviation-free source line. |
-| `numeros_raw` | string | yes | House-number cell as transcribed (commas **and/or** semicolons as list separators, arrows, `bis`, leading zeros, line breaks normalized to spaces if needed). The application parses this into `street_segments` per **`docs/EXTRACTION.md`**. |
-| `sequence` | integer | no | If set, preferred ordering among rows on the same bobine page; otherwise the loader may derive from `reading_order_index`. |
-| `scan_note` | string \| null | no | Audit-only glyph or cell note (e.g. circled “⑧ page 4”). |
-| `low_confidence` | boolean | no | If `true`, persisted segments should set **`SEGMENT_QUALITY.LOW_CONFIDENCE_EXTRACTION`** (`docs/EXTRACTION.md` → Segment quality flags). |
+| Field                 | Type           | Required | Notes                                                                                                                                                                                                                                                       |
+| --------------------- | -------------- | -------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------- | ------------------------ | -------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------- |
+| `reading_order_index` | integer        | yes      | Stable **0-based** order in the linear traversal (§ Physical reading rules). Used for QA and deterministic `sequence`.                                                                                                                                      |
+| `pdf_page`            | integer        | yes      | 1-based page in the PDF/image bundle.                                                                                                                                                                                                                       |
+| `page`                | integer        | no       | Explicit value for `source_entries.page` if it **differs** from `pdf_page`; otherwise the loader may copy `pdf_page`.                                                                                                                                       |
+| `ilot_numbers`        | integer[]      | yes      | One or more globally unique îlot numbers (`ilots.number`).                                                                                                                                                                                                  |
+| `raw_text`            | string         | yes      | Single stitched inscription for `source_entries.raw_text`. **Recommended shape for QA:** three segments separated by \*\*`                                                                                                                                  | `** (space-pipe-space): **`Ilot …`** (îlot id(s) after sticky resolution) **` | `** **voie as read** **` | `** **`numeros_raw`**. For multiple îlots in one cell, list integers in the first segment with commas (e.g. `Ilot 820, 821 | …`). The loader treats this as provenance text; the structured fields remain authoritative. |
+| `rue`                 | object         | yes      | Canonical voie split for validation: `type` (lowercase `voie_types.code`), `libelle` (canonical form per `docs/EXTRACTION.md`), optional `inferred`: `true` when the model inferred the type from an abbreviation-free source line.                         |
+| `numeros_raw`         | string         | yes      | House-number cell as transcribed (commas **and/or** semicolons as list separators, arrows, `bis`, leading zeros, line breaks normalized to spaces if needed). The application parses this into `street_segments` per **`docs/EXTRACTION.md`**.              |
+| `sequence`            | integer        | no       | If set, preferred ordering among rows on the same bobine page; otherwise the loader may derive from `reading_order_index`.                                                                                                                                  |
+| `scan_note`           | string \| null | no       | Audit-only glyph or cell note (e.g. circled “⑧ page 4”), or a **short reviewer hint** (e.g. bracketed îlot band assumed, cross-out nearby, header series drift on this page).                                                                               |
+| `low_confidence`      | boolean        | no       | If `true`, persisted segments should set **`SEGMENT_QUALITY.LOW_CONFIDENCE_EXTRACTION`** (`docs/EXTRACTION.md` → Segment quality flags). Omit the field when the reading is confident (do not emit `false` unless your pipeline prefers explicit booleans). |
 
 **Per-page header variance:** if a single batch ever mixes pages under different headers, either split into **multiple JSON documents** or add an optional `quartier` / `arrondissement` on each `logical_records[]` element and require the loader to resolve `quartier_id` per row. Single-quartier PDFs (bobine 8 NDDC, bobine 43 Grandes Carrières) are **uniform** per their source notes.
 
 ---
 
+## Human review and model caveats
+
+Handwriting, corrections, and layout edge cases mean **no vision-only extraction** should be treated as ground truth without spot-checking the scan.
+
+1. **Use `low_confidence: true`** when the model is unsure: dense or overwritten **N°** cells, ambiguous digits, **non-monotonic** ranges left verbatim, **bracket / multi-îlot** groupings where column boundaries are unclear, **cross-outs or superscripts** nearby (even if the emitted row follows the surviving ink), or a **voie** that looks wrong for the quartier (e.g. a name that usually belongs in another arrondissement).
+2. **Use `scan_note`** to point human reviewers at the issue in one line (e.g. “bracket îlots 846–848 assumed”, “header reads 2MI 27 on this page”, “stitched blank ADRESSE continuation”).
+3. **Review priority:** rows with `low_confidence` or substantive `scan_note` should be **checked against the image** before the data is trusted for lookup; manual correction of the JSON (or loader overrides) is normal for archival-quality pipelines.
+4. **Structured fields win:** `rue`, `ilot_numbers`, and `numeros_raw` are what validators and loaders consume; `raw_text` is provenance and QA aid (including the pipe layout below).
+
+---
+
 ## Example (minimal)
+
+The example shows the **recommended `raw_text` pipe pattern**, optional `page` (omit when equal to `pdf_page`), and optional omission of `low_confidence` when confident.
 
 ```json
 {
@@ -101,18 +114,16 @@ Each element is **one** logical register row after sticky îlot resolution, **Ad
       "pdf_page": 4,
       "page": 4,
       "ilot_numbers": [845],
-      "raw_text": "Ilot 845 Rue Stanislas 9 -> 11",
+      "raw_text": "Ilot 845 | Rue Stanislas | 9 -> 11",
       "rue": { "type": "rue", "libelle": "Stanislas" },
       "numeros_raw": "9 -> 11",
-      "scan_note": "⑧ page 4",
-      "low_confidence": false
+      "scan_note": "⑧ page 4"
     },
     {
       "reading_order_index": 1,
       "pdf_page": 4,
-      "page": 4,
       "ilot_numbers": [845],
-      "raw_text": "Rue Stanislas 6 -> 16",
+      "raw_text": "Ilot 845 | Rue Stanislas | 6 -> 16",
       "rue": { "type": "rue", "libelle": "Stanislas" },
       "numeros_raw": "6 -> 16"
     }
