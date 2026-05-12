@@ -33,6 +33,7 @@ For the **structured JSON payload** an LLM (or vision model) should emit **befor
 - `quartier`: subdivision inside an arrondissement
 - `ilot`: block number inside a quartier
 - `rue`: canonical street entity
+- **List separators in house-number cells:** in `numeros_raw`, **comma** and **semicolon** are equivalent **union** delimiters between singletons and/or ranges (scribe-dependent); mixed in one cell is allowed (`docs/LLM_EXTRACTION_INTERCHANGE.md`).
 - `source entry`: one **logical register row** (street + îlot + numbers); street usually in the address cell, îlot rarely spills, house numbers may **overflow downward** in the N° column — still one entry; see Provenance Model
 - `source_entries`: normalized table storing one row per source entry
 - `segment`: one normalized (street, parity, range) unit stored in `street_segments`
@@ -119,7 +120,7 @@ When the LLM has to infer the type (the source had no explicit type token), it e
 
 A source entry may produce one or many rows.
 
-**Typical house-number shapes.** In the bulk of the corpus, the N° cell is built from only a few compositional patterns: a **singleton**; a **comma-separated list** of singletons; an **inclusive range** between two endpoints (the source often uses an arrow; examples below use `>` for the same idea); or a **mixture** of lists and ranges in one logical entry (including long lists that wrap across several printed lines — still one stitched `source_entries` row). The subsections below fix how each pattern maps to `street_segments`; later subsections add suffix precision, separate pair/impair columns, and explicit rejections so edge cases stay specified without obscuring the common grammar.
+**Typical house-number shapes.** In the bulk of the corpus, the N° cell is built from only a few compositional patterns: a **singleton**; a **list** of singletons separated by **comma and/or semicolon** (scribe-dependent); an **inclusive range** between two endpoints (the source often uses an arrow; examples below use `>` for the same idea); or a **mixture** of lists and ranges in one logical entry (including long lists that wrap across several printed lines — still one stitched `source_entries` row). The subsections below fix how each pattern maps to `street_segments`; later subsections add suffix precision, separate pair/impair columns, and explicit rejections so edge cases stay specified without obscuring the common grammar.
 
 ### Basic ranges
 
@@ -135,6 +136,8 @@ A source entry may produce one or many rows.
   - `16..16`
   - `24..34`
 
+- `10; 16; 24 > 34` (semicolon-delimited, same semantics) -> the same three segment rows.
+
 ### Explicit enumeration (no compression)
 
 - `12, 14, 16` -> three singleton rows:
@@ -142,9 +145,11 @@ A source entry may produce one or many rows.
   - `14..14`
   - `16..16`
 
+- `12; 14; 16` -> the same three singleton rows.
+
 Do not compress to `12..16`.
 
-If a notation ever uses **French “et”** between numbers (e.g. `12 et 16`), normalize it to the same rule as commas: **two singleton segments** `12..12` and `16..16`. This pattern is **not observed** in the current corpus; the rule exists for consistency if it appears later.
+If a notation ever uses **French “et”** between numbers (e.g. `12 et 16`), normalize it to the same rule as comma- or semicolon-separated lists: **two singleton segments** `12..12` and `16..16`. This pattern is **not observed** in the current corpus; the rule exists for consistency if it appears later.
 
 ### Separate pair / impair columns
 
@@ -201,6 +206,7 @@ If one source entry yields multiple segments, those segments share the same `sou
 The extractor must reject (skip + log) and never invent encodings for:
 
 - **Open-ended ranges** (e.g. `12+`, `12 → …`, “and above”, or any notation **without** a finite upper bound). **Policy:** never persist segments for these; do **not** guess an endpoint. **Log** the rejection. **No** `quality_flags` update (typically no `street_segments` rows are written for that parse). Revisit only if such notations appear routinely in the corpus.
+- **`NEANT` register rows** — some sources mark **no data** for an îlot span with **`NEANT`** in the address column (often with **`/`** in **N°**). The LLM interchange **omits** these entirely (`docs/LLM_EXTRACTION_INTERCHANGE.md`); the loader never creates `source_entries` for them.
 - segments without house numbers
 - cross-quartier multi-ilot groupings
 - parity value outside `odd`/`even`

@@ -18,7 +18,8 @@ _Avoid_: sheet, scan.
 **Source entry**:
 One **logical register row** from the clerk’s table: a single horizontal notation (street + îlot + house numbers) that belongs together, even when the **printed grid** does not fully contain the ink.
 
-- **Street (type + libellé):** in **almost all** cases the handwriting respects the printed **address** cell; line-wrapping stays inside that rectangle (like a spreadsheet cell).
+- **Street (type + libellé):** in **almost all** cases the handwriting respects the printed **address** cell; line-wrapping stays inside that rectangle (like a spreadsheet cell). Some registers use a **ditto** **`"`** in the address cell alone = **same street line as the row above** (îlot still from the sticky îlot column); see **`docs/SOURCE_BOBINE43_GRANDES_CARRIERES_TABLE_MODEL.md`**.
+- **NEANT:** a printed row meaning **no housing rows** for that îlot span is **skipped** at extraction — it never becomes a `source_entry` (`docs/LLM_EXTRACTION_INTERCHANGE.md`).
 - **Îlot:** usually inside its cell; **rare** overflow when several numbers are listed (e.g. three îlots).
 - **House numbers:** may **overflow** the printed cell and **continue downward** across the grid (long lists in the **N°** cell beside **ADRESSE**), so visually the street name looks “sticky” on the left with a tall number block beside it. That whole span is still **one** source entry.
 
@@ -88,10 +89,12 @@ _Avoid_: ambiguous, mismatch.
 
 ## Documentation map (extraction → lookup)
 
-- **`docs/LLM_EXTRACTION_INTERCHANGE.md`** — JSON interchange from scans, linear reading order, sticky îlot, reel vs PDF page vs printed “PAGE” column.
-- **`docs/EXTRACTION.md`** — Persistence and lookup contract after validation (`street_segments`, suffixes, parity, no-gos).
+- **`docs/LLM_EXTRACTION_INTERCHANGE.md`** — JSON interchange from scans, linear reading order, sticky îlot, Adresse ditto **`"`**, **`NEANT`** skips, reel vs PDF page vs printed îlot column.
+- **`docs/LLM_EXTRACTION_PROMPT.md`** — ready-made LLM user/system prompt for uniform extraction JSON.
+- **`docs/EXTRACTION.md`** — Persistence and lookup contract after validation (`street_segments`, suffixes, parity, comma/semicolon lists, no-gos).
 - **`docs/DOMAIN_MODEL.md`** — Entities, FKs, and the optimized read pattern for address lookup.
-- **`docs/SOURCE_BOBINE8_NDDC_TABLE_MODEL.md`** — Example bobine layout analysis (grid, N° DSL); other bobines get their own source note as needed.
+- **`docs/SOURCE_BOBINE8_NDDC_TABLE_MODEL.md`** — Bobine 8 (6ᵉ NDDC) grid: **PAGE** mislabel, comma-heavy **N°**.
+- **`docs/SOURCE_BOBINE43_GRANDES_CARRIERES_TABLE_MODEL.md`** — Bobine 43 (18ᵉ Grandes Carrières): **Ilot** header, **`;`** lists, **`"`** ditto, **`NEANT`**.
 
 ## Flagged ambiguities
 
