@@ -28,7 +28,7 @@ Address mapping hierarchy:
 
 Provenance hierarchy:
 
-- one `source_entries` row represents one source notation line
+- one `source_entries` row represents one **logical register row** (street + îlot + numbers); printed cells are a guide — street usually fits the address cell, îlot may rarely spill, house numbers may **overflow downward** — still one provenance row with stitched `raw_text`
 - one source entry can produce many `street_segments`
 
 ## Entity Relationship Graph
@@ -111,6 +111,7 @@ Constraint:
 Display:
 
 - the display-cased form (e.g. `Rue`, `Petite Rue`) is derived at the API serialization layer; the table stores only the lowercase canonical.
+- **Capitalization rules** (single-word vs multi-word types, French typography vs title-case) are **TBD** pending a domain convention — see grill Q13.
 
 ## `rues`
 
@@ -140,7 +141,7 @@ See `docs/adr/0001-rue-as-type-libelle.md` for the rationale of the split and th
 
 Role:
 
-- one normalized provenance row for one source notation line
+- one normalized provenance row for **one logical register row** (what the clerk wrote as a single horizontal notation)
 - carries page-level metadata (quartier, bobine, page) as first-class columns
 
 Core fields:
@@ -149,7 +150,7 @@ Core fields:
 - `quartier_id` (FK -> `quartiers.id`) — the quartier named in the bobine page header; **anchors the cross-quartier integrity rule** for all segments derived from this source entry
 - `bobine` — reel number as an integer; other archival reference strings from the source are not stored in this column (audit-only outside the normalized row)
 - `page`
-- `raw_text`
+- `raw_text` — stitched inscription for that **logical row** as emitted by extraction (street + îlot + numbers), including house numbers that **overflow downward**; see `docs/EXTRACTION.md` → Provenance Model
 - `sequence` (optional ordering on a page)
 - `notes` (optional provenance notes)
 
@@ -175,6 +176,7 @@ Core fields:
 - `to_number`, `to_suffix_rank`
 - `from_suffix`, `to_suffix` (display/source fidelity)
 - `type_inferred` — SQLite integer boolean (`0`/`1`); `1` when the extractor inferred the voie type because the source had no explicit type token (see `docs/EXTRACTION.md` → Inferred-type rows)
+- `quality_flags` — `INTEGER NOT NULL DEFAULT 0`; bitmask for QA (see `docs/EXTRACTION.md` → Segment quality flags)
 - `notes` (segment-level note)
 
 Range semantics:
@@ -286,11 +288,16 @@ Disambiguation between rues that share a libellé is a **client-side** concern (
 
 Input:
 
-- libellé fragment (normalized client-side)
+- libellé fragment (normalized client-side), **minimum length 2** characters
+
+Matching (v1):
+
+- **Prefix** on `rues.libelle_normalized` after normalization (index-friendly: `LIKE 'prefix%'`).
+- **No** substring or fuzzy match in v1; revisit if real users need it.
 
 Output:
 
-- list of `{ rue_id, type, libelle }` matching `rues.libelle_normalized`
+- up to **20** rows, **`{ rue_id, type, libelle }`**, ordered **alphabetically** (by libellé, with a stable tie-break on `rue_id` if needed)
 
 Index: `rues_libelle_normalized_idx (libelle_normalized)`.
 

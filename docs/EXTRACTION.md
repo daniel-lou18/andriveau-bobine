@@ -31,7 +31,7 @@ This document does not specify OCR/parsing implementation details.
 - `quartier`: subdivision inside an arrondissement
 - `ilot`: block number inside a quartier
 - `rue`: canonical street entity
-- `source entry`: one handwritten/printed notation line from source
+- `source entry`: one **logical register row** (street + îlot + numbers); street usually in the address cell, îlot rarely spills, house numbers may **overflow downward** in the N° column — still one entry; see Provenance Model
 - `source_entries`: normalized table storing one row per source entry
 - `segment`: one normalized (street, parity, range) unit stored in `street_segments`
 
@@ -75,7 +75,7 @@ If an extracted range has mismatched endpoint parity, the extractor must treat i
 
 ## Rue Canonicalization
 
-Extraction is **LLM-driven**: a frontier model reads the raw bobine scan and emits structured `{type, libelle}` per address cell. The application then **normalizes** and **validates** that output before persisting. There is no in-app regex parser or alias map for the rue type; abbreviation expansion (`Bd → Boulevard`, `R. → Rue`), missing-type inference (`ST Denis` → `Rue Saint-Denis`; `Pierre Lescot` → `Rue Pierre-Lescot`), canonical hyphenation (`Notre Dame des Champs` → `Notre-Dame-des-Champs`), and saint-form expansion (`St → Saint`, `Ste → Sainte`) are all the LLM's responsibility.
+Extraction is **LLM-driven**: a frontier model reads the raw bobine scan and emits structured `{type, libelle}` per **logical source notation** (see Provenance Model: one stitched reading per `source_entries` row, not necessarily one printed grid row). The application then **normalizes** and **validates** that output before persisting. There is no in-app regex parser or alias map for the rue type; abbreviation expansion (`Bd → Boulevard`, `R. → Rue`), missing-type inference (`ST Denis` → `Rue Saint-Denis`; `Pierre Lescot` → `Rue Pierre-Lescot`), canonical hyphenation (`Notre Dame des Champs` → `Notre-Dame-des-Champs`), and saint-form expansion (`St → Saint`, `Ste → Sainte`) are all the LLM's responsibility.
 
 ### Stage 1 — LLM emits canonical `{type, libelle}`
 
@@ -100,6 +100,18 @@ Look up `rues` by `(type_id, libelle_normalized)`. Insert if missing. The same r
 ### Inferred-type rows
 
 When the LLM has to infer the type (the source had no explicit type token), it emits `inferred: true` on the structured extraction. Persist that on every resulting `street_segments` row as **`type_inferred`** (SQLite stores it as integer `0`/`1`, `NOT NULL`, default `0`). QA can filter on `type_inferred = 1` without parsing `notes`.
+
+### Segment quality flags
+
+`street_segments.quality_flags` is an **`INTEGER NOT NULL DEFAULT 0`** bitmask. Combine flags with bitwise OR; the canonical names live in **`apps/api/src/lib/quality_flags.ts`**.
+
+**Defined bits (v1):**
+
+- **Bit 0** — `SEGMENT_QUALITY.LOW_CONFIDENCE_EXTRACTION`: the extractor or validation pipeline marked this segment as low-confidence. Use for QA triage.
+
+**Reserved:** all higher bits are reserved for future dimensions. Do not repurpose without updating this doc and `quality_flags.ts`.
+
+**Out of scope for this field** (by product decision): strikethroughs and crossed-out source lines are **skipped** at extraction, not flagged on segments. A source entry that legitimately maps to **several îlots** via `segment_ilots` is **valid data**, not a quality warning. **Layout nuance:** house numbers may **overflow downward** from the N° cell (“sticky” street beside a tall block) — still **one** `source_entries` row with stitched `raw_text`; no separate flag unless a new QA need appears.
 
 ## Source Entry To Row Mapping
 
@@ -128,14 +140,22 @@ A source entry may produce one or many rows.
 
 Do not compress to `12..16`.
 
+If a notation ever uses **French “et”** between numbers (e.g. `12 et 16`), normalize it to the same rule as commas: **two singleton segments** `12..12` and `16..16`. This pattern is **not observed** in the current corpus; the rule exists for consistency if it appears later.
+
+### Separate pair / impair columns
+
+When the source row carries **distinct even-side and odd-side** number notations (e.g. **pair** and **impair** columns, or equivalent), emit **one `street_segments` row per side**: each row gets the correct `parity` (`even` or `odd`) and its own range(s). A single visual source row may therefore produce two segment rows (or more if a side lists several ranges).
+
 ### Suffix singletons and suffix ranges
 
 - `8bis` -> one row:
+
   - `from_number = to_number = 8`
   - `from_suffix_rank = to_suffix_rank = 1`
   - `from_suffix = to_suffix = "bis"`
 
 - `2 > 8 bis` -> one row:
+
   - `from = (2, 0)`
   - `to = (8, 1)`
 
@@ -164,10 +184,10 @@ Provenance is normalized into `source_entries`:
 - `quartier_id` (FK -> `quartiers.id`, the quartier named in the bobine page header)
 - `bobine`
 - `page`
-- `raw_text` (literal source notation)
+- `raw_text` — **one string for one logical register row** (street + îlot + house numbers). The printed grid is only a guide: **Street** — almost always inside the address cell (wrap-in-place). **Îlot** — usually in cell; rare spill when many îlot numbers are listed. **House numbers** — may **overflow** the printed cell and **continue downward** across the grid (beside ADRESSE; “sticky” street + tall N° block). Pipeline **stitches** into one `raw_text`. **v1:** no separate `raw_scanned`; revisit only if QA shows systematic reconstruction errors.
 - optional `sequence` and `notes`
 
-`quartier_id` is page-level metadata: every row on a bobine page inherits the same quartier from the page header, so it sits on `source_entries` (one row per source notation, all rows on a page share it).
+`quartier_id` is page-level metadata: every row on a bobine page inherits the same quartier from the page header, so it sits on `source_entries` (one row per logical source notation, all rows on a page share it).
 
 Each `street_segments` row references one `source_entries` row via `source_entry_id`.
 If one source entry yields multiple segments, those segments share the same `source_entry_id`.
@@ -176,7 +196,7 @@ If one source entry yields multiple segments, those segments share the same `sou
 
 The extractor must reject (skip + log) and never invent encodings for:
 
-- open-ended ranges (not expected in dataset)
+- **Open-ended ranges** (e.g. `12+`, `12 → …`, “and above”, or any notation **without** a finite upper bound). **Policy:** never persist segments for these; do **not** guess an endpoint. **Log** the rejection. **No** `quality_flags` update (typically no `street_segments` rows are written for that parse). Revisit only if such notations appear routinely in the corpus.
 - segments without house numbers
 - cross-quartier multi-ilot groupings
 - parity value outside `odd`/`even`
@@ -192,11 +212,15 @@ The two endpoints share a normalization contract with extraction:
 
 Input:
 
-- a libellé fragment (≥ 2 characters), normalized client-side using the shared normalize function
+- a libellé fragment (**≥ 2** characters), normalized client-side using the shared normalize function
+
+Matching:
+
+- **Prefix** match on `rues.libelle_normalized` (e.g. `LIKE 'vaugirard%'` after normalize). Substring / fuzzy deferred until user feedback.
 
 Output:
 
-- a list of `{ rue_id, type, libelle }` rows matched against `rues.libelle_normalized` (prefix or substring; index-backed)
+- at most **20** rows, ordered **alphabetically** (libellé, then stable on `rue_id` if needed)
 
 The client uses this to populate an autocomplete; the user picks a suggestion before submitting the main lookup.
 

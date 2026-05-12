@@ -1,0 +1,1 @@
+ALTER TABLE `street_segments` ADD `quality_flags` integer DEFAULT 0 NOT NULL;

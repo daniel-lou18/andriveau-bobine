@@ -29,6 +29,8 @@ export const streetSegments = sqliteTable(
     typeInferred: integer("type_inferred", { mode: "boolean" })
       .notNull()
       .default(false),
+    /** Bitmask; see `apps/api/src/lib/quality_flags.ts` and `docs/EXTRACTION.md`. */
+    qualityFlags: integer("quality_flags").notNull().default(0),
     notes: text("notes"),
   },
   (table) => [

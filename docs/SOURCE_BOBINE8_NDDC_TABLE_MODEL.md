@@ -8,12 +8,12 @@ The PDF is **image-only** (no text layer). Structure below is inferred from visu
 
 Each page shares a **header band** that fixes the scope of every row on that page:
 
-| Level | Meaning on the source |
-|--------|------------------------|
-| **Quartier** | Notre-Dame-des-Champs (title text) |
-| **Arrondissement** | 6ᵉ |
-| **Archival series / bobine** | References such as `2MI 24`, circled reel **⑧**, and “page *n*” in the BOBINE column |
-| **Period** | `1946/8` (treated as provenance metadata, not a lookup key) |
+| Level                        | Meaning on the source                                                                |
+| ---------------------------- | ------------------------------------------------------------------------------------ |
+| **Quartier**                 | Notre-Dame-des-Champs (title text)                                                   |
+| **Arrondissement**           | 6ᵉ                                                                                   |
+| **Archival series / bobine** | References such as `2MI 24`, circled reel **⑧**, and “page _n_” in the BOBINE column |
+| **Period**                   | `1946/8` (treated as provenance metadata, not a lookup key)                          |
 
 **Implication:** every extracted row should carry **quartier + arrondissement + source page/reel** as provenance, while using the source **îlot number as a globally unique key** in the project model (see `docs/DOMAIN_MODEL.md`).
 
@@ -23,12 +23,12 @@ Each page is split **vertically** into **two identical four-column grids** (left
 
 ## Column semantics (printed headers vs actual use)
 
-| Printed header | Typical content | Semantic role |
-|----------------|-----------------|---------------|
-| **BOBINE** | Mostly blank; occasional `⑧ page k` | **Microfilm reel** and **sheet/page within this PDF** — provenance pointer, not an address key |
-| **PAGE** | `Ilot NNN` (handwritten) | **Îlot identifier** — the **primary grouping key** for the rows below until the next `Ilot …` |
-| **ADRESSE** | Street / voie name (cursive) | **Rue (or place, bd, av., etc.)** — the street facet of the address |
-| **N°** | House numbers, lists, ranges | **Numéro** side of the address, in a **domain-specific micro-notation** |
+| Printed header | Typical content                     | Semantic role                                                                                  |
+| -------------- | ----------------------------------- | ---------------------------------------------------------------------------------------------- |
+| **BOBINE**     | Mostly blank; occasional `⑧ page k` | **Microfilm reel** and **sheet/page within this PDF** — provenance pointer, not an address key |
+| **PAGE**       | `Ilot NNN` (handwritten)            | **Îlot identifier** — the **primary grouping key** for the rows below until the next `Ilot …`  |
+| **ADRESSE**    | Street / voie name (cursive)        | **Rue (or place, bd, av., etc.)** — the street facet of the address                            |
+| **N°**         | House numbers, lists, ranges        | **Numéro** side of the address, in a **domain-specific micro-notation**                        |
 
 **Important:** the column printed **PAGE** holds **îlot** labels, not pagination. Any digitization pipeline should **rename** this field to `ilot` (or `ilot_label`) to avoid confusion with PDF page numbers.
 
@@ -40,7 +40,7 @@ The table is a **three-level repeating group** with **sticky** parent keys:
 Document scope (header: quartier, arrondissement, series, date)
   └── Ilot N          [PAGE column; repeats only when N changes — “sticky” ilot]
         └── Row       [ADRESSE + N°]
-              (multiple rows per ilot; multiple rows per street within same ilot)
+              (multiple **printed** rows per îlot; one **logical** provenance row may span several ruled lines when **N°** overflows downward — see `CONTEXT.md` / `docs/EXTRACTION.md` Provenance Model)
 ```
 
 There is **no deeper printed level** (no “îlot section”, no building id). The **atomic published fact** in the source is best modeled as:
@@ -57,45 +57,48 @@ One **îlot** groups **many** `(ADRESSE, N°)` rows until the scribe writes the 
 
 ### Street ↔ îlot (many-to-many)
 
-The same **street name** appears under **different îlots** with **different number sets**. Example pattern seen on the scans: long axes such as *Rue Notre-Dame-des-Champs*, *Rue de Rennes*, *Bd du Montparnasse* each recur under successive îlots with disjoint or adjacent number bands.
+The same **street name** appears under **different îlots** with **different number sets**. Example pattern seen on the scans: long axes such as _Rue Notre-Dame-des-Champs_, _Rue de Rennes_, _Bd du Montparnasse_ each recur under successive îlots with disjoint or adjacent number bands.
 
 **Implication:** the source is **not** a function `(street) → îlot`. The lookup direction implemented in the domain model — **`(street, house number) → îlot`** (possibly multiple) — matches the table’s intent.
 
-### One row → multiple logical segments
+### One printed row → multiple logical segments
 
-A single handwritten row can encode **several disjoint ranges or lists** in **N°** (commas, multiple arrows, line breaks inside the cell). For a relational model, that row is often easier to treat as **several `street_segment`-like facts** sharing the same **îlot** and **street**.
+A single **printed grid row** (one horizontal band of cells) can encode **several disjoint ranges or lists** in **N°** (commas, multiple arrows, line breaks **inside** the N° cell). For a relational model, that content is often split into **several `street_segments`** sharing the same **îlot** and **street**. A **logical** `source_entries` row can also **stitch** N° ink that continues **down** across further ruled lines (blank ADRESSE beside the continuation) — same story: multiple segments, one provenance row (`CONTEXT.md`).
 
 ### Boundary and ambiguity cases
 
-- **Two îlot labels in one cell** (e.g. `Ilot 820` and `Ilot 821` together): marks a **shared edge**, **correction**, or **transition**. Extraction should preserve **both labels** plus **verbatim cell text** and flag **manual review**.
-- **Strikethroughs and superscripts** (e.g. wrong îlot crossed out, replaced): treat as **versioning at source**; store **raw** + **interpreted** with a **confidence / needs_review** flag.
-- **Multi-line street names**: a single voie may be split across two lines in **ADRESSE**; merge on **same îlot** when the second line has **empty N°** continuation pattern (heuristic).
+_What the paper shows; **ingestion policy** (skip vs persist, `raw_text` stitching, `segment_ilots`) is canonical in **`CONTEXT.md`** and **`docs/EXTRACTION.md`**._
+
+- **Two îlot labels in one cell** (e.g. `Ilot 820` and `Ilot 821` together), or **bracket grouping** of several îlots for one address: often a **shared edge** or clerk grouping on the sheet. In the DB, **multiple îlots** on the same segments are **`segment_ilots`** (same quartier).
+- **Strikethroughs and superscripts** (e.g. wrong îlot crossed out, replaced): **versioning at source** on the scan. The **v1 extractor skips** crossed-out / rejected lines rather than persisting a parallel “interpreted” row (`docs/EXTRACTION.md`).
+- **Multi-line voie in ADRESSE**: long names normally **wrap inside the printed address cell** (several lines of cursive **within** the box). Do not confuse with **N°** continuing **down** ruled rows beside a blank ADRESSE (**sticky street** + tall number block — `CONTEXT.md`).
 
 ## `N°` column: notation grammar (informal)
 
 The **N°** field behaves like a **small DSL** rather than a single integer:
 
-| Pattern | Meaning |
-|---------|---------|
-| `a -> b` | Inclusive (or street-order) **range** from `a` to `b` |
-| `n, m, p` | **Finite set** of numbers |
-| Mix of commas and `->` | **Union** of sets/ranges in one cell |
-| `bis`, `ter`, … | French **suffix** forms (e.g. `4 bis`, `4ter`) — must remain **suffixes on the preceding numeral token**, not separate tokens |
-| Leading zeros (`05`) | Filing / handwriting convention — normalize to integer + suffix in structured data |
-| Line breaks inside cell | Same logical row continued — join before parsing |
+| Pattern                                           | Meaning                                                                                                                       |
+| ------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------- |
+| `a -> b`                                          | Inclusive (or street-order) **range** from `a` to `b`                                                                         |
+| `n, m, p`                                         | **Finite set** of numbers                                                                                                     |
+| Mix of commas and `->`                            | **Union** of sets/ranges in one cell                                                                                          |
+| `bis`, `ter`, …                                   | French **suffix** forms (e.g. `4 bis`, `4ter`) — must remain **suffixes on the preceding numeral token**, not separate tokens |
+| Leading zeros (`05`)                              | Filing / handwriting convention — normalize to integer + suffix in structured data                                            |
+| Line breaks inside N° cell                        | Same logical **notation** continued — join before parsing                                                                     |
+| N° continues on ruled lines below (ADRESSE blank) | Same **logical** `source_entries` row — **stitch** for `raw_text`, then parse (`CONTEXT.md`)                                  |
 
-**Parity:** the table does **not** consistently print separate columns for **pair / impair**; when the domain model stores parity, it is **derived** from parsed numbers and local street context, not from this column header.
+**Parity:** on this bobine the table does **not** consistently print separate columns for **pair / impair**; parity in the model is usually **derived** from parsed numbers. If a source layout uses explicit pair/impair columns, see **`docs/EXTRACTION.md`**.
 
 ## Mapping to the repository domain model
 
 Alignment with `docs/DOMAIN_MODEL.md` (conceptual, not a mandate to change schema):
 
-| Source construct | Domain analogue |
-|------------------|-----------------|
-| Header (6ᵉ, Notre-Dame-des-Champs) | `arrondissement` + `quartier` context for every `ilot` |
-| `Ilot N` | `ilots.number` (globally unique), with `ilots.quartier_id` carrying hierarchy attachment |
+| Source construct                    | Domain analogue                                                                           |
+| ----------------------------------- | ----------------------------------------------------------------------------------------- |
+| Header (6ᵉ, Notre-Dame-des-Champs)  | `arrondissement` + `quartier` context for every `ilot`                                    |
+| `Ilot N`                            | `ilots.number` (globally unique), with `ilots.quartier_id` carrying hierarchy attachment  |
 | `(ADRESSE, N°)` rows under one îlot | One or more **`street_segments`** (parsed ranges/suffixes) linked via **`segment_ilots`** |
-| BOBINE / page of bobine | **`source_entries`** provenance (reel, sheet, scan page) |
+| BOBINE / page of bobine             | **`source_entries`** provenance (reel, sheet, scan page)                                  |
 
 The source **does not** split voie into **type + libellé**; that split is a **canonicalization** choice documented elsewhere (see `rues` in `DOMAIN_MODEL.md`).
 

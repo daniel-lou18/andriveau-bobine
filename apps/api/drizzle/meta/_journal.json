@@ -85,6 +85,13 @@
       "when": 1778506269733,
       "tag": "0011_street_segments_type_inferred",
       "breakpoints": true
+    },
+    {
+      "idx": 12,
+      "version": "6",
+      "when": 1778569407367,
+      "tag": "0012_street_segments_quality_flags",
+      "breakpoints": true
     }
   ]
 }
