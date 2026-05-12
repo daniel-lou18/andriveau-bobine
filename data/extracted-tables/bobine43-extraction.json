@@ -1,0 +1,1716 @@
+{
+  "document_scope": {
+    "quartier": "Grandes Carrières",
+    "arrondissement": 18,
+    "bobine": 43,
+    "audit": {
+      "source_filename": "Bobine 43 - 18ème - GRANDES-CARRIERES.pdf",
+      "extraction_note": "Bobine column uses (43) p.k / Bp.8; page field set when k ≠ pdf_page. NEANT rows omitted. Semicolon-heavy N° as on scan."
+    }
+  },
+  "logical_records": [
+    {
+      "reading_order_index": 0,
+      "pdf_page": 1,
+      "ilot_numbers": [4089],
+      "raw_text": "Ilot 4089 | Rue Fauvet | 3 -> 19",
+      "rue": {
+        "type": "rue",
+        "libelle": "Fauvet"
+      },
+      "numeros_raw": "3 -> 19",
+      "scan_note": "(43) p.1"
+    },
+    {
+      "reading_order_index": 1,
+      "pdf_page": 1,
+      "ilot_numbers": [4089],
+      "raw_text": "Ilot 4089 | Rue Ganneron | 33; 39; 47",
+      "rue": {
+        "type": "rue",
+        "libelle": "Ganneron"
+      },
+      "numeros_raw": "33; 39; 47"
+    },
+    {
+      "reading_order_index": 2,
+      "pdf_page": 1,
+      "ilot_numbers": [4089],
+      "raw_text": "Ilot 4089 | Rue Hégésippe-Moreau | 13 -> 19",
+      "rue": {
+        "type": "rue",
+        "libelle": "Hégésippe-Moreau"
+      },
+      "numeros_raw": "13 -> 19"
+    },
+    {
+      "reading_order_index": 3,
+      "pdf_page": 1,
+      "ilot_numbers": [4089],
+      "raw_text": "Ilot 4089 | Rue Étienne-Jodelle | 4 -> 12",
+      "rue": {
+        "type": "rue",
+        "libelle": "Étienne-Jodelle"
+      },
+      "numeros_raw": "4 -> 12"
+    },
+    {
+      "reading_order_index": 4,
+      "pdf_page": 1,
+      "ilot_numbers": [4089],
+      "raw_text": "Ilot 4089 | Avenue de Saint-Ouen | 14 -> 28; 32 -> 36",
+      "rue": {
+        "type": "avenue",
+        "libelle": "de Saint-Ouen"
+      },
+      "numeros_raw": "14 -> 28; 32 -> 36"
+    },
+    {
+      "reading_order_index": 5,
+      "pdf_page": 1,
+      "ilot_numbers": [4089],
+      "raw_text": "Ilot 4089 | Avenue de Saint-Ouen | 30",
+      "rue": {
+        "type": "avenue",
+        "libelle": "de Saint-Ouen"
+      },
+      "numeros_raw": "30"
+    },
+    {
+      "reading_order_index": 6,
+      "pdf_page": 1,
+      "ilot_numbers": [4089],
+      "raw_text": "Ilot 4089 | Cité Filleux | 1; 3; 11; 15; 15 bis; 43; 51; 2; 6; 8; 12; 20; 22; 26; 36; 38; 46",
+      "rue": {
+        "type": "cité",
+        "libelle": "Filleux"
+      },
+      "numeros_raw": "1; 3; 11; 15; 15 bis; 43; 51; 2; 6; 8; 12; 20; 22; 26; 36; 38; 46",
+      "low_confidence": true,
+      "scan_note": "Long list; boxed cluster on scan"
+    },
+    {
+      "reading_order_index": 7,
+      "pdf_page": 1,
+      "ilot_numbers": [4090],
+      "raw_text": "Ilot 4090 | Rue Étienne-Jodelle | 3 -> 7",
+      "rue": {
+        "type": "rue",
+        "libelle": "Étienne-Jodelle"
+      },
+      "numeros_raw": "3 -> 7"
+    },
+    {
+      "reading_order_index": 8,
+      "pdf_page": 1,
+      "ilot_numbers": [4090],
+      "raw_text": "Ilot 4090 | Rue Pierre Génier | 3 -> 11",
+      "rue": {
+        "type": "rue",
+        "libelle": "Pierre Génier"
+      },
+      "numeros_raw": "3 -> 11"
+    },
+    {
+      "reading_order_index": 9,
+      "pdf_page": 1,
+      "ilot_numbers": [4090],
+      "raw_text": "Ilot 4090 | Avenue de Clichy | 52 -> 62",
+      "rue": {
+        "type": "avenue",
+        "libelle": "de Clichy"
+      },
+      "numeros_raw": "52 -> 62"
+    },
+    {
+      "reading_order_index": 10,
+      "pdf_page": 1,
+      "ilot_numbers": [4090],
+      "raw_text": "Ilot 4090 | Avenue de Saint-Ouen | 2; 6 -> 10",
+      "rue": {
+        "type": "avenue",
+        "libelle": "de Saint-Ouen"
+      },
+      "numeros_raw": "2; 6 -> 10"
+    },
+    {
+      "reading_order_index": 11,
+      "pdf_page": 1,
+      "ilot_numbers": [4091],
+      "raw_text": "Ilot 4091 | Rue Hégésippe-Moreau | 11; 11 bis",
+      "rue": {
+        "type": "rue",
+        "libelle": "Hégésippe-Moreau"
+      },
+      "numeros_raw": "11; 11 bis"
+    },
+    {
+      "reading_order_index": 12,
+      "pdf_page": 1,
+      "ilot_numbers": [4092],
+      "raw_text": "Ilot 4092 | Rue Hégésippe-Moreau | 2; 4; 8 -> 18",
+      "rue": {
+        "type": "rue",
+        "libelle": "Hégésippe-Moreau"
+      },
+      "numeros_raw": "2; 4; 8 -> 18",
+      "scan_note": "Adresse ditto \""
+    },
+    {
+      "reading_order_index": 13,
+      "pdf_page": 1,
+      "ilot_numbers": [4092],
+      "raw_text": "Ilot 4092 | Rue Ganneron | 19; 25",
+      "rue": {
+        "type": "rue",
+        "libelle": "Ganneron"
+      },
+      "numeros_raw": "19; 25"
+    },
+    {
+      "reading_order_index": 14,
+      "pdf_page": 1,
+      "ilot_numbers": [4093],
+      "raw_text": "Ilot 4093 | Rue Pierre Génier | 8",
+      "rue": {
+        "type": "rue",
+        "libelle": "Pierre Génier"
+      },
+      "numeros_raw": "8"
+    },
+    {
+      "reading_order_index": 15,
+      "pdf_page": 1,
+      "ilot_numbers": [4093],
+      "raw_text": "Ilot 4093 | Rue Hégésippe-Moreau | 3 -> 9",
+      "rue": {
+        "type": "rue",
+        "libelle": "Hégésippe-Moreau"
+      },
+      "numeros_raw": "3 -> 9"
+    },
+    {
+      "reading_order_index": 16,
+      "pdf_page": 1,
+      "ilot_numbers": [4093],
+      "raw_text": "Ilot 4093 | Rue Ganneron | 3 -> 15",
+      "rue": {
+        "type": "rue",
+        "libelle": "Ganneron"
+      },
+      "numeros_raw": "3 -> 15",
+      "page": 4,
+      "scan_note": "(43) p.4"
+    },
+    {
+      "reading_order_index": 17,
+      "pdf_page": 1,
+      "ilot_numbers": [4093],
+      "raw_text": "Ilot 4093 | Avenue de Clichy | 40 -> 50",
+      "rue": {
+        "type": "avenue",
+        "libelle": "de Clichy"
+      },
+      "numeros_raw": "40 -> 50",
+      "page": 4
+    },
+    {
+      "reading_order_index": 18,
+      "pdf_page": 1,
+      "ilot_numbers": [4094],
+      "raw_text": "Ilot 4094 | Rue Ganneron | 6 -> 16",
+      "rue": {
+        "type": "rue",
+        "libelle": "Ganneron"
+      },
+      "numeros_raw": "6 -> 16",
+      "page": 4
+    },
+    {
+      "reading_order_index": 19,
+      "pdf_page": 1,
+      "ilot_numbers": [4094],
+      "raw_text": "Ilot 4094 | Rue Cavalotti | 1 -> 17; 21; 23; 27",
+      "rue": {
+        "type": "rue",
+        "libelle": "Cavalotti"
+      },
+      "numeros_raw": "1 -> 17; 21; 23; 27",
+      "page": 4,
+      "scan_note": "Scan reads 'Cavalotte'; normalized to Cavalotti"
+    },
+    {
+      "reading_order_index": 20,
+      "pdf_page": 1,
+      "ilot_numbers": [4094],
+      "raw_text": "Ilot 4094 | Avenue de Clichy | 20 -> 28; 34; 36",
+      "rue": {
+        "type": "avenue",
+        "libelle": "de Clichy"
+      },
+      "numeros_raw": "20 -> 28; 34; 36",
+      "page": 4
+    },
+    {
+      "reading_order_index": 21,
+      "pdf_page": 1,
+      "ilot_numbers": [4094],
+      "raw_text": "Ilot 4094 | Impasse de la Défense | 5; 6 -> 10; 11; 15",
+      "rue": {
+        "type": "impasse",
+        "libelle": "de la Défense"
+      },
+      "numeros_raw": "5; 6 -> 10; 11; 15",
+      "page": 4,
+      "scan_note": "Hand 'Defense'"
+    },
+    {
+      "reading_order_index": 22,
+      "pdf_page": 1,
+      "ilot_numbers": [4094],
+      "raw_text": "Ilot 4094 | Impasse des Deux Nèthes | 3; 9; 10; 12; 18",
+      "rue": {
+        "type": "impasse",
+        "libelle": "des Deux Nèthes"
+      },
+      "numeros_raw": "3; 9; 10; 12; 18",
+      "page": 4,
+      "scan_note": "Scan 'des 2 Nethes'"
+    },
+    {
+      "reading_order_index": 23,
+      "pdf_page": 1,
+      "ilot_numbers": [4095],
+      "raw_text": "Ilot 4095 | Rue Capron | 2",
+      "rue": {
+        "type": "rue",
+        "libelle": "Capron"
+      },
+      "numeros_raw": "2",
+      "page": 4
+    },
+    {
+      "reading_order_index": 24,
+      "pdf_page": 1,
+      "ilot_numbers": [4095],
+      "raw_text": "Ilot 4095 | Rue Forest | 1 -> 9",
+      "rue": {
+        "type": "rue",
+        "libelle": "Forest"
+      },
+      "numeros_raw": "1 -> 9",
+      "page": 4
+    },
+    {
+      "reading_order_index": 25,
+      "pdf_page": 1,
+      "ilot_numbers": [4095],
+      "raw_text": "Ilot 4095 | Avenue de Clichy | 16; 18",
+      "rue": {
+        "type": "avenue",
+        "libelle": "de Clichy"
+      },
+      "numeros_raw": "16; 18",
+      "page": 4
+    },
+    {
+      "reading_order_index": 26,
+      "pdf_page": 1,
+      "ilot_numbers": [4095],
+      "raw_text": "Ilot 4095 | Passage Lathuille | 1; 5 -> 11; 17 -> 23; 15",
+      "rue": {
+        "type": "passage",
+        "libelle": "Lathuille"
+      },
+      "numeros_raw": "1; 5 -> 11; 17 -> 23; 15",
+      "page": 4,
+      "low_confidence": true,
+      "scan_note": "Token '1' placement crowded in cell"
+    },
+    {
+      "reading_order_index": 27,
+      "pdf_page": 1,
+      "ilot_numbers": [4095],
+      "raw_text": "Ilot 4095 | Passage de Clichy | 6; 17",
+      "rue": {
+        "type": "passage",
+        "libelle": "de Clichy"
+      },
+      "numeros_raw": "6; 17",
+      "page": 4,
+      "scan_note": "Scan 'Passage Clichy'"
+    },
+    {
+      "reading_order_index": 28,
+      "pdf_page": 1,
+      "ilot_numbers": [4096],
+      "raw_text": "Ilot 4096 | Passage Lathuille | 2; 6 -> 10; 1; 12; 14",
+      "rue": {
+        "type": "passage",
+        "libelle": "Lathuille"
+      },
+      "numeros_raw": "2; 6 -> 10; 1; 12; 14",
+      "page": 4
+    },
+    {
+      "reading_order_index": 29,
+      "pdf_page": 1,
+      "ilot_numbers": [4096],
+      "raw_text": "Ilot 4096 | Passage de Clichy | 2; 10 -> 18",
+      "rue": {
+        "type": "passage",
+        "libelle": "de Clichy"
+      },
+      "numeros_raw": "2; 10 -> 18",
+      "page": 4
+    },
+    {
+      "reading_order_index": 30,
+      "pdf_page": 1,
+      "ilot_numbers": [4096],
+      "raw_text": "Ilot 4096 | Boulevard de Clichy | 128 -> 134",
+      "rue": {
+        "type": "boulevard",
+        "libelle": "de Clichy"
+      },
+      "numeros_raw": "128 -> 134",
+      "page": 4
+    },
+    {
+      "reading_order_index": 31,
+      "pdf_page": 1,
+      "ilot_numbers": [4096],
+      "raw_text": "Ilot 4096 | Avenue de Clichy | 12; 14",
+      "rue": {
+        "type": "avenue",
+        "libelle": "de Clichy"
+      },
+      "numeros_raw": "12; 14",
+      "page": 4
+    },
+    {
+      "reading_order_index": 32,
+      "pdf_page": 1,
+      "ilot_numbers": [4096],
+      "raw_text": "Ilot 4096 | Avenue de Clichy | 2; 12; 12 bis",
+      "rue": {
+        "type": "avenue",
+        "libelle": "de Clichy"
+      },
+      "numeros_raw": "2; 12; 12 bis",
+      "page": 4
+    },
+    {
+      "reading_order_index": 33,
+      "pdf_page": 2,
+      "ilot_numbers": [4096],
+      "raw_text": "Ilot 4096 | Place de Clichy | 16",
+      "rue": {
+        "type": "place",
+        "libelle": "de Clichy"
+      },
+      "numeros_raw": "16",
+      "page": 5,
+      "scan_note": "(43) p.5"
+    },
+    {
+      "reading_order_index": 34,
+      "pdf_page": 2,
+      "ilot_numbers": [4097],
+      "raw_text": "Ilot 4097 | Rue Caulaincourt | 13",
+      "rue": {
+        "type": "rue",
+        "libelle": "Caulaincourt"
+      },
+      "numeros_raw": "13",
+      "page": 5
+    },
+    {
+      "reading_order_index": 35,
+      "pdf_page": 2,
+      "ilot_numbers": [4097],
+      "raw_text": "Ilot 4097 | Rue Forest | 12 -> 16",
+      "rue": {
+        "type": "rue",
+        "libelle": "Forest"
+      },
+      "numeros_raw": "12 -> 16",
+      "page": 5
+    },
+    {
+      "reading_order_index": 36,
+      "pdf_page": 2,
+      "ilot_numbers": [4097],
+      "raw_text": "Ilot 4097 | Rue Cavalotti | 4 -> 14",
+      "rue": {
+        "type": "rue",
+        "libelle": "Cavalotti"
+      },
+      "numeros_raw": "4 -> 14",
+      "page": 5
+    },
+    {
+      "reading_order_index": 37,
+      "pdf_page": 2,
+      "ilot_numbers": [4097],
+      "raw_text": "Ilot 4097 | Rue Camille Tahan | 2; 3; 4 -> 8",
+      "rue": {
+        "type": "rue",
+        "libelle": "Camille Tahan"
+      },
+      "numeros_raw": "2; 3; 4 -> 8",
+      "page": 5
+    },
+    {
+      "reading_order_index": 38,
+      "pdf_page": 2,
+      "ilot_numbers": [4097],
+      "raw_text": "Ilot 4097 | Rue Ganneron | 24",
+      "rue": {
+        "type": "rue",
+        "libelle": "Ganneron"
+      },
+      "numeros_raw": "24",
+      "page": 5
+    },
+    {
+      "reading_order_index": 39,
+      "pdf_page": 2,
+      "ilot_numbers": [4098],
+      "raw_text": "Ilot 4098 | Passage du Lavoir | 2; 6 -> 12; 16 -> 22",
+      "rue": {
+        "type": "passage",
+        "libelle": "du Lavoir"
+      },
+      "numeros_raw": "2; 6 -> 12; 16 -> 22",
+      "page": 5
+    },
+    {
+      "reading_order_index": 40,
+      "pdf_page": 2,
+      "ilot_numbers": [4098],
+      "raw_text": "Ilot 4098 | Rue Ganneron | 53",
+      "rue": {
+        "type": "rue",
+        "libelle": "Ganneron"
+      },
+      "numeros_raw": "53",
+      "page": 5
+    },
+    {
+      "reading_order_index": 41,
+      "pdf_page": 2,
+      "ilot_numbers": [4098],
+      "raw_text": "Ilot 4098 | Rue Fauvet | 2 -> 18",
+      "rue": {
+        "type": "rue",
+        "libelle": "Fauvet"
+      },
+      "numeros_raw": "2 -> 18",
+      "page": 5
+    },
+    {
+      "reading_order_index": 42,
+      "pdf_page": 2,
+      "ilot_numbers": [4099],
+      "raw_text": "Ilot 4099 | Avenue de Saint-Ouen | 42",
+      "rue": {
+        "type": "avenue",
+        "libelle": "de Saint-Ouen"
+      },
+      "numeros_raw": "42",
+      "page": 5
+    },
+    {
+      "reading_order_index": 43,
+      "pdf_page": 2,
+      "ilot_numbers": [4099],
+      "raw_text": "Ilot 4099 | Passage du Lavoir | 3 -> 13",
+      "rue": {
+        "type": "passage",
+        "libelle": "du Lavoir"
+      },
+      "numeros_raw": "3 -> 13",
+      "page": 5
+    },
+    {
+      "reading_order_index": 44,
+      "pdf_page": 2,
+      "ilot_numbers": [4100],
+      "raw_text": "Ilot 4100 | Villa Saint-Michel | 4 -> 8; 12 -> 16; 26",
+      "rue": {
+        "type": "villa",
+        "libelle": "Saint-Michel"
+      },
+      "numeros_raw": "4 -> 8; 12 -> 16; 26",
+      "page": 5
+    },
+    {
+      "reading_order_index": 45,
+      "pdf_page": 2,
+      "ilot_numbers": [4100],
+      "raw_text": "Ilot 4100 | Rue Ganneron | 59; 61",
+      "rue": {
+        "type": "rue",
+        "libelle": "Ganneron"
+      },
+      "numeros_raw": "59; 61",
+      "page": 5
+    },
+    {
+      "reading_order_index": 46,
+      "pdf_page": 2,
+      "ilot_numbers": [4100],
+      "raw_text": "Ilot 4100 | Passage Ganneron | 9 -> 17; 21; 25; 27",
+      "rue": {
+        "type": "passage",
+        "libelle": "Ganneron"
+      },
+      "numeros_raw": "9 -> 17; 21; 25; 27",
+      "page": 5
+    },
+    {
+      "reading_order_index": 47,
+      "pdf_page": 2,
+      "ilot_numbers": [4100],
+      "raw_text": "Ilot 4100 | Avenue de Saint-Ouen | 44; 46",
+      "rue": {
+        "type": "avenue",
+        "libelle": "de Saint-Ouen"
+      },
+      "numeros_raw": "44; 46",
+      "page": 5
+    },
+    {
+      "reading_order_index": 48,
+      "pdf_page": 2,
+      "ilot_numbers": [4101],
+      "raw_text": "Ilot 4101 | Passage Davy | 2 -> 8; 12",
+      "rue": {
+        "type": "passage",
+        "libelle": "Davy"
+      },
+      "numeros_raw": "2 -> 8; 12",
+      "page": 5
+    },
+    {
+      "reading_order_index": 49,
+      "pdf_page": 2,
+      "ilot_numbers": [4101],
+      "raw_text": "Ilot 4101 | Villa Saint-Michel | 1 -> 17; 25",
+      "rue": {
+        "type": "villa",
+        "libelle": "Saint-Michel"
+      },
+      "numeros_raw": "1 -> 17; 25",
+      "page": 5
+    },
+    {
+      "reading_order_index": 50,
+      "pdf_page": 2,
+      "ilot_numbers": [4102],
+      "raw_text": "Ilot 4102 | Rue Étex | 3 -> 19; 23",
+      "rue": {
+        "type": "rue",
+        "libelle": "Étex"
+      },
+      "numeros_raw": "3 -> 19; 23",
+      "page": 5,
+      "scan_note": "(43) p.5 right column"
+    },
+    {
+      "reading_order_index": 51,
+      "pdf_page": 2,
+      "ilot_numbers": [4102],
+      "raw_text": "Ilot 4102 | Rue Ganneron | 65; 71",
+      "rue": {
+        "type": "rue",
+        "libelle": "Ganneron"
+      },
+      "numeros_raw": "65; 71",
+      "page": 5
+    },
+    {
+      "reading_order_index": 52,
+      "pdf_page": 2,
+      "ilot_numbers": [4102],
+      "raw_text": "Ilot 4102 | Passage Davy | 3 -> 11",
+      "rue": {
+        "type": "passage",
+        "libelle": "Davy"
+      },
+      "numeros_raw": "3 -> 11",
+      "page": 5
+    },
+    {
+      "reading_order_index": 53,
+      "pdf_page": 2,
+      "ilot_numbers": [4102],
+      "raw_text": "Ilot 4102 | Avenue de Saint-Ouen | 52 -> 62",
+      "rue": {
+        "type": "avenue",
+        "libelle": "de Saint-Ouen"
+      },
+      "numeros_raw": "52 -> 62",
+      "page": 5
+    },
+    {
+      "reading_order_index": 54,
+      "pdf_page": 2,
+      "ilot_numbers": [4093],
+      "raw_text": "Ilot 4093 | Avenue de Clichy | 48",
+      "rue": {
+        "type": "avenue",
+        "libelle": "de Clichy"
+      },
+      "numeros_raw": "48",
+      "page": 5,
+      "scan_note": "Îlot 4093 reappears later on sheet"
+    },
+    {
+      "reading_order_index": 55,
+      "pdf_page": 2,
+      "ilot_numbers": [4094],
+      "raw_text": "Ilot 4094 | Rue Cavalotti | 15",
+      "rue": {
+        "type": "rue",
+        "libelle": "Cavalotti"
+      },
+      "numeros_raw": "15",
+      "page": 5
+    },
+    {
+      "reading_order_index": 56,
+      "pdf_page": 2,
+      "ilot_numbers": [4102],
+      "raw_text": "Ilot 4102 | Passage Davy | 11 -> 19; 23; 25; 29; 31",
+      "rue": {
+        "type": "passage",
+        "libelle": "Davy"
+      },
+      "numeros_raw": "11 -> 19; 23; 25; 29; 31",
+      "page": 5
+    },
+    {
+      "reading_order_index": 57,
+      "pdf_page": 2,
+      "ilot_numbers": [4103],
+      "raw_text": "Ilot 4103 | Rue Coysevox | 1 -> 7",
+      "rue": {
+        "type": "rue",
+        "libelle": "Coysevox"
+      },
+      "numeros_raw": "1 -> 7",
+      "page": 5
+    },
+    {
+      "reading_order_index": 58,
+      "pdf_page": 2,
+      "ilot_numbers": [4103],
+      "raw_text": "Ilot 4103 | Rue Lamarck | 135 -> 153",
+      "rue": {
+        "type": "rue",
+        "libelle": "Lamarck"
+      },
+      "numeros_raw": "135 -> 153",
+      "page": 5
+    },
+    {
+      "reading_order_index": 59,
+      "pdf_page": 2,
+      "ilot_numbers": [4103],
+      "raw_text": "Ilot 4103 | Rue Étex | 22 -> 32",
+      "rue": {
+        "type": "rue",
+        "libelle": "Étex"
+      },
+      "numeros_raw": "22 -> 32",
+      "page": 5
+    },
+    {
+      "reading_order_index": 60,
+      "pdf_page": 2,
+      "ilot_numbers": [4103],
+      "raw_text": "Ilot 4103 | Villa Étex | 1 -> 5",
+      "rue": {
+        "type": "villa",
+        "libelle": "Étex"
+      },
+      "numeros_raw": "1 -> 5",
+      "page": 5
+    },
+    {
+      "reading_order_index": 61,
+      "pdf_page": 2,
+      "ilot_numbers": [4104],
+      "raw_text": "Ilot 4104 | Rue Coysevox | 10 -> 2",
+      "rue": {
+        "type": "rue",
+        "libelle": "Coysevox"
+      },
+      "numeros_raw": "10 -> 2",
+      "page": 5,
+      "low_confidence": true,
+      "scan_note": "Non-monotonic range as written"
+    },
+    {
+      "reading_order_index": 62,
+      "pdf_page": 2,
+      "ilot_numbers": [4104],
+      "raw_text": "Ilot 4104 | Rue Étex | 6; 4",
+      "rue": {
+        "type": "rue",
+        "libelle": "Étex"
+      },
+      "numeros_raw": "6; 4",
+      "page": 5
+    },
+    {
+      "reading_order_index": 63,
+      "pdf_page": 2,
+      "ilot_numbers": [4104],
+      "raw_text": "Ilot 4104 | Rue Carpeaux | 1",
+      "rue": {
+        "type": "rue",
+        "libelle": "Carpeaux"
+      },
+      "numeros_raw": "1",
+      "page": 5
+    },
+    {
+      "reading_order_index": 64,
+      "pdf_page": 2,
+      "ilot_numbers": [4094],
+      "raw_text": "Ilot 4094 | Rue Cavalotti | 17",
+      "rue": {
+        "type": "rue",
+        "libelle": "Cavalotti"
+      },
+      "numeros_raw": "17",
+      "page": 5
+    },
+    {
+      "reading_order_index": 65,
+      "pdf_page": 2,
+      "ilot_numbers": [4104],
+      "raw_text": "Ilot 4104 | Rue Carpeaux | 1; 1 bis; 3; 3 bis; 9 -> 13",
+      "rue": {
+        "type": "rue",
+        "libelle": "Carpeaux"
+      },
+      "numeros_raw": "1; 1 bis; 3; 3 bis; 9 -> 13",
+      "page": 5
+    },
+    {
+      "reading_order_index": 66,
+      "pdf_page": 2,
+      "ilot_numbers": [4104],
+      "raw_text": "Ilot 4104 | Rue Joseph de Maistre | 25",
+      "rue": {
+        "type": "rue",
+        "libelle": "Joseph de Maistre"
+      },
+      "numeros_raw": "25",
+      "page": 5
+    },
+    {
+      "reading_order_index": 67,
+      "pdf_page": 3,
+      "ilot_numbers": [4104],
+      "raw_text": "Ilot 4104 | Rue Lamarck | 123 -> 133",
+      "rue": {
+        "type": "rue",
+        "libelle": "Lamarck"
+      },
+      "numeros_raw": "123 -> 133",
+      "page": 6,
+      "scan_note": "(43) p.6"
+    },
+    {
+      "reading_order_index": 68,
+      "pdf_page": 3,
+      "ilot_numbers": [4105],
+      "raw_text": "Ilot 4105 | Rue Carpeaux | 2",
+      "rue": {
+        "type": "rue",
+        "libelle": "Carpeaux"
+      },
+      "numeros_raw": "2",
+      "page": 6
+    },
+    {
+      "reading_order_index": 69,
+      "pdf_page": 3,
+      "ilot_numbers": [4106],
+      "raw_text": "Ilot 4106 | Rue Coysevox | 14 -> 22",
+      "rue": {
+        "type": "rue",
+        "libelle": "Coysevox"
+      },
+      "numeros_raw": "14 -> 22",
+      "page": 6
+    },
+    {
+      "reading_order_index": 70,
+      "pdf_page": 3,
+      "ilot_numbers": [4106],
+      "raw_text": "Ilot 4106 | Rue Joseph de Maistre | 27 -> 39",
+      "rue": {
+        "type": "rue",
+        "libelle": "Joseph de Maistre"
+      },
+      "numeros_raw": "27 -> 39",
+      "page": 6
+    },
+    {
+      "reading_order_index": 71,
+      "pdf_page": 3,
+      "ilot_numbers": [4106],
+      "raw_text": "Ilot 4106 | Rue Lamarck | 142; 144; 148; 150",
+      "rue": {
+        "type": "rue",
+        "libelle": "Lamarck"
+      },
+      "numeros_raw": "142; 144; 148; 150",
+      "page": 6
+    },
+    {
+      "reading_order_index": 72,
+      "pdf_page": 3,
+      "ilot_numbers": [4107],
+      "raw_text": "Ilot 4107 | Rue Coysevox | 9; 9 bis; 11; 11 bis; 19 -> 23",
+      "rue": {
+        "type": "rue",
+        "libelle": "Coysevox"
+      },
+      "numeros_raw": "9; 9 bis; 11; 11 bis; 19 -> 23",
+      "page": 6
+    },
+    {
+      "reading_order_index": 73,
+      "pdf_page": 3,
+      "ilot_numbers": [4107],
+      "raw_text": "Ilot 4107 | Rue d'Oslo | 2; 6; 8; 14",
+      "rue": {
+        "type": "rue",
+        "libelle": "d'Oslo"
+      },
+      "numeros_raw": "2; 6; 8; 14",
+      "page": 6
+    },
+    {
+      "reading_order_index": 74,
+      "pdf_page": 3,
+      "ilot_numbers": [4107],
+      "raw_text": "Ilot 4107 | Rue Lamarck | 152; 154",
+      "rue": {
+        "type": "rue",
+        "libelle": "Lamarck"
+      },
+      "numeros_raw": "152; 154",
+      "page": 6
+    },
+    {
+      "reading_order_index": 75,
+      "pdf_page": 3,
+      "ilot_numbers": [4108],
+      "raw_text": "Ilot 4108 | Rue Marcadet | 251; 247",
+      "rue": {
+        "type": "rue",
+        "libelle": "Marcadet"
+      },
+      "numeros_raw": "251; 247",
+      "page": 6,
+      "low_confidence": true,
+      "scan_note": "Stacked order in cell"
+    },
+    {
+      "reading_order_index": 76,
+      "pdf_page": 3,
+      "ilot_numbers": [4108],
+      "raw_text": "Ilot 4108 | Avenue de Saint-Ouen | 68 -> 80; 86; 88",
+      "rue": {
+        "type": "avenue",
+        "libelle": "de Saint-Ouen"
+      },
+      "numeros_raw": "68 -> 80; 86; 88",
+      "page": 6
+    },
+    {
+      "reading_order_index": 77,
+      "pdf_page": 3,
+      "ilot_numbers": [4108],
+      "raw_text": "Ilot 4108 | Rue Lamarck | 162",
+      "rue": {
+        "type": "rue",
+        "libelle": "Lamarck"
+      },
+      "numeros_raw": "162",
+      "page": 6
+    },
+    {
+      "reading_order_index": 78,
+      "pdf_page": 3,
+      "ilot_numbers": [4108],
+      "raw_text": "Ilot 4108 | Avenue de Saint-Ouen | 82",
+      "rue": {
+        "type": "avenue",
+        "libelle": "de Saint-Ouen"
+      },
+      "numeros_raw": "82",
+      "page": 6
+    },
+    {
+      "reading_order_index": 79,
+      "pdf_page": 3,
+      "ilot_numbers": [4108],
+      "raw_text": "Ilot 4108 | Rue Lamarck | 156; 158",
+      "rue": {
+        "type": "rue",
+        "libelle": "Lamarck"
+      },
+      "numeros_raw": "156; 158",
+      "page": 6
+    },
+    {
+      "reading_order_index": 80,
+      "pdf_page": 3,
+      "ilot_numbers": [4108],
+      "raw_text": "Ilot 4108 | Rue d'Oslo | 3",
+      "rue": {
+        "type": "rue",
+        "libelle": "d'Oslo"
+      },
+      "numeros_raw": "3",
+      "page": 6
+    },
+    {
+      "reading_order_index": 81,
+      "pdf_page": 3,
+      "ilot_numbers": [4108],
+      "raw_text": "Ilot 4108 | Rue Marcadet | 243; 247; 251",
+      "rue": {
+        "type": "rue",
+        "libelle": "Marcadet"
+      },
+      "numeros_raw": "243; 247; 251",
+      "page": 6
+    },
+    {
+      "reading_order_index": 82,
+      "pdf_page": 3,
+      "ilot_numbers": [4109],
+      "raw_text": "Ilot 4109 | Rue Championnet | 221; 231; 233",
+      "rue": {
+        "type": "rue",
+        "libelle": "Championnet"
+      },
+      "numeros_raw": "221; 231; 233",
+      "page": 6
+    },
+    {
+      "reading_order_index": 83,
+      "pdf_page": 3,
+      "ilot_numbers": [4109],
+      "raw_text": "Ilot 4109 | Rue Joseph de Maistre | 41",
+      "rue": {
+        "type": "rue",
+        "libelle": "Joseph de Maistre"
+      },
+      "numeros_raw": "41",
+      "page": 6
+    },
+    {
+      "reading_order_index": 84,
+      "pdf_page": 3,
+      "ilot_numbers": [4109],
+      "raw_text": "Ilot 4109 | Rue Marcadet | 256; 258; 264 -> 268",
+      "rue": {
+        "type": "rue",
+        "libelle": "Marcadet"
+      },
+      "numeros_raw": "256; 258; 264 -> 268",
+      "page": 6
+    },
+    {
+      "reading_order_index": 85,
+      "pdf_page": 3,
+      "ilot_numbers": [4110],
+      "raw_text": "Ilot 4110 | Rue Lagille | 8 -> 14; 20",
+      "rue": {
+        "type": "rue",
+        "libelle": "Lagille"
+      },
+      "numeros_raw": "8 -> 14; 20",
+      "page": 6
+    },
+    {
+      "reading_order_index": 86,
+      "pdf_page": 3,
+      "ilot_numbers": [4110],
+      "raw_text": "Ilot 4110 | Rue Jacques Cartier | 1 -> 5",
+      "rue": {
+        "type": "rue",
+        "libelle": "Jacques Cartier"
+      },
+      "numeros_raw": "1 -> 5",
+      "page": 6
+    },
+    {
+      "reading_order_index": 87,
+      "pdf_page": 3,
+      "ilot_numbers": [4110],
+      "raw_text": "Ilot 4110 | Rue Championnet | 232 -> 240",
+      "rue": {
+        "type": "rue",
+        "libelle": "Championnet"
+      },
+      "numeros_raw": "232 -> 240",
+      "page": 6
+    },
+    {
+      "reading_order_index": 88,
+      "pdf_page": 3,
+      "ilot_numbers": [4110],
+      "raw_text": "Ilot 4110 | Avenue de Saint-Ouen | 90 -> 112",
+      "rue": {
+        "type": "avenue",
+        "libelle": "de Saint-Ouen"
+      },
+      "numeros_raw": "90 -> 112",
+      "page": 6
+    },
+    {
+      "reading_order_index": 89,
+      "pdf_page": 3,
+      "ilot_numbers": [4111],
+      "raw_text": "Ilot 4111 | Rue Belliard | 171; 175; 181; 183",
+      "rue": {
+        "type": "rue",
+        "libelle": "Belliard"
+      },
+      "numeros_raw": "171; 175; 181; 183",
+      "page": 6
+    },
+    {
+      "reading_order_index": 90,
+      "pdf_page": 3,
+      "ilot_numbers": [4111],
+      "raw_text": "Ilot 4111 | Rue Vauvenargues | 45 -> 49",
+      "rue": {
+        "type": "rue",
+        "libelle": "Vauvenargues"
+      },
+      "numeros_raw": "45 -> 49",
+      "page": 6
+    },
+    {
+      "reading_order_index": 91,
+      "pdf_page": 3,
+      "ilot_numbers": [4111],
+      "raw_text": "Ilot 4111 | Rue Championnet | 192; 196 -> 200 bis; 204 -> 210; 224; 226",
+      "rue": {
+        "type": "rue",
+        "libelle": "Championnet"
+      },
+      "numeros_raw": "192; 196 -> 200 bis; 204 -> 210; 224; 226",
+      "page": 6
+    },
+    {
+      "reading_order_index": 92,
+      "pdf_page": 3,
+      "ilot_numbers": [4111],
+      "raw_text": "Ilot 4111 | Villa Championnet | 4 -> 12",
+      "rue": {
+        "type": "villa",
+        "libelle": "Championnet"
+      },
+      "numeros_raw": "4 -> 12",
+      "page": 6
+    },
+    {
+      "reading_order_index": 93,
+      "pdf_page": 3,
+      "ilot_numbers": [4111],
+      "raw_text": "Ilot 4111 | Rue Jacques Cartier | 4",
+      "rue": {
+        "type": "rue",
+        "libelle": "Jacques Cartier"
+      },
+      "numeros_raw": "4",
+      "page": 6
+    },
+    {
+      "reading_order_index": 94,
+      "pdf_page": 3,
+      "ilot_numbers": [4111],
+      "raw_text": "Ilot 4111 | Rue Lagille | 15 -> 31",
+      "rue": {
+        "type": "rue",
+        "libelle": "Lagille"
+      },
+      "numeros_raw": "15 -> 31",
+      "page": 6
+    },
+    {
+      "reading_order_index": 95,
+      "pdf_page": 3,
+      "ilot_numbers": [4111],
+      "raw_text": "Ilot 4111 | Rue Tennis | 2 -> 16; 22",
+      "rue": {
+        "type": "rue",
+        "libelle": "Tennis"
+      },
+      "numeros_raw": "2 -> 16; 22",
+      "page": 6,
+      "scan_note": "Distinct from 'Rue des Tennis' below"
+    },
+    {
+      "reading_order_index": 96,
+      "pdf_page": 3,
+      "ilot_numbers": [4111],
+      "raw_text": "Ilot 4111 | Rue Firmin Gémier | 20; 23; 26; 28",
+      "rue": {
+        "type": "rue",
+        "libelle": "Firmin Gémier"
+      },
+      "numeros_raw": "20; 23; 26; 28",
+      "page": 6
+    },
+    {
+      "reading_order_index": 97,
+      "pdf_page": 3,
+      "ilot_numbers": [4111],
+      "raw_text": "Ilot 4111 | Impasse Cope | 1; 3; 4 -> 8",
+      "rue": {
+        "type": "impasse",
+        "libelle": "Cope"
+      },
+      "numeros_raw": "1; 3; 4 -> 8",
+      "page": 6
+    },
+    {
+      "reading_order_index": 98,
+      "pdf_page": 3,
+      "ilot_numbers": [4111],
+      "raw_text": "Ilot 4111 | Impasse Sainte-Monique | 3; 3 bis; 7; 4; 5 -> 11; 8; 12; 14",
+      "rue": {
+        "type": "impasse",
+        "libelle": "Sainte-Monique"
+      },
+      "numeros_raw": "3; 3 bis; 7; 4; 5 -> 11; 8; 12; 14",
+      "page": 6,
+      "scan_note": "Scan 'Ste Monique'"
+    },
+    {
+      "reading_order_index": 99,
+      "pdf_page": 3,
+      "ilot_numbers": [4112],
+      "raw_text": "Ilot 4112 | Rue Belliard | 185; 187",
+      "rue": {
+        "type": "rue",
+        "libelle": "Belliard"
+      },
+      "numeros_raw": "185; 187",
+      "page": 6
+    },
+    {
+      "reading_order_index": 100,
+      "pdf_page": 3,
+      "ilot_numbers": [4112],
+      "raw_text": "Ilot 4112 | Rue des Tennis | 1 -> 23",
+      "rue": {
+        "type": "rue",
+        "libelle": "des Tennis"
+      },
+      "numeros_raw": "1 -> 23",
+      "page": 6
+    },
+    {
+      "reading_order_index": 101,
+      "pdf_page": 4,
+      "ilot_numbers": [4112],
+      "raw_text": "Ilot 4112 | Rue Lagille | 1 -> 11",
+      "rue": {
+        "type": "rue",
+        "libelle": "Lagille"
+      },
+      "numeros_raw": "1 -> 11",
+      "page": 7,
+      "scan_note": "(43) p.7"
+    },
+    {
+      "reading_order_index": 102,
+      "pdf_page": 4,
+      "ilot_numbers": [4112],
+      "raw_text": "Ilot 4112 | Avenue de Saint-Ouen | 120; 122",
+      "rue": {
+        "type": "avenue",
+        "libelle": "de Saint-Ouen"
+      },
+      "numeros_raw": "120; 122",
+      "page": 7
+    },
+    {
+      "reading_order_index": 103,
+      "pdf_page": 4,
+      "ilot_numbers": [4112],
+      "raw_text": "Ilot 4112 | Villa Belliard | 2 -> 6",
+      "rue": {
+        "type": "villa",
+        "libelle": "Belliard"
+      },
+      "numeros_raw": "2 -> 6",
+      "page": 7
+    },
+    {
+      "reading_order_index": 104,
+      "pdf_page": 4,
+      "ilot_numbers": [4113],
+      "raw_text": "Ilot 4113 | Avenue de Saint-Ouen | 124; 124 bis",
+      "rue": {
+        "type": "avenue",
+        "libelle": "de Saint-Ouen"
+      },
+      "numeros_raw": "124; 124 bis",
+      "page": 7
+    },
+    {
+      "reading_order_index": 105,
+      "pdf_page": 4,
+      "ilot_numbers": [4113],
+      "raw_text": "Ilot 4113 | Passage Daunay | 4 -> 12",
+      "rue": {
+        "type": "passage",
+        "libelle": "Daunay"
+      },
+      "numeros_raw": "4 -> 12",
+      "page": 7
+    },
+    {
+      "reading_order_index": 106,
+      "pdf_page": 4,
+      "ilot_numbers": [4114],
+      "raw_text": "Ilot 4114 | Rue Belliard | 191, 193",
+      "rue": {
+        "type": "rue",
+        "libelle": "Belliard"
+      },
+      "numeros_raw": "191, 193",
+      "page": 7
+    },
+    {
+      "reading_order_index": 107,
+      "pdf_page": 4,
+      "ilot_numbers": [4114],
+      "raw_text": "Ilot 4114 | Avenue de Saint-Ouen | 126",
+      "rue": {
+        "type": "avenue",
+        "libelle": "de Saint-Ouen"
+      },
+      "numeros_raw": "126",
+      "page": 7
+    },
+    {
+      "reading_order_index": 108,
+      "pdf_page": 4,
+      "ilot_numbers": [4116],
+      "raw_text": "Ilot 4116 | Rue Vauvenargues | 75; 77; 85",
+      "rue": {
+        "type": "rue",
+        "libelle": "Vauvenargues"
+      },
+      "numeros_raw": "75; 77; 85",
+      "page": 7
+    },
+    {
+      "reading_order_index": 109,
+      "pdf_page": 4,
+      "ilot_numbers": [4116],
+      "raw_text": "Ilot 4116 | Rue de Leibnitz | 82 -> 92; 96; 98",
+      "rue": {
+        "type": "rue",
+        "libelle": "de Leibnitz"
+      },
+      "numeros_raw": "82 -> 92; 96; 98",
+      "page": 7
+    },
+    {
+      "reading_order_index": 110,
+      "pdf_page": 4,
+      "ilot_numbers": [4116],
+      "raw_text": "Ilot 4116 | Villa Vauvenargues | 2 -> 10; 3 -> 11",
+      "rue": {
+        "type": "villa",
+        "libelle": "Vauvenargues"
+      },
+      "numeros_raw": "2 -> 10; 3 -> 11",
+      "page": 7,
+      "low_confidence": true,
+      "scan_note": "Overlapping-style ranges as written"
+    },
+    {
+      "reading_order_index": 111,
+      "pdf_page": 4,
+      "ilot_numbers": [4116],
+      "raw_text": "Ilot 4116 | Avenue de Saint-Ouen | 132 -> 156",
+      "rue": {
+        "type": "avenue",
+        "libelle": "de Saint-Ouen"
+      },
+      "numeros_raw": "132 -> 156",
+      "page": 7
+    },
+    {
+      "reading_order_index": 112,
+      "pdf_page": 4,
+      "ilot_numbers": [4116],
+      "raw_text": "Ilot 4116 | Impasse Milord | 3; 5; 7 bis; 11; 4 -> 8; 12",
+      "rue": {
+        "type": "impasse",
+        "libelle": "Milord"
+      },
+      "numeros_raw": "3; 5; 7 bis; 11; 4 -> 8; 12",
+      "page": 7,
+      "scan_note": "Two-line N° cell stitched"
+    },
+    {
+      "reading_order_index": 113,
+      "pdf_page": 4,
+      "ilot_numbers": [4117],
+      "raw_text": "Ilot 4117 | Boulevard Ney | 135 -> 147; 151, 153",
+      "rue": {
+        "type": "boulevard",
+        "libelle": "Ney"
+      },
+      "numeros_raw": "135 -> 147; 151, 153",
+      "page": 7
+    },
+    {
+      "reading_order_index": 114,
+      "pdf_page": 4,
+      "ilot_numbers": [4117],
+      "raw_text": "Ilot 4117 | Passage Charles-Albert | 3 -> 7 bis; 11 -> 29",
+      "rue": {
+        "type": "passage",
+        "libelle": "Charles-Albert"
+      },
+      "numeros_raw": "3 -> 7 bis; 11 -> 29",
+      "page": 7,
+      "scan_note": "Scan 'Charles Albert'"
+    },
+    {
+      "reading_order_index": 115,
+      "pdf_page": 4,
+      "ilot_numbers": [4117],
+      "raw_text": "Ilot 4117 | Rue de Leibnitz | 72 bis",
+      "rue": {
+        "type": "rue",
+        "libelle": "de Leibnitz"
+      },
+      "numeros_raw": "72 bis",
+      "page": 7
+    },
+    {
+      "reading_order_index": 116,
+      "pdf_page": 4,
+      "ilot_numbers": [4117],
+      "raw_text": "Ilot 4117 | Rue Vauvenargues | 70 -> 80",
+      "rue": {
+        "type": "rue",
+        "libelle": "Vauvenargues"
+      },
+      "numeros_raw": "70 -> 80",
+      "page": 7
+    },
+    {
+      "reading_order_index": 117,
+      "pdf_page": 4,
+      "ilot_numbers": [4119],
+      "raw_text": "Ilot 4119 | Boulevard Ney | 119; 129; 131",
+      "rue": {
+        "type": "boulevard",
+        "libelle": "Ney"
+      },
+      "numeros_raw": "119; 129; 131",
+      "page": 7
+    },
+    {
+      "reading_order_index": 118,
+      "pdf_page": 4,
+      "ilot_numbers": [4119],
+      "raw_text": "Ilot 4119 | Rue Jean Dolfus | 3; 9 -> 15",
+      "rue": {
+        "type": "rue",
+        "libelle": "Jean Dolfus"
+      },
+      "numeros_raw": "3; 9 -> 15",
+      "page": 7,
+      "scan_note": "Scan 'J. Dolfus'"
+    },
+    {
+      "reading_order_index": 119,
+      "pdf_page": 4,
+      "ilot_numbers": [4119],
+      "raw_text": "Ilot 4119 | Passage Charles-Albert | 7 -> 12; 16; 18",
+      "rue": {
+        "type": "passage",
+        "libelle": "Charles-Albert"
+      },
+      "numeros_raw": "7 -> 12; 16; 18",
+      "page": 7
+    },
+    {
+      "reading_order_index": 120,
+      "pdf_page": 4,
+      "ilot_numbers": [4119],
+      "raw_text": "Ilot 4119 | Square de Leibnitz | 1; 2; 3; 4; 5; 6; 7",
+      "rue": {
+        "type": "square",
+        "libelle": "de Leibnitz"
+      },
+      "numeros_raw": "1; 2; 3; 4; 5; 6; 7",
+      "page": 7
+    },
+    {
+      "reading_order_index": 121,
+      "pdf_page": 4,
+      "ilot_numbers": [4119],
+      "raw_text": "Ilot 4119 | Rue Leibnitz | 52 -> 58",
+      "rue": {
+        "type": "rue",
+        "libelle": "Leibnitz"
+      },
+      "numeros_raw": "52 -> 58",
+      "page": 7,
+      "scan_note": "Scan 'Rue Leibnitz' (no 'de')"
+    },
+    {
+      "reading_order_index": 122,
+      "pdf_page": 4,
+      "ilot_numbers": [4119],
+      "raw_text": "Ilot 4119 | Impasse du Talus | 2 -> 10; 3 -> 11; 15",
+      "rue": {
+        "type": "impasse",
+        "libelle": "du Talus"
+      },
+      "numeros_raw": "2 -> 10; 3 -> 11; 15",
+      "page": 7
+    },
+    {
+      "reading_order_index": 123,
+      "pdf_page": 4,
+      "ilot_numbers": [4120],
+      "raw_text": "Ilot 4120 | Boulevard Ney | 170",
+      "rue": {
+        "type": "boulevard",
+        "libelle": "Ney"
+      },
+      "numeros_raw": "170",
+      "page": 7
+    },
+    {
+      "reading_order_index": 124,
+      "pdf_page": 4,
+      "ilot_numbers": [4120],
+      "raw_text": "Ilot 4120 | Avenue Ney | 120",
+      "rue": {
+        "type": "avenue",
+        "libelle": "Ney"
+      },
+      "numeros_raw": "120",
+      "page": 7
+    },
+    {
+      "reading_order_index": 125,
+      "pdf_page": 4,
+      "ilot_numbers": [4120],
+      "raw_text": "Ilot 4120 | Avenue de la Porte de Saint-Ouen | 6; 12 -> 16; 22",
+      "rue": {
+        "type": "avenue",
+        "libelle": "de la Porte de Saint-Ouen"
+      },
+      "numeros_raw": "6; 12 -> 16; 22",
+      "page": 7,
+      "scan_note": "Scan 'Av de la Pte de St Ouen'"
+    },
+    {
+      "reading_order_index": 126,
+      "pdf_page": 4,
+      "ilot_numbers": [4127],
+      "raw_text": "Ilot 4127 | Porte de Clignancourt | 7, 9",
+      "rue": {
+        "type": "porte",
+        "libelle": "de Clignancourt"
+      },
+      "numeros_raw": "7, 9",
+      "page": 7,
+      "scan_note": "Scan 'Pte de Clignancourt'"
+    },
+    {
+      "reading_order_index": 127,
+      "pdf_page": 4,
+      "ilot_numbers": [4127],
+      "raw_text": "Ilot 4127 | Rue Fernand Labori | 2; 4",
+      "rue": {
+        "type": "rue",
+        "libelle": "Fernand Labori"
+      },
+      "numeros_raw": "2; 4",
+      "page": 7
+    },
+    {
+      "reading_order_index": 128,
+      "pdf_page": 4,
+      "ilot_numbers": [4128],
+      "raw_text": "Ilot 4128 | Rue Fernand Labori | 1; 3",
+      "rue": {
+        "type": "rue",
+        "libelle": "Fernand Labori"
+      },
+      "numeros_raw": "1; 3",
+      "page": 7,
+      "scan_note": "Adresse ditto \""
+    },
+    {
+      "reading_order_index": 129,
+      "pdf_page": 4,
+      "ilot_numbers": [4128],
+      "raw_text": "Ilot 4128 | Boulevard Ney | 118",
+      "rue": {
+        "type": "boulevard",
+        "libelle": "Ney"
+      },
+      "numeros_raw": "118",
+      "page": 7
+    },
+    {
+      "reading_order_index": 130,
+      "pdf_page": 4,
+      "ilot_numbers": [4128],
+      "raw_text": "Ilot 4128 | Rue Eugène Fournière | 3",
+      "rue": {
+        "type": "rue",
+        "libelle": "Eugène Fournière"
+      },
+      "numeros_raw": "3",
+      "page": 7,
+      "scan_note": "Scan 'Fourrier' on this page"
+    },
+    {
+      "reading_order_index": 131,
+      "pdf_page": 4,
+      "ilot_numbers": [4128],
+      "raw_text": "Ilot 4128 | Boulevard Ney | 118",
+      "rue": {
+        "type": "boulevard",
+        "libelle": "Ney"
+      },
+      "numeros_raw": "118",
+      "page": 7,
+      "low_confidence": true,
+      "scan_note": "Scan 'Bol Ney'"
+    },
+    {
+      "reading_order_index": 132,
+      "pdf_page": 5,
+      "ilot_numbers": [4128],
+      "raw_text": "Ilot 4128 | Rue Eugène Fournière | 3; 2; 4",
+      "rue": {
+        "type": "rue",
+        "libelle": "Eugène Fournière"
+      },
+      "numeros_raw": "3; 2; 4",
+      "page": 8,
+      "scan_note": "Bp. 8"
+    },
+    {
+      "reading_order_index": 133,
+      "pdf_page": 5,
+      "ilot_numbers": [4129],
+      "raw_text": "Ilot 4129 | Rue Eugène Fournière | 5; 3",
+      "rue": {
+        "type": "rue",
+        "libelle": "Eugène Fournière"
+      },
+      "numeros_raw": "5; 3",
+      "page": 8,
+      "scan_note": "Adresse ditto \""
+    },
+    {
+      "reading_order_index": 134,
+      "pdf_page": 5,
+      "ilot_numbers": [4129],
+      "raw_text": "Ilot 4129 | Rue Charles Flammarion | 2",
+      "rue": {
+        "type": "rue",
+        "libelle": "Charles Flammarion"
+      },
+      "numeros_raw": "2",
+      "page": 8
+    },
+    {
+      "reading_order_index": 135,
+      "pdf_page": 5,
+      "ilot_numbers": [4130],
+      "raw_text": "Ilot 4130 | Rue F. Schneider | 2; 4",
+      "rue": {
+        "type": "rue",
+        "libelle": "F. Schneider"
+      },
+      "numeros_raw": "2; 4",
+      "page": 8,
+      "scan_note": "Abbreviated praenomen on scan"
+    },
+    {
+      "reading_order_index": 136,
+      "pdf_page": 5,
+      "ilot_numbers": [4132],
+      "raw_text": "Ilot 4132 | Rue Marcel Sembat | 1; 3",
+      "rue": {
+        "type": "rue",
+        "libelle": "Marcel Sembat"
+      },
+      "numeros_raw": "1; 3",
+      "page": 8
+    },
+    {
+      "reading_order_index": 137,
+      "pdf_page": 5,
+      "ilot_numbers": [4133],
+      "raw_text": "Ilot 4133 | Avenue de la Porte Montmartre | 5",
+      "rue": {
+        "type": "avenue",
+        "libelle": "de la Porte Montmartre"
+      },
+      "numeros_raw": "5",
+      "page": 8,
+      "scan_note": "Scan 'Av de la Pte Montmartre'"
+    },
+    {
+      "reading_order_index": 138,
+      "pdf_page": 5,
+      "ilot_numbers": [4133],
+      "raw_text": "Ilot 4133 | Rue Jean Varenne | 6; 8",
+      "rue": {
+        "type": "rue",
+        "libelle": "Jean Varenne"
+      },
+      "numeros_raw": "6; 8",
+      "page": 8
+    },
+    {
+      "reading_order_index": 139,
+      "pdf_page": 5,
+      "ilot_numbers": [4134],
+      "raw_text": "Ilot 4134 | Rue Jean Varenne | 5 -> 13",
+      "rue": {
+        "type": "rue",
+        "libelle": "Jean Varenne"
+      },
+      "numeros_raw": "5 -> 13",
+      "page": 8,
+      "scan_note": "Adresse ditto \""
+    }
+  ]
+}
