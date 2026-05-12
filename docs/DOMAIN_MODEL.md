@@ -3,6 +3,8 @@
 This document describes the core domain model for address-based lookup in this project.
 It focuses on entities, relationships, hierarchy, and the read pattern we optimize for.
 
+The JSON batch an LLM emits from scans **before** application validation maps onto these tables via **`docs/LLM_EXTRACTION_INTERCHANGE.md`** and the persistence rules in **`docs/EXTRACTION.md`**.
+
 ## Goal And Optimization Target
 
 Primary read pattern:

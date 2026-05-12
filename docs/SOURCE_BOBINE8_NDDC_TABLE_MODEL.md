@@ -4,6 +4,8 @@ This note describes the **logical data structures, relations, and hierarchies** 
 
 The PDF is **image-only** (no text layer). Structure below is inferred from visual layout across **six pages**, each using the same grid pattern.
 
+**LLM interchange:** the repository-wide JSON shape, prompt-ready reading rules, and loader summary live in **`docs/LLM_EXTRACTION_INTERCHANGE.md`**. This note stays focused on **bobine 8** layout and column semantics.
+
 ## Document scope (root)
 
 Each page shares a **header band** that fixes the scope of every row on that page:
@@ -20,6 +22,36 @@ Each page shares a **header band** that fixes the scope of every row on that pag
 ## Physical layout: two parallel tables per page
 
 Each page is split **vertically** into **two identical four-column grids** (left and right), separated by a **thick double rule**. Reading order is **top-to-bottom within a column-set**, then typically **continue on the other half of the page** as space runs out (the list is one logical stream broken for typography, not two independent datasets).
+
+The grid is **hand-ruled** (verticals and horizontals); column boundaries are reliable enough to treat **BOBINE | PAGE | ADRESSE | N°** as four lanes within each half-page. The **îlot** label in the PAGE column is often **visually centered** against the **first** address row of the block it introduces, while subsequent rows under the same îlot leave that column blank — use blank cells for sticky inheritance, not vertical span alone.
+
+## Visual and transcription cues (LLM / OCR)
+
+These observations come from the bobine 8 scans (including multi-line **ADRESSE** cells, dense **N°** blocks, and sparse **BOBINE** / **PAGE** columns). They **complement** the cross-bobine rules in **`docs/LLM_EXTRACTION_INTERCHANGE.md`**; persistence policy (reject vs parse) stays in **`docs/EXTRACTION.md`**.
+
+### Header strip
+
+The top of each page typically carries a **single line** fixing scope, e.g. quartier name, **6ᵉ**, archival series (**`2MI 24`** or close handwritten variants), and period **`1946/8`**. Treat spelling / spacing variants in the series token as **audit-only** provenance unless you normalize them deliberately; they do not replace `source_entries.bobine` (integer reel).
+
+### Sticky **BOBINE** as well as **PAGE**
+
+The **BOBINE** column is usually **almost empty**: one cell may hold a circled reel digit and a sheet hint (e.g. `⑧ page 2`). That **same reel context applies to the whole page** (and inherited row-to-row like the îlot column) until a new BOBINE cell is inked. For JSON: map the circled reel to the integer in `document_scope.bobine` / per-record provenance; keep the exact glyph string in `scan_note` if useful for QA.
+
+### Multi-îlot cells (variants)
+
+Besides two labels in one line (`Ilot 820` … `Ilot 821`), the scans sometimes show **stacked** or **repeated** îlot numbers in one PAGE cell (e.g. a vertical list or duplicated pairs). Emit **`ilot_numbers`** as the **ordered list of distinct** îlot integers as read (de-dupe while preserving order if the clerk repeated a pair intentionally — when in doubt, preserve source order and let QA reconcile).
+
+### **N°** density and non-linear layout inside the cell
+
+- **Several lines of ink inside one N° cell** (stacked or wrapped) still belong to the **same printed row**’s address unless the **N°** clearly continues **downward** beside a **blank ADRESSE** (then stitch into one logical row per `CONTEXT.md`).
+- **Comma lists** may run in **street order** either ascending or descending (e.g. `56, 54, 52, …`) — they remain a **finite set**; transcribe **verbatim** in `numeros_raw`.
+- **`/` notation** (e.g. `10/12`) appears on the sheets. Transcribe **as written**; do not silently split or merge until the validated parser (`docs/EXTRACTION.md`) defines behavior.
+- **Handwriting corrections** (digits written over other digits): prefer the **final** intended value when legible; if two readings remain plausible, emit the best reading in `numeros_raw` and set **`low_confidence`** (`docs/LLM_EXTRACTION_INTERCHANGE.md`).
+- **Leading arrow only** (e.g. `-> 132, 136` with no left endpoint in the same cell): **appears in the corpus** — still transcribe verbatim; whether the loader accepts it is governed by **`docs/EXTRACTION.md`** (finite ranges / no-gos), not by the vision model.
+
+### Margin marks
+
+Small **dots, ticks, or checkmarks** in the margins are common; they are **not** part of the address mapping unless product policy says otherwise. Omit from structured fields; optional mention in freeform audit notes only.
 
 ## Column semantics (printed headers vs actual use)
 
@@ -38,8 +70,10 @@ The table is a **three-level repeating group** with **sticky** parent keys:
 
 ```text
 Document scope (header: quartier, arrondissement, series, date)
-  └── Ilot N          [PAGE column; repeats only when N changes — “sticky” ilot]
-        └── Row       [ADRESSE + N°]
+  └── Row stream (linear reading order; see Physical layout)
+        ├── Sticky BOBINE hint   [sparse: circled reel + optional “page k”; blank = inherit]
+        ├── Sticky Ilot N        [PAGE column: blank = same îlot as above]
+        └── ADRESSE + N°
               (multiple **printed** rows per îlot; one **logical** provenance row may span several ruled lines when **N°** overflows downward — see `CONTEXT.md` / `docs/EXTRACTION.md` Provenance Model)
 ```
 
@@ -53,7 +87,7 @@ Normalization into typed house numbers and canonical street entities is a **down
 
 ### Ilot → rows (one-to-many)
 
-One **îlot** groups **many** `(ADRESSE, N°)` rows until the scribe writes the next `Ilot …`. Empty cells in the **PAGE** column mean **“same îlot as above”** (inheritance / carry-forward).
+One **îlot** groups **many** `(ADRESSE, N°)` rows until the scribe writes the next `Ilot …`. Empty cells in the **PAGE** column mean **“same îlot as above”** (inheritance / carry-forward). Empty cells in the **BOBINE** column mean **“same reel / sheet note as above”** within the same linear reading order on that page.
 
 ### Street ↔ îlot (many-to-many)
 
@@ -80,11 +114,13 @@ The **N°** field behaves like a **small DSL** rather than a single integer:
 | Pattern                                           | Meaning                                                                                                                       |
 | ------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------- |
 | `a -> b`                                          | Inclusive (or street-order) **range** from `a` to `b`                                                                         |
-| `n, m, p`                                         | **Finite set** of numbers                                                                                                     |
+| `n, m, p`                                         | **Finite set** of numbers (order may follow street direction — ascending or descending on the axis)                           |
 | Mix of commas and `->`                            | **Union** of sets/ranges in one cell                                                                                          |
-| `bis`, `ter`, …                                   | French **suffix** forms (e.g. `4 bis`, `4ter`) — must remain **suffixes on the preceding numeral token**, not separate tokens |
-| Leading zeros (`05`)                              | Filing / handwriting convention — normalize to integer + suffix in structured data                                            |
-| Line breaks inside N° cell                        | Same logical **notation** continued — join before parsing                                                                     |
+| `n / m` (slash)                                   | Appears on scans (e.g. two adjacent numbers); **transcribe verbatim** — parser policy in **`docs/EXTRACTION.md`**              |
+| `-> b` or `-> b, c` (no left endpoint in cell)    | **Appears** in the corpus; transcribe verbatim; acceptance is **not** assumed — see **`docs/EXTRACTION.md`** → No-Go Cases      |
+| `bis`, `ter`, …                                   | French **suffix** forms (e.g. `4 bis`, `4ter`, `59 -> 61 bis`) — suffix stays on the **numeral token** it modifies              |
+| Leading zeros (`05`, `07`)                        | Filing / handwriting convention — normalize to integer + suffix in structured data                                            |
+| Line breaks / stacked ink inside N° cell          | Same logical **notation** for that printed row — join sensibly for `numeros_raw`; do not split into two logical records without a blank ADRESSE continuation |
 | N° continues on ruled lines below (ADRESSE blank) | Same **logical** `source_entries` row — **stitch** for `raw_text`, then parse (`CONTEXT.md`)                                  |
 
 **Parity:** on this bobine the table does **not** consistently print separate columns for **pair / impair**; parity in the model is usually **derived** from parsed numbers. If a source layout uses explicit pair/impair columns, see **`docs/EXTRACTION.md`**.
@@ -104,24 +140,9 @@ The source **does not** split voie into **type + libellé**; that split is a **c
 
 ## Suggested normalized extraction shape (logical)
 
-For each **interpreted** line after sticky-îlot resolution:
+The **canonical** batch JSON (`document_scope` + `logical_records[]` with structured `rue`, `raw_text`, `numeros_raw`, and provenance fields) is defined in **`docs/LLM_EXTRACTION_INTERCHANGE.md`**.
 
-```json
-{
-  "quartier": "Notre-Dame-des-Champs",
-  "arrondissement": 6,
-  "ilot_numbers": [818],
-  "voie_raw": "Rue Madame",
-  "numeros_raw": "8 -> 10",
-  "source": {
-    "bobine": 8,
-    "pdf_page": 1,
-    "scan_note": "⑧ page 1"
-  }
-}
-```
-
-Use an **array** for `ilot_numbers` when the PAGE cell lists more than one îlot.
+For each **interpreted** line after sticky-îlot resolution, that document’s `logical_records[]` elements replace the older minimal sketch. In particular, emit **`ilot_numbers`** as an array when the PAGE cell lists more than one îlot, and use the structured **`rue`** object (`type` + `libelle` per `docs/EXTRACTION.md`), not only a raw voie string.
 
 ## Machine-readability note
 

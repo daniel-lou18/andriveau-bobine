@@ -23,6 +23,8 @@ This document specifies:
 
 This document does not specify OCR/parsing implementation details.
 
+For the **structured JSON payload** an LLM (or vision model) should emit **before** application validation — field names, linear reading order, sticky îlot inheritance, and disambiguation of reel vs PDF page vs the printed “PAGE” column — see **`docs/LLM_EXTRACTION_INTERCHANGE.md`**.
+
 ## Glossary
 
 - `bobine`: reel number as an integer in `source_entries`; other archival strings (series codes, composite labels) are audit-only, not structured fields
@@ -116,6 +118,8 @@ When the LLM has to infer the type (the source had no explicit type token), it e
 ## Source Entry To Row Mapping
 
 A source entry may produce one or many rows.
+
+**Typical house-number shapes.** In the bulk of the corpus, the N° cell is built from only a few compositional patterns: a **singleton**; a **comma-separated list** of singletons; an **inclusive range** between two endpoints (the source often uses an arrow; examples below use `>` for the same idea); or a **mixture** of lists and ranges in one logical entry (including long lists that wrap across several printed lines — still one stitched `source_entries` row). The subsections below fix how each pattern maps to `street_segments`; later subsections add suffix precision, separate pair/impair columns, and explicit rejections so edge cases stay specified without obscuring the common grammar.
 
 ### Basic ranges
 

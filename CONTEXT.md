@@ -86,6 +86,13 @@ Ordered sub-position on the house-number axis: none `0`, `bis 1`, `ter 2`, `quat
 A response is in conflict when the matched ilots come from **more than one `source_entry`** for the same `(rue, n, parity)` input. A single source entry asserting multiple ilots via `segment_ilots` (shared edge / correction) is **not** a conflict — it's a legitimate intent of the source. The API computes this at query time; no schema column carries it.
 _Avoid_: ambiguous, mismatch.
 
+## Documentation map (extraction → lookup)
+
+- **`docs/LLM_EXTRACTION_INTERCHANGE.md`** — JSON interchange from scans, linear reading order, sticky îlot, reel vs PDF page vs printed “PAGE” column.
+- **`docs/EXTRACTION.md`** — Persistence and lookup contract after validation (`street_segments`, suffixes, parity, no-gos).
+- **`docs/DOMAIN_MODEL.md`** — Entities, FKs, and the optimized read pattern for address lookup.
+- **`docs/SOURCE_BOBINE8_NDDC_TABLE_MODEL.md`** — Example bobine layout analysis (grid, N° DSL); other bobines get their own source note as needed.
+
 ## Flagged ambiguities
 
 - **"Rue" is overloaded.** It means both (a) the table name for all voies, regardless of type, and (b) one specific `type` value. Resolution: the table `rues` covers all voies; the column `type` carries the kind. When a domain expert says "rue", treat it as (a) unless context narrows it.

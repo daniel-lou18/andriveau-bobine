@@ -18,6 +18,7 @@ apps/
 
 A **`packages/`** tree may be added later for shared TypeScript configs or shared libraries.
 Address extraction mapping rules and domain conventions are documented in **`docs/EXTRACTION.md`**.
+**`docs/LLM_EXTRACTION_INTERCHANGE.md`** defines the LLM-facing JSON payload and paper-reading rules before validation and D1 load.
 Domain entities, relations, and lookup optimization are documented in **`docs/DOMAIN_MODEL.md`**.
 
 ## Prerequisites
