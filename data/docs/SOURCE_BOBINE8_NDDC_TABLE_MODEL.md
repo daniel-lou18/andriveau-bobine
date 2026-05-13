@@ -6,7 +6,7 @@ The PDF is **image-only** (no text layer). Structure below is inferred from visu
 
 **LLM interchange:** the repository-wide JSON shape, prompt-ready reading rules, and loader summary live in **`docs/LLM_EXTRACTION_INTERCHANGE.md`**. This note stays focused on **bobine 8** layout and column semantics.
 
-**Other registers:** a second scribe (bobine **43**, **Grandes Carrières** 18ᵉ) uses **semicolons** in **N°**, **Adresse ditto `"`**, and **`NEANT`** skip rows — see **`docs/SOURCE_BOBINE43_GRANDES_CARRIERES_TABLE_MODEL.md`**.
+**Other registers:** a second scribe (bobine **43**, **Grandes Carrières** 18ᵉ) uses **semicolons** in **N°**, **Adresse ditto `"`**, and **`NEANT`** skip rows — see **`data/docs/SOURCE_BOBINE43_GRANDES_CARRIERES_TABLE_MODEL.md`**.
 
 ## Document scope (root)
 
@@ -118,7 +118,7 @@ The **N°** field behaves like a **small DSL** rather than a single integer:
 | `a -> b`                                          | Inclusive (or street-order) **range** from `a` to `b`                                                                         |
 | `n, m, p`                                         | **Finite set** of numbers (order may follow street direction — ascending or descending on the axis)                           |
 | Mix of commas and `->`                            | **Union** of sets/ranges in one cell                                                                                          |
-| Semicolon (`;`) between tokens                    | Used heavily by **other scribes** (e.g. bobine 43); **same union semantics** as comma — see **`docs/EXTRACTION.md`** / **`docs/SOURCE_BOBINE43_GRANDES_CARRIERES_TABLE_MODEL.md`** |
+| Semicolon (`;`) between tokens                    | Used heavily by **other scribes** (e.g. bobine 43); **same union semantics** as comma — see **`docs/EXTRACTION.md`** / **`data/docs/SOURCE_BOBINE43_GRANDES_CARRIERES_TABLE_MODEL.md`** |
 | `n / m` (slash)                                   | Appears on scans (e.g. two adjacent numbers); **transcribe verbatim** — parser policy in **`docs/EXTRACTION.md`**              |
 | `-> b` or `-> b, c` (no left endpoint in cell)    | **Appears** in the corpus; transcribe verbatim; acceptance is **not** assumed — see **`docs/EXTRACTION.md`** → No-Go Cases      |
 | `bis`, `ter`, …                                   | French **suffix** forms (e.g. `4 bis`, `4ter`, `59 -> 61 bis`) — suffix stays on the **numeral token** it modifies              |
@@ -153,6 +153,4 @@ The file analyzed is **raster-only** (JPEG tiles per page). Reliable full transc
 
 ## Source file reference
 
-Original PDF path (local Cursor workspace storage; not committed to this repo):
-
-`Bobine 8 - 6ème - NOTRE-DAME-DES-CHAMPS.pdf` (six pages).
+Scan in the repo: **`data/source-tables/Bobine 8 - 6ème - NOTRE-DAME-DES-CHAMPS.pdf`** (six pages). Sample interchange output: **`data/extracted-tables/bobine8-extraction.json`**.

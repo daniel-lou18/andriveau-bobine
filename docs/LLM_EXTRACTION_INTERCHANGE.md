@@ -2,7 +2,7 @@
 
 This document defines the **structured payload** a frontier model (plus any layout front-end) should emit from a bobine-style register **before** application validation and D1 writes.
 
-It is **not** the persistence contract: numeric suffixes, parity, segment splitting, rejections, and lookup mirroring remain canonical in **`docs/EXTRACTION.md`**. Entities and FK shapes are in **`docs/DOMAIN_MODEL.md`**. **Printed-layout** variants by bobine/scribe are documented in **`docs/SOURCE_BOBINE8_NDDC_TABLE_MODEL.md`** (6ᵉ NDDC) and **`docs/SOURCE_BOBINE43_GRANDES_CARRIERES_TABLE_MODEL.md`** (18ᵉ Grandes Carrières).
+It is **not** the persistence contract: numeric suffixes, parity, segment splitting, rejections, and lookup mirroring remain canonical in **`docs/EXTRACTION.md`**. Entities and FK shapes are in **`docs/DOMAIN_MODEL.md`**. **Printed-layout** variants by bobine/scribe are documented in **`data/docs/SOURCE_BOBINE8_NDDC_TABLE_MODEL.md`** (6ᵉ NDDC) and **`data/docs/SOURCE_BOBINE43_GRANDES_CARRIERES_TABLE_MODEL.md`** (18ᵉ Grandes Carrières).
 
 **Out of scope here:** OCR engine choice, geometric table detection, and the **operational** human-review workflow (ticketing, assignment). The interchange still **encodes review signals** (`low_confidence`, `scan_note`) so reviewers know where visual ambiguity remains; see § Human review and model caveats.
 
@@ -12,7 +12,7 @@ It is **not** the persistence contract: numeric suffixes, parity, segment splitt
 
 ## Related documents (read order)
 
-1. **Source layout note for the PDF you process** — e.g. **`docs/SOURCE_BOBINE8_NDDC_TABLE_MODEL.md`** (bobine 8) or **`docs/SOURCE_BOBINE43_GRANDES_CARRIERES_TABLE_MODEL.md`** (bobine 43): column semantics, two-column reading order, N° delimiters, ditto **`NEANT`**, etc.
+1. **Source layout note for the PDF you process** — e.g. **`data/docs/SOURCE_BOBINE8_NDDC_TABLE_MODEL.md`** (bobine 8) or **`data/docs/SOURCE_BOBINE43_GRANDES_CARRIERES_TABLE_MODEL.md`** (bobine 43): column semantics, two-column reading order, N° delimiters, ditto **`NEANT`**, etc.
 2. **This file** — one JSON document per extraction batch, prompt-ready disambiguation and sticky rules.
 3. **`docs/EXTRACTION.md`** — what the loader must enforce when turning this payload into `source_entries`, `rues`, `street_segments`, `segment_ilots`.
 4. **`docs/DOMAIN_MODEL.md`** — table fields, uniqueness, lookup read pattern.
@@ -36,9 +36,9 @@ Optional **audit-only** strings (series codes such as `2MI 24`, circled reel gly
 
 Apply these **after** fixing **document scope** from the page header (`quartier`, `arrondissement`, and any header-only provenance you copy into `document_scope.audit`).
 
-1. **Linear reading order** — Follow the layout note for your bobine. Typical pattern: **top to bottom within the left four-column block**, then **top to bottom within the right block** on the same sheet; the two halves are **one** logical stream, not two independent tables (bobine 8: `docs/SOURCE_BOBINE8_NDDC_TABLE_MODEL.md`; bobine 43: `docs/SOURCE_BOBINE43_GRANDES_CARRIERES_TABLE_MODEL.md`).
+1. **Linear reading order** — Follow the layout note for your bobine. Typical pattern: **top to bottom within the left four-column block**, then **top to bottom within the right block** on the same sheet; the two halves are **one** logical stream, not two independent tables (bobine 8: `data/docs/SOURCE_BOBINE8_NDDC_TABLE_MODEL.md`; bobine 43: `data/docs/SOURCE_BOBINE43_GRANDES_CARRIERES_TABLE_MODEL.md`).
 2. **Sticky îlot** — When the printed **îlot** cell is **empty** for a row, that row **inherits** the same `ilot_numbers` as the **previous** row in that linear order until a new îlot number is written.
-3. **Sticky voie (ditto `"`)** — On some registers the **Adresse** cell contains **only** a **double quote `"`**: repeat the **same street / voie line** as the **row immediately above** (îlot still comes from the sticky îlot column). See **`docs/SOURCE_BOBINE43_GRANDES_CARRIERES_TABLE_MODEL.md`**.
+3. **Sticky voie (ditto `"`)** — On some registers the **Adresse** cell contains **only** a **double quote `"`**: repeat the **same street / voie line** as the **row immediately above** (îlot still comes from the sticky îlot column). See **`data/docs/SOURCE_BOBINE43_GRANDES_CARRIERES_TABLE_MODEL.md`**.
 4. **Multi-îlot in one cell** — If one handwritten cell lists several îlots (or bracketed grouping), emit **`ilot_numbers`** as an **array** of integers in source order. Loaders attach every produced segment to each îlot via **`segment_ilots`**, same quartier only (`docs/EXTRACTION.md` → Multi-Ilot Attribution Rule).
 5. **One logical register row** — Street + îlot + house numbers that belong together count as **one** interchange object, even when:
    - the **N°** ink **wraps inside** the cell, or

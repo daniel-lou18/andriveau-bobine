@@ -2,7 +2,7 @@
 
 This note describes the **logical layout and scribal conventions** of a second handwritten bobine register: **Grandes Carrières**, **Paris 18ᵉ**, on scans that carry reel references such as **`(43) p.1`** / **`B p 7`** in the **Bobine** column. It is **image-only** like bobine 8; structure is inferred from sample pages.
 
-**Cross-reference:** shared JSON interchange and loader rules — **`docs/LLM_EXTRACTION_INTERCHANGE.md`**. The **6ᵉ** Notre-Dame-des-Champs grid (bobine 8) is **`docs/SOURCE_BOBINE8_NDDC_TABLE_MODEL.md`**. Persistence semantics — **`docs/EXTRACTION.md`**.
+**Cross-reference:** shared JSON interchange and loader rules — **`docs/LLM_EXTRACTION_INTERCHANGE.md`**. The **6ᵉ** Notre-Dame-des-Champs grid (bobine 8) is **`data/docs/SOURCE_BOBINE8_NDDC_TABLE_MODEL.md`**. Persistence semantics — **`docs/EXTRACTION.md`**.
 
 ## How this register differs from bobine 8 (NDDC)
 
@@ -68,7 +68,7 @@ Crossed-out or superseded lines elsewhere remain governed by **`docs/EXTRACTION.
 
 ## Mapping to the domain model
 
-Same as **`docs/SOURCE_BOBINE8_NDDC_TABLE_MODEL.md`** → **`docs/DOMAIN_MODEL.md`**: header → quartier + arrondissement; îlot → `ilots.number`; `(voie, N°)` → `street_segments` + `segment_ilots`; provenance → `source_entries`.
+Same as **`data/docs/SOURCE_BOBINE8_NDDC_TABLE_MODEL.md`** → **`docs/DOMAIN_MODEL.md`**: header → quartier + arrondissement; îlot → `ilots.number`; `(voie, N°)` → `street_segments` + `segment_ilots`; provenance → `source_entries`.
 
 ## Machine-readability
 
@@ -76,4 +76,4 @@ Raster handwriting + ditto marks + dense **`;`** lists benefit from the same str
 
 ## Source file reference
 
-Local workspace PDF path (not committed): treat as **bobine 43 / Grandes Carrières 18ᵉ** sibling to the bobine 8 NDDC PDF; exact filename may vary by import.
+Scan in the repo: **`data/source-tables/Bobine 43 - 18ème - GRANDES-CARRIERES.pdf`**. Sample interchange output: **`data/extracted-tables/bobine43-extraction.json`**.

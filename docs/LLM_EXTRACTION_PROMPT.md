@@ -6,7 +6,7 @@
 
 **Downstream validity:** The JSON is **interchange** input, not a guarantee that every row loads into D1 unchanged. A separate validator/loader applies **`docs/EXTRACTION.md`** (e.g. `type` must exist in `voie_types`, finite ranges, suffix ranks, parity). Set `low_confidence: true` when the scan is ambiguous.
 
-For each run, attach **(1)** the page image(s) or PDF, **(2)** the full text of the matching **source layout** doc (`docs/SOURCE_BOBINE8_NDDC_TABLE_MODEL.md` _or_ `docs/SOURCE_BOBINE43_GRANDES_CARRIERES_TABLE_MODEL.md`), and **(3)** optional: `docs/LLM_EXTRACTION_INTERCHANGE.md` (or rely on the schema below).
+For each run, attach **(1)** the page image(s) or PDF (from **`data/source-tables/`** when using repo files), **(2)** the full text of the matching **source layout** doc (`data/docs/SOURCE_BOBINE8_NDDC_TABLE_MODEL.md` _or_ `data/docs/SOURCE_BOBINE43_GRANDES_CARRIERES_TABLE_MODEL.md`), and **(3)** optional: `docs/LLM_EXTRACTION_INTERCHANGE.md` (or rely on the schema below).
 
 ---
 

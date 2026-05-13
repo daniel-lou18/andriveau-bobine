@@ -20,7 +20,7 @@ A **`packages/`** tree may be added later for shared TypeScript configs or share
 Address extraction mapping rules and domain conventions are documented in **`docs/EXTRACTION.md`**.
 **`docs/LLM_EXTRACTION_INTERCHANGE.md`** defines the LLM-facing JSON payload and paper-reading rules before validation and D1 load.
 **`docs/LLM_EXTRACTION_PROMPT.md`** — copy-paste prompt for vision/LLM extraction into that JSON.
-Register layout notes: **`docs/SOURCE_BOBINE8_NDDC_TABLE_MODEL.md`**, **`docs/SOURCE_BOBINE43_GRANDES_CARRIERES_TABLE_MODEL.md`**.
+Register layout notes: **`data/docs/SOURCE_BOBINE8_NDDC_TABLE_MODEL.md`**, **`data/docs/SOURCE_BOBINE43_GRANDES_CARRIERES_TABLE_MODEL.md`**. Scans live under **`data/source-tables/`**; interchange JSON under **`data/extracted-tables/`**.
 Domain entities, relations, and lookup optimization are documented in **`docs/DOMAIN_MODEL.md`**.
 
 ## Prerequisites

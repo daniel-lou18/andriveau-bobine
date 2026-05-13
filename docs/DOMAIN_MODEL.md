@@ -3,7 +3,16 @@
 This document describes the core domain model for address-based lookup in this project.
 It focuses on entities, relationships, hierarchy, and the read pattern we optimize for.
 
-The JSON batch an LLM emits from scans **before** application validation maps onto these tables via **`docs/LLM_EXTRACTION_INTERCHANGE.md`** and the persistence rules in **`docs/EXTRACTION.md`**. Register-specific **printed layout** and scribal quirks (e.g. bobine 8 vs bobine 43) live under **`docs/SOURCE_*.md`**.
+The JSON batch an LLM emits from scans **before** application validation maps onto these tables via **`docs/LLM_EXTRACTION_INTERCHANGE.md`** and the persistence rules in **`docs/EXTRACTION.md`**.
+
+**Source data (repo `data/`):**
+
+| Path | Contents |
+| ---- | -------- |
+| **`data/docs/SOURCE_BOBINE8_NDDC_TABLE_MODEL.md`** | Printed layout and notation for bobine **8** (6ᵉ Notre-Dame-des-Champs). |
+| **`data/docs/SOURCE_BOBINE43_GRANDES_CARRIERES_TABLE_MODEL.md`** | Printed layout and notation for bobine **43** (18ᵉ Grandes Carrières). |
+| **`data/source-tables/`** | Image-only PDF scans of the lookup registers. |
+| **`data/extracted-tables/`** | Interchange JSON batches produced from those scans (e.g. `bobine8-extraction.json`, `bobine43-extraction.json`). |
 
 ## Goal And Optimization Target
 

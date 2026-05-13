@@ -25,6 +25,8 @@ This document does not specify OCR/parsing implementation details.
 
 For the **structured JSON payload** an LLM (or vision model) should emit **before** application validation — field names, linear reading order, sticky îlot inheritance, and disambiguation of reel vs PDF page vs the printed “PAGE” column — see **`docs/LLM_EXTRACTION_INTERCHANGE.md`**.
 
+Register-specific **printed layout** notes, PDF scans, and sample interchange files live under **`data/`** (see **`docs/DOMAIN_MODEL.md`** → Source data).
+
 ## Glossary
 
 - `bobine`: reel number as an integer in `source_entries`; other archival strings (series codes, composite labels) are audit-only, not structured fields

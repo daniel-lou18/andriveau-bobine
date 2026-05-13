@@ -1047,7 +1047,7 @@ def main() -> None:
         "logical_records": rows,
     }
 
-    out = "/Users/danie/Documents/PROJECTS/andriveau-bobine/.tmp/bobine8-extraction.json"
+    out = "/Users/danie/Documents/PROJECTS/andriveau-bobine/data/extracted-tables/bobine8-extraction.json"
     with open(out, "w", encoding="utf-8") as f:
         json.dump(root, f, ensure_ascii=False, indent=2)
     print(out, "records", len(rows))
