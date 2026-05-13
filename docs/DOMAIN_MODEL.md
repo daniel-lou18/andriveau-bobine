@@ -7,12 +7,12 @@ The JSON batch an LLM emits from scans **before** application validation maps on
 
 **Source data (repo `data/`):**
 
-| Path | Contents |
-| ---- | -------- |
-| **`data/docs/SOURCE_BOBINE8_NDDC_TABLE_MODEL.md`** | Printed layout and notation for bobine **8** (6ᵉ Notre-Dame-des-Champs). |
-| **`data/docs/SOURCE_BOBINE43_GRANDES_CARRIERES_TABLE_MODEL.md`** | Printed layout and notation for bobine **43** (18ᵉ Grandes Carrières). |
-| **`data/source-tables/`** | Image-only PDF scans of the lookup registers. |
-| **`data/extracted-tables/`** | Interchange JSON batches produced from those scans (e.g. `bobine8-extraction.json`, `bobine43-extraction.json`). |
+| Path                                                             | Contents                                                                                                         |
+| ---------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------- |
+| **`data/docs/SOURCE_BOBINE8_NDDC_TABLE_MODEL.md`**               | Printed layout and notation for bobine **8** (6ᵉ Notre-Dame-des-Champs).                                         |
+| **`data/docs/SOURCE_BOBINE43_GRANDES_CARRIERES_TABLE_MODEL.md`** | Printed layout and notation for bobine **43** (18ᵉ Grandes Carrières).                                           |
+| **`data/source-tables/`**                                        | Image-only PDF scans of the lookup registers.                                                                    |
+| **`data/extracted-tables/`**                                     | Interchange JSON batches produced from those scans (e.g. `bobine8-extraction.json`, `bobine43-extraction.json`). |
 
 ## Goal And Optimization Target
 
@@ -273,10 +273,14 @@ Canonical rank table (from `apps/api/src/lib/suffix.ts`):
 - `ter`: `2`
 - `quater`: `3`
 - `quinquies`: `4`
+- `sexies`: `5`
+- `septies`: `6`
+
+Tokens beyond `septies` are not modeled; the loader skips and logs them (same policy as other unsupported notations). See `docs/EXTRACTION.md`.
 
 Example ordering:
 
-`8 < 8bis < 8ter < 8quater < 8quinquies < 10`
+`8 < 8bis < 8ter < 8quater < 8quinquies < 8sexies < 8septies < 10`
 
 ## Cardinalities (Summary)
 
