@@ -119,7 +119,7 @@ The **N°** field behaves like a **small DSL** rather than a single integer:
 | `n, m, p`                                         | **Finite set** of numbers (order may follow street direction — ascending or descending on the axis)                           |
 | Mix of commas and `->`                            | **Union** of sets/ranges in one cell                                                                                          |
 | Semicolon (`;`) between tokens                    | Used heavily by **other scribes** (e.g. bobine 43); **same union semantics** as comma — see **`docs/EXTRACTION.md`** / **`data/docs/SOURCE_BOBINE43_GRANDES_CARRIERES_TABLE_MODEL.md`** |
-| `n / m` (slash)                                   | Appears on scans (e.g. two adjacent numbers); **transcribe verbatim** — parser policy in **`docs/EXTRACTION.md`**              |
+| `n / m` (slash)                                   | **Third union separator**, equivalent to `,` and `;` (`docs/EXTRACTION.md` → List separators / Mixed singleton + range list). `10/12` → singletons `10` and `12` under one `source_entries`; `5 -> 7 / 6` → range `5..7` + singleton `6`. Adjacent-civic-number convention on Haussmann parcels.    |
 | `-> b` or `-> b, c` (no left endpoint in cell)    | **Appears** in the corpus; transcribe verbatim; acceptance is **not** assumed — see **`docs/EXTRACTION.md`** → No-Go Cases      |
 | `bis`, `ter`, …                                   | French **suffix** forms (e.g. `4 bis`, `4ter`, `59 -> 61 bis`) — suffix stays on the **numeral token** it modifies              |
 | Leading zeros (`05`, `07`)                        | Filing / handwriting convention — normalize to integer + suffix in structured data                                            |

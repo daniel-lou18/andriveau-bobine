@@ -47,7 +47,7 @@ Apply these **after** fixing **document scope** from the page header (`quartier`
 6. **Multi-line ADRESSE** — Wrapping **inside** the address cell is still one voie line; do not split into two logical records on that basis alone.
 7. **`NEANT` rows** — When **Adresse** is **`NEANT`** (no housing inventory for that îlot span), **omit** the row from **`logical_records[]`** entirely — no `source_entries`, no segments. A slash **`/`** in **N°** often accompanies **`NEANT`**; still skip. Prose such as **`4121 à 4126`** in the same row is clerical scope, not a parse target.
 8. **Skip rejected ink** — Lines or blocks that are **crossed out** or otherwise rejected on the source are **omitted** from `logical_records` in v1 (`docs/EXTRACTION.md` → Segment quality flags / provenance policy).
-9. **List separators in `numeros_raw`** — Some scribes use **semicolon** (`;`) instead of **comma** between list items; **both** may appear in one cell. Transcribe **verbatim**; the validated parser treats them as the same **union** of singletons/ranges (`docs/EXTRACTION.md` → Source Entry To Row Mapping).
+9. **List separators in `numeros_raw`** — Some scribes use **semicolon** (`;`) instead of **comma** between list items, and the **bobine-8 / NDDC** scribe additionally uses **slash** (`/`) for adjacent civic numbers on one Haussmann parcel (e.g. `10/12`); **all three** may appear in one cell. Transcribe **verbatim**; the validated parser treats `,`, `;`, and `/` as the same **union** of singletons/ranges (`docs/EXTRACTION.md` → Source Entry To Row Mapping).
 
 ---
 

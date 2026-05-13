@@ -35,7 +35,7 @@ Register-specific **printed layout** notes, PDF scans, and sample interchange fi
 - `quartier`: subdivision inside an arrondissement
 - `ilot`: block number inside a quartier
 - `rue`: canonical street entity
-- **List separators in house-number cells:** in `numeros_raw`, **comma** and **semicolon** are equivalent **union** delimiters between singletons and/or ranges (scribe-dependent); mixed in one cell is allowed (`docs/LLM_EXTRACTION_INTERCHANGE.md`).
+- **List separators in house-number cells:** in `numeros_raw`, **comma** (`,`), **semicolon** (`;`), and **slash** (`/`) are equivalent **union** delimiters between singletons and/or ranges (scribe-dependent); mixed in one cell is allowed (`docs/LLM_EXTRACTION_INTERCHANGE.md`). The slash form is bobine-8 / NDDC specific and typically marks adjacent civic numbers on one Haussmann parcel (e.g. `10/12`, `18/20`); the loader treats both numbers as singleton `street_segments` linked to the **same** `source_entries` row, exactly like the comma/semicolon list case. No new domain concept; co-assertion is recovered at query time via shared `source_entry_id`.
 - `source entry`: one **logical register row** (street + îlot + numbers); street usually in the address cell, îlot rarely spills, house numbers may **overflow downward** in the N° column — still one entry; see Provenance Model
 - `source_entries`: normalized table storing one row per source entry
 - `segment`: one normalized (street, parity, range) unit stored in `street_segments`
@@ -140,6 +140,16 @@ A source entry may produce one or many rows.
   - `24..34`
 
 - `10; 16; 24 > 34` (semicolon-delimited, same semantics) -> the same three segment rows.
+
+- `10/12` (slash-delimited adjacent singletons, bobine-8 / NDDC scribe) -> two segment rows linked to one `source_entries` row:
+
+  - `10..10` (parity `even`)
+  - `12..12` (parity `even`)
+
+- `5 -> 7 / 6` (slash separating a range from a singleton across parities) -> two segment rows linked to one `source_entries` row:
+
+  - `5..7` (parity `odd`)
+  - `6..6` (parity `even`)
 
 ### Explicit enumeration (no compression)
 
@@ -294,6 +304,29 @@ WHERE s.rue_id = :rue_id
   AND (:n, :n_rank) <= (s.to_number, s.to_suffix_rank)
 ORDER BY se.bobine, se.page, COALESCE(se.sequence, 0), i.number;
 ```
+
+## Loader Field Mapping
+
+The extraction loader (Worker route `POST /api/_loader/extraction`, `apps/api/src/loader/`) consumes the JSON defined in **`docs/LLM_EXTRACTION_INTERCHANGE.md`**. The per-field mapping is:
+
+| Interchange field | DB target | Rule |
+| ----------------- | --------- | ---- |
+| `document_scope.bobine` | `source_entries.bobine` (every row in the batch) | Integer; also the **wipe key**: the loader deletes pre-existing rows where `source_entries.bobine = N` before insert (`docs/adr/0004-loader-whole-bobine-wipe-on-reload.md`). |
+| `document_scope.arrondissement` | `arrondissements.number` | `INSERT OR IGNORE`; display name supplied by the loader's static map (`1 → "1er"`, `2..20 → "2e"`…`"20e"`). |
+| `document_scope.quartier` | `quartiers.name` + `quartiers.name_normalized` | `INSERT OR IGNORE` keyed on `(arrondissement_id, name_normalized)`. Normalization via shared `apps/api/src/lib/normalize.ts`. |
+| `record.ilot_numbers[]` | `ilots.number` + `ilots.quartier_id` | `INSERT OR IGNORE`; each ilot attaches to the batch's quartier. Pre-existing ilots with a different `quartier_id` cause the **row** to be skipped with `CROSS_QUARTIER_ILOT` (the trigger would reject anyway; the loader pre-validates so the D1 batch stays trusted-clean). |
+| `record.rue.type` | `voie_types.code` → `rues.type_id` | Strict lookup on lowercase `code`. Miss → skip row with `UNKNOWN_VOIE_TYPE`. |
+| `record.rue.libelle` | `rues.libelle` + `rues.libelle_normalized` | `INSERT OR IGNORE` keyed on `(type_id, libelle_normalized)`. LLM is responsible for canonical form; loader only normalizes. |
+| `record.rue.inferred: true` | `street_segments.type_inferred = 1` | Applied to **every** segment derived from the record. |
+| `record.numeros_raw` | one or more `street_segments` rows | Tokenize on `,;/`; each token is a singleton or `a -> b` range; suffixes (`bis`, `ter`, …, `septies`) resolve via `apps/api/src/lib/suffix.ts`. See § Source Entry To Row Mapping. |
+| `record.low_confidence: true` | `street_segments.quality_flags \|= SEGMENT_QUALITY.LOW_CONFIDENCE_EXTRACTION` | Applied to **every** segment derived from the record. |
+| `record.raw_text` | `source_entries.raw_text` | Stored verbatim. |
+| `record.page` (optional) | `source_entries.page` | `source_entries.page = record.page ?? record.pdf_page`. |
+| `record.reading_order_index` | `source_entries.sequence` | Stored as-is; monotone within a batch is sufficient for the canonical lookup `ORDER BY se.bobine, se.page, COALESCE(se.sequence, 0), i.number`. |
+| `record.scan_note` | `source_entries.notes` | Stored verbatim when present; preserves human-reviewer hints for QA queries. |
+| `record.pdf_page` | (audit only) | Already feeds `source_entries.page` via the fallback above; not stored separately. |
+
+Per-record fields not in the table (`reading_order_index` consumed for `sequence`, `ilot_numbers` consumed for `segment_ilots`) are described in their own sections.
 
 ## Deferred Topics
 

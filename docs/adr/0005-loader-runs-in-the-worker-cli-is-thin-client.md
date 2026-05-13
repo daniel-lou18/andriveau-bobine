@@ -1,0 +1,9 @@
+# Loader runs inside the Worker; the CLI is a thin HTTP client
+
+The extraction loader's writing path runs only inside the Cloudflare Worker, behind a destructive `POST /api/_loader/extraction` route gated by a `LOADER_TOKEN` secret. The loader logic (zod validation, `numeros_raw` parser, voie/ilot/quartier resolution, segment assembly) lives in `apps/api/src/loader/` and is invoked by the route handler with the bound `DB`. A small Node CLI in `apps/api/scripts/load-extraction.ts` reads `data/extracted-tables/bobineN-extraction.json` from disk and POSTs it to the running Worker — local `wrangler dev` during development, deployed URL in production. Same TypeScript code path, same D1 engine, same trigger semantics local and remote.
+
+## Considered Options
+
+- **Node CLI using `better-sqlite3` against the local D1 SQLite file.** Already a `devDependency`. Fast iteration, no HTTP overhead. Rejected: forks the execution context. `better-sqlite3` and D1 differ on `RAISE(ABORT)` text, batch transaction semantics, and PRAGMA handling — bugs reproducing in one engine but not the other are exactly the false-positive debugging surface we don't want this early. Remote D1 would still need a second path (`wrangler d1 execute --remote --file=...`), turning "one loader" into two near-duplicates.
+- **Mixed runtime: pure module + per-environment driver.** Build a loader that accepts an injected `DB`-like interface, run it under better-sqlite3 locally and under D1 remotely. Rejected: the abstraction is leaky (trigger error formats, batch model, foreign-key PRAGMA defaults all differ), and the only benefit is dev iteration speed — addressable by keeping the Worker dev server hot and the CLI quiet.
+- **Bake data into Drizzle migrations.** Rejected upstream in the framing: extraction JSONs are payload, not reference data; they re-emit as the LLM prompt and `low_confidence` corrections improve.

@@ -495,7 +495,6 @@
         "libelle": "Saint-Denis"
       },
       "numeros_raw": "163",
-      "low_confidence": true,
       "scan_note": "Unusual voie for NDDC context; verify scan reading"
     },
     {
@@ -915,7 +914,6 @@
         "libelle": "d'Assas"
       },
       "numeros_raw": "116, 118, 55, 118 -> 132, 136",
-      "low_confidence": true,
       "scan_note": "Dense corrections in N° cell"
     },
     {
@@ -927,8 +925,7 @@
         "type": "avenue",
         "libelle": "de l'Observatoire"
       },
-      "numeros_raw": "12 -> 16, 14, 16, 14, 18",
-      "low_confidence": true
+      "numeros_raw": "12 -> 16, 18"
     },
     {
       "reading_order_index": 83,
@@ -1314,7 +1311,6 @@
         "libelle": "du Montparnasse"
       },
       "numeros_raw": "101, 120",
-      "low_confidence": true,
       "scan_note": "Crossed-out îlot revision adjacent on scan; îlot 844 kept"
     },
     {
@@ -1476,14 +1472,12 @@
       "reading_order_index": 132,
       "pdf_page": 4,
       "ilot_numbers": [848],
-      "raw_text": "Ilot 848 | Rue de la Cité | 4",
+      "raw_text": "Ilot 848 | Rue de Cicé | 4",
       "rue": {
         "type": "rue",
-        "libelle": "de la Cité"
+        "libelle": "de Cicé"
       },
-      "numeros_raw": "4",
-      "low_confidence": true,
-      "scan_note": "Hand as 'Rue de Cité'; normalized libellé"
+      "numeros_raw": "4"
     },
     {
       "reading_order_index": 133,
@@ -1494,8 +1488,7 @@
         "type": "rue",
         "libelle": "du Montparnasse"
       },
-      "numeros_raw": "3 -> 7, 11, 15 -> 25",
-      "scan_note": "Bracket îlots 846–848"
+      "numeros_raw": "3 -> 7, 11, 15 -> 25"
     },
     {
       "reading_order_index": 134,
@@ -1585,7 +1578,6 @@
         "libelle": "de Rennes"
       },
       "numeros_raw": "127 -> 137, 141, 169, 167, 165, 163, 161, 141, 143, 147, 149, 151, 151 bis, 153, 159, 169",
-      "low_confidence": true,
       "scan_note": "Tall N° block; stitched from multi-line cell"
     },
     {
@@ -2092,9 +2084,7 @@
         "type": "rue",
         "libelle": "Littré"
       },
-      "numeros_raw": "6 -> 12, 6, 12 -> 20",
-      "low_confidence": true,
-      "scan_note": "Overwrite/corrections in N°"
+      "numeros_raw": "6 -> 12, 12 -> 20"
     },
     {
       "reading_order_index": 188,
@@ -2222,14 +2212,12 @@
       "reading_order_index": 199,
       "pdf_page": 5,
       "ilot_numbers": [863],
-      "raw_text": "Ilot 863 | Bd du Montparnasse | 45 -> 13, 17 -> 19",
+      "raw_text": "Ilot 863 | Bd du Montparnasse | 1, 5 -> 13, 17 -> 19",
       "rue": {
         "type": "boulevard",
         "libelle": "du Montparnasse"
       },
-      "numeros_raw": "45 -> 13, 17 -> 19",
-      "low_confidence": true,
-      "scan_note": "Non-monotonic range; transcribed verbatim"
+      "numeros_raw": "1, 5 -> 13, 17 -> 19"
     },
     {
       "reading_order_index": 200,
@@ -2345,14 +2333,12 @@
       "reading_order_index": 210,
       "pdf_page": 6,
       "ilot_numbers": [866],
-      "raw_text": "Ilot 866 | Rue du Cherche-Midi | 66-086, 98 bis -> 100, 86 -> 92, 98 -> 102",
+      "raw_text": "Ilot 866 | Rue du Cherche-Midi | 66-86, 98 bis -> 100, 86 -> 92, 98 -> 102",
       "rue": {
         "type": "rue",
         "libelle": "du Cherche-Midi"
       },
-      "numeros_raw": "66-086, 98 bis -> 100, 86 -> 92, 98 -> 102",
-      "low_confidence": true,
-      "scan_note": "Possible misread '66-086'; transcribed from scan"
+      "numeros_raw": "66-86, 98 bis -> 100, 86 -> 92, 98 -> 102"
     },
     {
       "reading_order_index": 211,
@@ -2501,13 +2487,12 @@
       "reading_order_index": 224,
       "pdf_page": 6,
       "ilot_numbers": [869],
-      "raw_text": "Ilot 869 | Rue Littré | 29, 35, 39, 29, 33, 39, 43 -> 47",
+      "raw_text": "Ilot 869 | Rue Littré | 29, 35, 39, 33, 43 -> 47",
       "rue": {
         "type": "rue",
         "libelle": "Littré"
       },
-      "numeros_raw": "29, 35, 39, 29, 33, 39, 43 -> 47",
-      "low_confidence": true
+      "numeros_raw": "29, 35, 39, 33, 43 -> 47"
     },
     {
       "reading_order_index": 225,
@@ -2617,8 +2602,7 @@
         "type": "rue",
         "libelle": "de Sèvres"
       },
-      "numeros_raw": "17, 6, 17 -> 21",
-      "low_confidence": true
+      "numeros_raw": "17, 6, 17 -> 21"
     },
     {
       "reading_order_index": 235,

@@ -30,6 +30,7 @@ _Avoid_: row, record, line (ambiguous vs table row vs wrapped line).
 
 **Arrondissement**:
 Top-level Paris administrative division. Stable across the period covered by the bobines.
+**Display name**: French ordinal — `1er` for `1`, `2e`/`3e`/…/`20e` for `2`–`20`. The bobine extraction JSON carries only the integer (`document_scope.arrondissement`); the display name is materialized by the **loader** from a static `{1..20} → name` map, not re-emitted by the extractor.
 
 **Quartier**:
 Subdivision of an arrondissement. Page-level metadata in the bobines (the page header names the quartier).
