@@ -3,6 +3,7 @@ import { Hono } from "hono";
 import { cors } from "hono/cors";
 import { createDb, type Database } from "./db";
 import { loadBatch } from "./loader";
+import { suggestRues } from "./api/rues_suggest";
 
 type AppBindings = Cloudflare.Env;
 
@@ -27,6 +28,12 @@ app.use("*", async (c, next) => {
 });
 
 app.get("/api/health", (c) => c.json({ ok: true }));
+
+app.get("/api/rues/suggest", async (c) => {
+  const q = c.req.query("q") ?? "";
+  const result = await suggestRues(c.get("db"), q);
+  return c.json(result.body, result.status);
+});
 
 app.get("/api/db/health", async (c) => {
   const db = c.get("db");

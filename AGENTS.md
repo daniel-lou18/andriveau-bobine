@@ -66,6 +66,8 @@ Domain entities, relations, and lookup optimization are documented in **`docs/DO
 | `npm run db:migrate:remote` | Apply to **remote** D1.                                                 |
 | `npm run db:studio`         | Drizzle Studio.                                                         |
 | `npm run loader:run`      | POST a file to **`POST /api/_loader/extraction`** (requires **`npm run dev`** and **`LOADER_TOKEN`**). |
+| `npm run test`              | Worker Vitest suite (uses `@cloudflare/vitest-pool-workers`; applies `drizzle/*.sql` to an isolated D1 via `test/apply-migrations.ts`). |
+| `npm run test:watch`        | Same suite in watch mode. |
 
 Workspace-aware variants from root: `npm run <script> -w web` or `-w api`.
 
@@ -148,7 +150,9 @@ Some migrations are easier to write or reorder by hand (large rebuilds, seeds in
 
 ## Testing (API)
 
-- **`vitest`** and **`@cloudflare/vitest-pool-workers`** are listed in `apps/api` but a **Vitest config and tests are not required for every change** until the project wires them up.
+- **Harness:** `apps/api/vitest.config.ts` uses `@cloudflare/vitest-pool-workers`. Tests live under **`apps/api/test/`** and run inside a Workers runtime against an in-memory D1 with `drizzle/*.sql` applied by **`test/apply-migrations.ts`**.
+- **Conventions:** name files `*.test.ts`; reset any seeded rows in `beforeEach`/`afterEach` (the D1 is shared across tests in a file). Use `SELF.fetch("https://example.com/api/...")` to drive the Worker end-to-end.
+- **Adding tests:** prefer integration-style HTTP tests over isolated unit tests; assert public JSON shape and HTTP status rather than internal SQL strings (see `apps/api/test/rues_suggest.test.ts`).
 
 ## Git and ignored files
 
