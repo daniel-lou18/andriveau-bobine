@@ -154,6 +154,20 @@ Some migrations are easier to write or reorder by hand (large rebuilds, seeds in
 
 Root **`.gitignore`** includes `node_modules`, build outputs, `.wrangler`, `.`, env files, logs, and coverage. **`worker-configuration.d.ts`** is **tracked** so everyone and CI share the same generated binding types; refresh it with **`npm run types:api`** when `wrangler.jsonc` changes.
 
+## Agent skills
+
+### Issue tracker
+
+GitHub Issues in this repository (`gh` from a clone of `origin`). See `docs/agents/issue-tracker.md`.
+
+### Triage labels
+
+Canonical names match GitHub label strings (`needs-triage`, `needs-info`, `ready-for-agent`, `ready-for-human`, `wontfix`). See `docs/agents/triage-labels.md`.
+
+### Domain docs
+
+Single-context: root `CONTEXT.md` and `docs/adr/`. See `docs/agents/domain.md`.
+
 ## Conventions for agents
 
 - Run **`npm install`** from the **root** after dependency changes in any workspace.
