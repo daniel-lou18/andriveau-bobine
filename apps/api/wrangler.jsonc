@@ -3,6 +3,10 @@
   "name": "andriveau-bobine-api",
   "main": "src/index.ts",
   "compatibility_date": "2026-05-06",
+  "vars": {
+    // Overridden by `.dev.vars` in local dev; use `wrangler secret put LOADER_TOKEN` in production.
+    "LOADER_TOKEN": "replace-me-in-dev-vars"
+  },
   // Create DB: `cd apps/api && npx wrangler d1 create andriveau-bobine`, then paste database_id here.
   "d1_databases": [
     {

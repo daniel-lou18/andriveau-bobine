@@ -14,7 +14,7 @@ export const streetSegments = sqliteTable(
   {
     id: integer("id").primaryKey({ autoIncrement: true }),
     sourceEntryId: integer("source_entry_id")
-      .references(() => sourceEntries.id)
+      .references(() => sourceEntries.id, { onDelete: "cascade" })
       .notNull(),
     rueId: integer("rue_id")
       .references(() => rues.id)

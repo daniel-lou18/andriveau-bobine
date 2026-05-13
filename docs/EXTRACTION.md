@@ -315,10 +315,10 @@ The extraction loader (Worker route `POST /api/_loader/extraction`, `apps/api/sr
 | `document_scope.arrondissement` | `arrondissements.number` | `INSERT OR IGNORE`; display name supplied by the loader's static map (`1 → "1er"`, `2..20 → "2e"`…`"20e"`). |
 | `document_scope.quartier` | `quartiers.name` + `quartiers.name_normalized` | `INSERT OR IGNORE` keyed on `(arrondissement_id, name_normalized)`. Normalization via shared `apps/api/src/lib/normalize.ts`. |
 | `record.ilot_numbers[]` | `ilots.number` + `ilots.quartier_id` | `INSERT OR IGNORE`; each ilot attaches to the batch's quartier. Pre-existing ilots with a different `quartier_id` cause the **row** to be skipped with `CROSS_QUARTIER_ILOT` (the trigger would reject anyway; the loader pre-validates so the D1 batch stays trusted-clean). |
-| `record.rue.type` | `voie_types.code` → `rues.type_id` | Strict lookup on lowercase `code`. Miss → skip row with `UNKNOWN_VOIE_TYPE`. |
+| `record.rue.type` | `voie_types.code` → `rues.type_id` | Lookup on **`voie_types.code`** after the same aggressive **`normalizeName`** used for libellés (so e.g. interchange `cité` matches seeded `cite`). Miss → skip row with `UNKNOWN_VOIE_TYPE`. |
 | `record.rue.libelle` | `rues.libelle` + `rues.libelle_normalized` | `INSERT OR IGNORE` keyed on `(type_id, libelle_normalized)`. LLM is responsible for canonical form; loader only normalizes. |
 | `record.rue.inferred: true` | `street_segments.type_inferred = 1` | Applied to **every** segment derived from the record. |
-| `record.numeros_raw` | one or more `street_segments` rows | Tokenize on `,;/`; each token is a singleton or `a -> b` range; suffixes (`bis`, `ter`, …, `septies`) resolve via `apps/api/src/lib/suffix.ts`. See § Source Entry To Row Mapping. |
+| `record.numeros_raw` | one or more `street_segments` rows | Tokenize on `,;/`; each token is a singleton or `a -> b` range; suffixes (`bis`, `ter`, …, `septies`) resolve via `apps/api/src/lib/suffix.ts`. **Loader:** hyphen ranges with optional spaces (`75 - 77`, `66-86`) are normalized to `->` before tokenizing (scribe variant of the arrow). See § Source Entry To Row Mapping. |
 | `record.low_confidence: true` | `street_segments.quality_flags \|= SEGMENT_QUALITY.LOW_CONFIDENCE_EXTRACTION` | Applied to **every** segment derived from the record. |
 | `record.raw_text` | `source_entries.raw_text` | Stored verbatim. |
 | `record.page` (optional) | `source_entries.page` | `source_entries.page = record.page ?? record.pdf_page`. |

@@ -1443,12 +1443,12 @@
       "reading_order_index": 119,
       "pdf_page": 4,
       "ilot_numbers": [4119],
-      "raw_text": "Ilot 4119 | Passage Charles-Albert | 7 -> 12; 16; 18",
+      "raw_text": "Ilot 4119 | Passage Charles-Albert | 4 -> 12; 16; 18",
       "rue": {
         "type": "passage",
         "libelle": "Charles-Albert"
       },
-      "numeros_raw": "7 -> 12; 16; 18",
+      "numeros_raw": "4 -> 12; 16; 18",
       "page": 7
     },
     {

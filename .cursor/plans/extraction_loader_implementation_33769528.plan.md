@@ -4,25 +4,25 @@ overview: "Build the extraction loader per ADR-0004/0005/0006 and the EXTRACTION
 todos:
   - id: migration-cascade
     content: Edit Drizzle schemas for ON DELETE CASCADE on street_segments.source_entry_id and segment_ilots.segment_id; run db:generate; hand-edit generated SQL to re-create the segment_ilots_quartier_consistency trigger; rename to 0013_loader_cascade_deletes.sql; apply locally
-    status: pending
+    status: completed
   - id: loader-types-validate-parser
     content: "Create apps/api/src/loader/{types,validate,parse-numeros}.ts: SkipReason enum, LoaderReport type, zod batch schema, pure parseNumerosRaw tokenizer with no-go detection"
-    status: pending
+    status: completed
   - id: loader-bootstrap
     content: "Create apps/api/src/loader/bootstrap.ts: static arrondissement-name map; INSERT OR IGNORE arrondissement, quartier (with shared normalizeName), and ilots; detect cross-quartier ilot pre-existing rows"
-    status: pending
+    status: completed
   - id: loader-index
     content: "Create apps/api/src/loader/index.ts: orchestrate validate -> wipe -> bootstrap -> per-record processing -> chunked db.batch inserts; assemble LoaderReport with inserted counts and skipped array"
-    status: pending
+    status: completed
   - id: worker-route-and-secret
     content: Mount POST /api/_loader/extraction in apps/api/src/index.ts with Bearer LOADER_TOKEN check; declare LOADER_TOKEN in wrangler.jsonc and .dev.vars; regenerate worker-configuration.d.ts via npm run types:api
-    status: pending
+    status: completed
   - id: cli-script
     content: Create apps/api/scripts/load-extraction.ts (Node CLI with --file/--api-url/--token); add tsx devDep and loader:run npm script
-    status: pending
+    status: completed
   - id: run-and-verify
     content: Run wrangler dev; load both data/extracted-tables/*.json against local D1; verify row counts via Drizzle Studio; re-run to confirm idempotent whole-bobine wipe
-    status: pending
+    status: completed
 isProject: false
 ---
 

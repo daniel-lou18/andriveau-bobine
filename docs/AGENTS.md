@@ -65,8 +65,18 @@ Domain entities, relations, and lookup optimization are documented in **`docs/DO
 | `npm run db:migrate:local`  | Apply `drizzle/*.sql` to **local** D1.                                  |
 | `npm run db:migrate:remote` | Apply to **remote** D1.                                                 |
 | `npm run db:studio`         | Drizzle Studio.                                                         |
+| `npm run loader:run`      | POST a file to **`POST /api/_loader/extraction`** (requires **`npm run dev`** and **`LOADER_TOKEN`**). |
 
 Workspace-aware variants from root: `npm run <script> -w web` or `-w api`.
+
+### Extraction loader (local)
+
+1. Apply migrations: `npm run db:migrate:local -w api`.
+2. Set **`LOADER_TOKEN`** in **`apps/api/.dev.vars`** (same value you pass to the CLI).
+3. Start the Worker: `npm run dev:api` (or `npm run dev -w api`).
+4. Load JSON: `npm run loader:run -w api -- --file ../../data/extracted-tables/bobine8-extraction.json --token <LOADER_TOKEN>`.
+
+See **`docs/EXTRACTION.md`** (Loader Field Mapping) and **`docs/adr/0004`**–**`0006`** for semantics. Each load **replaces** all rows for that file’s `document_scope.bobine` (`DELETE` cascades segments and `segment_ilots`).
 
 ## Local development
 

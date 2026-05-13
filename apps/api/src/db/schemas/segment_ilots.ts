@@ -1,4 +1,9 @@
-import { index, integer, primaryKey, sqliteTable } from "drizzle-orm/sqlite-core";
+import {
+  index,
+  integer,
+  primaryKey,
+  sqliteTable,
+} from "drizzle-orm/sqlite-core";
 import { ilots } from "./ilots";
 import { streetSegments } from "./street_segments";
 
@@ -6,7 +11,7 @@ export const segmentIlots = sqliteTable(
   "segment_ilots",
   {
     segmentId: integer("segment_id")
-      .references(() => streetSegments.id)
+      .references(() => streetSegments.id, { onDelete: "cascade" })
       .notNull(),
     ilotId: integer("ilot_id")
       .references(() => ilots.id)
