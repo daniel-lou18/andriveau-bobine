@@ -3,7 +3,7 @@ import { Hono } from "hono";
 import { cors } from "hono/cors";
 import { createDb, type Database } from "./db";
 import { loadBatch } from "./loader";
-import { suggestRues } from "./api/rues_suggest";
+import { suggestRues } from "./suggest/rues_suggest";
 
 type AppBindings = Cloudflare.Env;
 

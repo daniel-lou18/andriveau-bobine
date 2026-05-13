@@ -136,14 +136,25 @@ describe("GET /api/rues/suggest", () => {
     expect(b3.results.map((r) => r.libelle)).toEqual(["Notre-Dame-des-Champs"]);
   });
 
-  it("matches prefix only, not substring inside the libellé", async () => {
+  it("matches libellé when the user omits a leading French article (e.g. vau → de Vaugirard)", async () => {
     await seedRues([
       { typeCode: "rue", libelle: "de Vaugirard" },
-      { typeCode: "boulevard", libelle: "Raspail" },
+      { typeCode: "rue", libelle: "Vauvenargues" },
     ]);
 
-    // "vau" appears inside "de vaugirard" but not at the start of the libelle_normalized.
     const res = await SELF.fetch("https://example.com/api/rues/suggest?q=vau");
+    expect(res.status).toBe(200);
+    const body = (await res.json()) as { results: { libelle: string }[] };
+    expect(body.results.map((r) => r.libelle)).toEqual([
+      "Vauvenargues",
+      "de Vaugirard",
+    ]);
+  });
+
+  it("still rejects true infix matches (no substring match on the stem)", async () => {
+    await seedRues([{ typeCode: "rue", libelle: "de Vaugirard" }]);
+
+    const res = await SELF.fetch("https://example.com/api/rues/suggest?q=gir");
     expect(res.status).toBe(200);
     const body = (await res.json()) as { results: { libelle: string }[] };
     expect(body.results).toEqual([]);
@@ -163,5 +174,59 @@ describe("GET /api/rues/suggest", () => {
     expect(res.status).toBe(200);
     const body = (await res.json()) as { results: { libelle: string }[] };
     expect(body.results).toEqual([]);
+  });
+
+  it("matches when the user types type + libellé (e.g. rue de rennes)", async () => {
+    await seedRues([
+      { typeCode: "rue", libelle: "de Rennes" },
+      { typeCode: "boulevard", libelle: "de Rennes" },
+      { typeCode: "rue", libelle: "Saint-Placide" },
+    ]);
+
+    const res = await SELF.fetch(
+      "https://example.com/api/rues/suggest?q=rue%20de%20rennes"
+    );
+    expect(res.status).toBe(200);
+    const body = (await res.json()) as {
+      results: { type: string; libelle: string }[];
+    };
+    expect(body.results).toHaveLength(1);
+    expect(body.results[0]!.type).toBe("Rue");
+    expect(body.results[0]!.libelle).toBe("de Rennes");
+  });
+
+  it("still matches libellé-only when type is omitted (rennes → de Rennes)", async () => {
+    await seedRues([
+      { typeCode: "rue", libelle: "de Rennes" },
+      { typeCode: "boulevard", libelle: "Rennes" },
+    ]);
+
+    const res = await SELF.fetch("https://example.com/api/rues/suggest?q=rennes");
+    expect(res.status).toBe(200);
+    const body = (await res.json()) as { results: { libelle: string }[] };
+    expect(body.results.map((r) => r.libelle).sort()).toEqual(
+      ["Rennes", "de Rennes"].sort()
+    );
+  });
+
+  it("matches full normalized voie key prefix (e.g. rue de la → all Rue de la …)", async () => {
+    await seedRues([
+      { typeCode: "rue", libelle: "de la Forge" },
+      { typeCode: "rue", libelle: "de la Paix" },
+      { typeCode: "rue", libelle: "de la Santé" },
+      { typeCode: "rue", libelle: "de Lorient" },
+      { typeCode: "boulevard", libelle: "de la Tour" },
+    ]);
+
+    const res = await SELF.fetch(
+      "https://example.com/api/rues/suggest?q=rue%20de%20la"
+    );
+    expect(res.status).toBe(200);
+    const body = (await res.json()) as { results: { type: string; libelle: string }[] };
+    expect(body.results).toHaveLength(3);
+    expect(body.results.every((r) => r.type === "Rue")).toBe(true);
+    expect(body.results.map((r) => r.libelle).sort()).toEqual(
+      ["de la Forge", "de la Paix", "de la Santé"].sort()
+    );
   });
 });
