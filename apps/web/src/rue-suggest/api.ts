@@ -1,8 +1,6 @@
-export type RueSuggestion = {
-  rue_id: number;
-  type: string;
-  libelle: string;
-};
+import type { RueSuggestion } from "@andriveau-bobine/disambiguation";
+
+export type { RueSuggestion };
 
 export type SuggestResponse =
   | { ok: true; results: RueSuggestion[] }
@@ -31,8 +29,4 @@ export async function fetchRueSuggestions(
   }
   const body = (await res.json()) as { results: RueSuggestion[] };
   return { ok: true, results: body.results };
-}
-
-export function formatSuggestionLabel(s: RueSuggestion): string {
-  return `${s.type} ${s.libelle}`;
 }

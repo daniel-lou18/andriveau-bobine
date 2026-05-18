@@ -2,8 +2,9 @@ import { sql } from "drizzle-orm";
 import { Hono } from "hono";
 import { cors } from "hono/cors";
 import { createDb, type Database } from "./db";
-import { loadBatch } from "./loader";
-import { suggestRues } from "./suggest/rues_suggest";
+import { apiErrorHandler } from "./http/on-error";
+import { loaderRoutes } from "./loader/routes";
+import { suggestRoutes } from "./suggest/routes";
 
 type AppBindings = Cloudflare.Env;
 
@@ -12,6 +13,8 @@ type AppVariables = {
 };
 
 const app = new Hono<{ Bindings: AppBindings; Variables: AppVariables }>();
+
+app.onError(apiErrorHandler);
 
 app.use(
   "/*",
@@ -29,32 +32,13 @@ app.use("*", async (c, next) => {
 
 app.get("/api/health", (c) => c.json({ ok: true }));
 
-app.get("/api/rues/suggest", async (c) => {
-  const q = c.req.query("q") ?? "";
-  const result = await suggestRues(c.get("db"), q);
-  return c.json(result.body, result.status);
-});
+app.route("/api/rues", suggestRoutes);
+app.route("/api/_loader", loaderRoutes);
 
 app.get("/api/db/health", async (c) => {
   const db = c.get("db");
   await db.run(sql`select 1`);
   return c.json({ ok: true, db: true });
-});
-
-app.post("/api/_loader/extraction", async (c) => {
-  const auth = c.req.header("Authorization") ?? "";
-  const token = c.env.LOADER_TOKEN;
-  if (!token || auth !== `Bearer ${token}`) {
-    return c.json({ error: "unauthorized" }, 401);
-  }
-  let body: unknown;
-  try {
-    body = await c.req.json();
-  } catch {
-    return c.json({ error: "invalid JSON body" }, 400);
-  }
-  const result = await loadBatch(c.get("db"), body);
-  return c.json(result.body, result.status);
 });
 
 export default app;

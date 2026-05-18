@@ -1,22 +1,20 @@
 import { useEffect, useRef, useState } from "react";
 import {
-  fetchRueSuggestions,
   formatSuggestionLabel,
+  SUGGEST_MIN_LENGTH,
+  toResolvedRue,
+  type ResolvedRue,
   type RueSuggestion,
-} from "./api";
+} from "@andriveau-bobine/disambiguation";
+import { fetchRueSuggestions } from "./api";
 
-/** Mirrors the API's own minimum-length rule; avoids the round-trip for `q.length < 2`. */
-const SUGGEST_MIN_LENGTH = 2;
 /** Debounce window between keystroke and request. */
 const DEBOUNCE_MS = 150;
 
-export type SelectedRue = {
-  rueId: number;
-  display: string;
-};
+export type { ResolvedRue as SelectedRue };
 
 export type RueSuggestBoxProps = {
-  onSelect?: (rue: SelectedRue) => void;
+  onSelect?: (rue: ResolvedRue) => void;
 };
 
 export function RueSuggestBox({ onSelect }: RueSuggestBoxProps) {
@@ -24,7 +22,7 @@ export function RueSuggestBox({ onSelect }: RueSuggestBoxProps) {
   const [suggestions, setSuggestions] = useState<RueSuggestion[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [selected, setSelected] = useState<SelectedRue | null>(null);
+  const [selected, setSelected] = useState<ResolvedRue | null>(null);
 
   // Track the in-flight request so a slow earlier response cannot overwrite
   // a fresher one for a more recent fragment.
@@ -62,10 +60,9 @@ export function RueSuggestBox({ onSelect }: RueSuggestBoxProps) {
   }, [query]);
 
   function handleSelect(s: RueSuggestion) {
-    const display = formatSuggestionLabel(s);
-    const choice: SelectedRue = { rueId: s.rue_id, display };
+    const choice = toResolvedRue(s);
     setSelected(choice);
-    setQuery(display);
+    setQuery(choice.display);
     setSuggestions([]);
     onSelect?.(choice);
   }

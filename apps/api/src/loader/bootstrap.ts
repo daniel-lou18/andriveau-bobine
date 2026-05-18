@@ -6,7 +6,7 @@ import {
   quartiers,
 } from "../db/schema";
 import { normalizeName } from "../lib/normalize";
-import type { ExtractionBatch } from "./validate";
+import type { ExtractionBatch } from "./schema";
 
 /** French ordinal display name for `arrondissements.name` (integer 1..20). */
 const ARR_DISPLAY_NAME: Record<number, string> = {
