@@ -1,12 +1,16 @@
 import type { RueSuggestion } from "@andriveau-bobine/disambiguation";
 import type { Database } from "../db";
 import { displayVoieType } from "../lib/voie_type_display";
-import { buildSuggestMatchSpec } from "./match";
+import { buildSuggestLikePatterns, buildSuggestMatchSpec } from "./match";
 import { querySuggestRues } from "./query";
 
 export type { RueSuggestion } from "@andriveau-bobine/disambiguation";
-export { buildSuggestMatchSpec, escapeLikeFragment } from "./match";
-export type { SuggestMatchSpec } from "./match";
+export {
+  buildSuggestLikePatterns,
+  buildSuggestMatchSpec,
+  escapeLikeFragment,
+} from "./match";
+export type { SuggestLikePatterns, SuggestMatchSpec } from "./match";
 export { suggestQuerySchema } from "./schema";
 export type { SuggestQuery } from "./schema";
 
@@ -34,7 +38,8 @@ export async function suggestRues(
   normalizedQuery: string
 ): Promise<RueSuggestion[]> {
   const spec = buildSuggestMatchSpec(normalizedQuery);
-  const rows = await querySuggestRues(db, spec);
+  const patterns = buildSuggestLikePatterns(spec);
+  const rows = await querySuggestRues(db, patterns);
 
   return rows.map((r) => ({
     rue_id: r.rue_id,
