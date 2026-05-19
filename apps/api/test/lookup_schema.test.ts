@@ -38,4 +38,38 @@ describe("lookupQuerySchema", () => {
     expect(lookupQuerySchema.safeParse({ n: "0" }).success).toBe(false);
     expect(lookupQuerySchema.safeParse({ n: "-3" }).success).toBe(false);
   });
+
+  it("accepts canonical suffix tokens", () => {
+    for (const suffix of ["bis", "ter", "quater", "quinquies", "sexies", "septies"]) {
+      const result = lookupQuerySchema.safeParse({ n: "8", suffix });
+      expect(result.success).toBe(true);
+      if (result.success) {
+        expect(result.data.suffix).toBe(suffix);
+      }
+    }
+  });
+
+  it("accepts omitted or empty suffix as undefined", () => {
+    const omitted = lookupQuerySchema.safeParse({ n: "8" });
+    expect(omitted.success).toBe(true);
+    if (omitted.success) {
+      expect(omitted.data.suffix).toBeUndefined();
+    }
+
+    const empty = lookupQuerySchema.safeParse({ n: "8", suffix: "" });
+    expect(empty.success).toBe(true);
+    if (empty.success) {
+      expect(empty.data.suffix).toBeUndefined();
+    }
+  });
+
+  it("rejects unknown suffix tokens with a message naming allowed values", () => {
+    for (const suffix of ["octies", "foo", "1"]) {
+      const result = lookupQuerySchema.safeParse({ n: "8", suffix });
+      expect(result.success).toBe(false);
+      if (!result.success) {
+        expect(result.error.issues[0]?.message).toMatch(/suffix must be one of:/);
+      }
+    }
+  });
 });

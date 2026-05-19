@@ -6,6 +6,7 @@ import { lookupQueryOptions } from "./lookupQuery";
 export type LookupSubmitInput = {
   rueId: number;
   n: number;
+  suffix?: string;
 };
 
 export type AddressLookup = {
@@ -24,7 +25,11 @@ export function useAddressLookup(): AddressLookup {
     isFetching,
     error: queryError,
   } = useQuery({
-    ...lookupQueryOptions(submitted?.rueId ?? 0, submitted?.n ?? 0),
+    ...lookupQueryOptions(
+      submitted?.rueId ?? 0,
+      submitted?.n ?? 0,
+      submitted?.suffix
+    ),
     enabled: submitted !== null,
   });
 
