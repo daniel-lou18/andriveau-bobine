@@ -55,11 +55,24 @@ export async function queryLookupRawRows(
     );
 
   return rows.map(
-    ({ arrondissement, quartier, ilot, sourceEntryId }) => ({
+    ({
       arrondissement,
       quartier,
       ilot,
       sourceEntryId,
+      bobine,
+      page,
+      sequence,
+      raw_text,
+    }) => ({
+      arrondissement,
+      quartier,
+      ilot,
+      sourceEntryId,
+      bobine,
+      page,
+      sequence,
+      raw_text,
     })
   );
 }

@@ -8,11 +8,15 @@ export async function fetchLookup(
   rueId: number,
   n: number,
   suffix: string | undefined,
+  provenance = false,
   signal?: AbortSignal
 ): Promise<LookupFetchResponse> {
   const params = new URLSearchParams({ n: String(n) });
   if (suffix !== undefined) {
     params.set("suffix", suffix);
+  }
+  if (provenance) {
+    params.set("provenance", "1");
   }
   const url = `/api/rues/${encodeURIComponent(String(rueId))}/lookup?${params}`;
   const res = await fetch(url, { signal });

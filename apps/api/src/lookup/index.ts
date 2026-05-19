@@ -17,7 +17,8 @@ export async function lookupRue(
   db: Database,
   rueId: number,
   n: number,
-  suffix?: string
+  suffix?: string,
+  provenance = false
 ): Promise<LookupResponse | "not_found"> {
   const rue = await db
     .select({ id: rues.id })
@@ -32,5 +33,5 @@ export async function lookupRue(
   const input = parseLookupInput(n, suffix);
   const rows = await queryLookupRawRows(db, rueId, input);
 
-  return assembleLookupResult(rows);
+  return assembleLookupResult(rows, { provenance });
 }

@@ -46,6 +46,24 @@ export function LookupResultBox({ lookup }: LookupResultBoxProps) {
         {result.matches.map((match) => (
           <li key={`${match.arrondissement}-${match.quartier}-${match.ilot}`}>
             {match.arrondissement}e — {match.quartier} — îlot {match.ilot}
+            {match.provenance && match.provenance.length > 0 ? (
+              <details data-testid="lookup-provenance">
+                <summary>Provenance ({match.provenance.length})</summary>
+                <ul>
+                  {match.provenance.map((entry) => (
+                    <li
+                      key={`${entry.bobine}-${entry.page}-${entry.sequence}-${entry.raw_text}`}
+                    >
+                      Bobine {entry.bobine}, page {entry.page}
+                      {entry.sequence !== null
+                        ? `, seq ${entry.sequence}`
+                        : ""}
+                      : {entry.raw_text}
+                    </li>
+                  ))}
+                </ul>
+              </details>
+            ) : null}
           </li>
         ))}
       </ul>

@@ -7,6 +7,7 @@ export type LookupSubmitInput = {
   rueId: number;
   n: number;
   suffix?: string;
+  provenance?: boolean;
 };
 
 export type AddressLookup = {
@@ -28,7 +29,8 @@ export function useAddressLookup(): AddressLookup {
     ...lookupQueryOptions(
       submitted?.rueId ?? 0,
       submitted?.n ?? 0,
-      submitted?.suffix
+      submitted?.suffix,
+      submitted?.provenance ?? false
     ),
     enabled: submitted !== null,
   });

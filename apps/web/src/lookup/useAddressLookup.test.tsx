@@ -72,6 +72,7 @@ describe("useAddressLookup", () => {
       42,
       95,
       undefined,
+      false,
       expect.any(AbortSignal)
     );
     expect(result.current.loading).toBe(false);
@@ -168,6 +169,30 @@ describe("useAddressLookup", () => {
       42,
       8,
       "bis",
+      false,
+      expect.any(AbortSignal)
+    );
+  });
+
+  it("submit with provenance passes provenance=1 to fetchLookup", async () => {
+    mockFetch.mockResolvedValue({ ok: true, data: sampleResponse });
+
+    const { result } = renderHook(() => useAddressLookup(), {
+      wrapper: createWrapper(),
+    });
+
+    act(() => {
+      result.current.submit({ rueId: 42, n: 95, provenance: true });
+    });
+
+    await waitFor(() => {
+      expect(result.current.result).toEqual(sampleResponse);
+    });
+    expect(mockFetch).toHaveBeenCalledWith(
+      42,
+      95,
+      undefined,
+      true,
       expect.any(AbortSignal)
     );
   });
@@ -196,6 +221,7 @@ describe("useAddressLookup", () => {
       42,
       8,
       "ter",
+      false,
       expect.any(AbortSignal)
     );
   });

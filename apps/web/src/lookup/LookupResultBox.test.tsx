@@ -70,4 +70,56 @@ describe("LookupResultBox", () => {
     expect(screen.getByTestId("lookup-matches")).toBeTruthy();
     expect(screen.getAllByRole("listitem")).toHaveLength(2);
   });
+
+  it("renders expandable provenance when present on a match", () => {
+    render(
+      <LookupResultBox
+        lookup={lookupWith({
+          result: {
+            conflict: false,
+            matches: [
+              {
+                arrondissement: 6,
+                quartier: "Notre-Dame-des-Champs",
+                ilot: 4121,
+                provenance: [
+                  {
+                    bobine: 8,
+                    page: 2,
+                    sequence: 1,
+                    raw_text: "Ilot 4121 | rue de Test | 95",
+                  },
+                ],
+              },
+            ],
+          },
+        })}
+      />
+    );
+
+    expect(screen.getByTestId("lookup-provenance")).toBeTruthy();
+    expect(screen.getByText(/Bobine 8, page 2/)).toBeTruthy();
+    expect(screen.getByText(/Ilot 4121 \| rue de Test \| 95/)).toBeTruthy();
+  });
+
+  it("does not render provenance UI when provenance is absent", () => {
+    render(
+      <LookupResultBox
+        lookup={lookupWith({
+          result: {
+            conflict: false,
+            matches: [
+              {
+                arrondissement: 6,
+                quartier: "Notre-Dame-des-Champs",
+                ilot: 4121,
+              },
+            ],
+          },
+        })}
+      />
+    );
+
+    expect(screen.queryByTestId("lookup-provenance")).toBeNull();
+  });
 });

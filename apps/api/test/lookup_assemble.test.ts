@@ -11,6 +11,10 @@ function row(
     arrondissement: 6,
     quartier: "Notre-Dame-des-Champs",
     sourceEntryId: 1,
+    bobine: 8,
+    page: 1,
+    sequence: 0,
+    raw_text: "test raw",
     ...overrides,
   };
 }
@@ -80,6 +84,63 @@ describe("assembleLookupResult", () => {
       ],
       conflict: true,
     });
+  });
+
+  it("attaches provenance when the provenance option is true", () => {
+    expect(
+      assembleLookupResult([row({ ilot: 4121 })], { provenance: true })
+    ).toEqual({
+      matches: [
+        {
+          arrondissement: 6,
+          quartier: "Notre-Dame-des-Champs",
+          ilot: 4121,
+          provenance: [
+            {
+              bobine: 8,
+              page: 1,
+              sequence: 0,
+              raw_text: "test raw",
+            },
+          ],
+        },
+      ],
+      conflict: false,
+    });
+  });
+
+  it("dedupes provenance entries within a match when multiple rows share the same source entry", () => {
+    expect(
+      assembleLookupResult(
+        [
+          row({ ilot: 4121 }),
+          row({ ilot: 4121 }),
+        ],
+        { provenance: true }
+      )
+    ).toEqual({
+      matches: [
+        {
+          arrondissement: 6,
+          quartier: "Notre-Dame-des-Champs",
+          ilot: 4121,
+          provenance: [
+            {
+              bobine: 8,
+              page: 1,
+              sequence: 0,
+              raw_text: "test raw",
+            },
+          ],
+        },
+      ],
+      conflict: false,
+    });
+  });
+
+  it("omits provenance on matches when the provenance option is false", () => {
+    const result = assembleLookupResult([row({ ilot: 4121 })]);
+    expect(result.matches[0]).not.toHaveProperty("provenance");
   });
 
   it("dedupes matching triples and still returns conflict true when two sources agree on ilot", () => {
