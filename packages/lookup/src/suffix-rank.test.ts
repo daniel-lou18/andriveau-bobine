@@ -1,9 +1,5 @@
 import { describe, expect, it } from "vitest";
-import {
-  rankOfSuffix,
-  SUFFIX_RANK,
-  suffixOfRank,
-} from "../src/lib/suffix";
+import { rankOfSuffix, SUFFIX_RANK, suffixOfRank } from "./suffix-rank";
 
 describe("rankOfSuffix", () => {
   it.each([

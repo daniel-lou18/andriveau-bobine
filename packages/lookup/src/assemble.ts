@@ -1,8 +1,9 @@
+import { lookupProvenanceKey, lookupTripleKey } from "./format";
 import type {
   LookupMatch,
   LookupProvenance,
   LookupResponse,
-} from "@andriveau-bobine/lookup";
+} from "./types";
 
 export type LookupRawRow = {
   arrondissement: number;
@@ -19,14 +20,6 @@ export type AssembleLookupOptions = {
   provenance?: boolean;
 };
 
-function tripleKey(row: Pick<LookupRawRow, "arrondissement" | "quartier" | "ilot">): string {
-  return `${row.arrondissement}-${row.quartier}-${row.ilot}`;
-}
-
-function provenanceKey(entry: LookupProvenance): string {
-  return `${entry.bobine}-${entry.page}-${entry.sequence}-${entry.raw_text}`;
-}
-
 function dedupeProvenance(rows: LookupRawRow[]): LookupProvenance[] {
   const seen = new Set<string>();
   const provenance: LookupProvenance[] = [];
@@ -38,7 +31,7 @@ function dedupeProvenance(rows: LookupRawRow[]): LookupProvenance[] {
       sequence: row.sequence,
       raw_text: row.raw_text,
     };
-    const key = provenanceKey(entry);
+    const key = lookupProvenanceKey(entry);
     if (seen.has(key)) {
       continue;
     }
@@ -59,7 +52,7 @@ export function assembleLookupResult(
 
   const rowsByTriple = new Map<string, LookupRawRow[]>();
   for (const row of rows) {
-    const key = tripleKey(row);
+    const key = lookupTripleKey(row);
     const group = rowsByTriple.get(key);
     if (group) {
       group.push(row);
@@ -72,7 +65,7 @@ export function assembleLookupResult(
   const seenTriples = new Set<string>();
 
   for (const row of rows) {
-    const key = tripleKey(row);
+    const key = lookupTripleKey(row);
     if (seenTriples.has(key)) {
       continue;
     }

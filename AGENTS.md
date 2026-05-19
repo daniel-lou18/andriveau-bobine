@@ -14,9 +14,10 @@ This document describes the **andriveau-bobine** monorepo: layout, commands, and
 apps/
   web/          # Frontend SPA
   api/          # Worker (Hono)
+packages/
+  disambiguation/   # @andriveau-bobine/disambiguation — suggest contract + handoff types
+  lookup/           # @andriveau-bobine/lookup — lookup contract, assembly, suffix ranks
 ```
-
-A **`packages/`** tree may be added later for shared TypeScript configs or shared libraries.
 Address extraction mapping rules and domain conventions are documented in **`docs/EXTRACTION.md`**.
 **`docs/LLM_EXTRACTION_INTERCHANGE.md`** defines the LLM-facing JSON payload and paper-reading rules before validation and D1 load.
 **`docs/LLM_EXTRACTION_PROMPT.md`** — copy-paste prompt for vision/LLM extraction into that JSON.
@@ -39,8 +40,9 @@ Domain entities, relations, and lookup optimization are documented in **`docs/DO
 | `npm run dev:web`   | Start Vite dev server for `apps/web`.                           |
 | `npm run dev:api`   | Start `wrangler dev` for `apps/api`.                            |
 | `npm run build`     | Run each workspace’s `build` script if present.                 |
-| `npm run test:web`  | Vitest suite for `apps/web` (happy-dom + Testing Library).      |
-| `npm run types:api` | Regenerate Worker TypeScript types (`wrangler types` in `api`). |
+| `npm run test:web`    | Vitest suite for `apps/web` (happy-dom + Testing Library).      |
+| `npm run test:lookup` | Vitest suite for `packages/lookup` (assembly, parse, suffix).   |
+| `npm run types:api`   | Regenerate Worker TypeScript types (`wrangler types` in `api`). |
 
 ## Commands (inside each app)
 

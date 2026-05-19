@@ -266,7 +266,7 @@ Single source of truth: `apps/api/src/lib/normalize.ts`.
 
 Suffixes are modeled as ordered sub-positions on a house-number axis.
 
-Canonical rank table (from `apps/api/src/lib/suffix.ts`):
+Canonical rank table (from `packages/lookup`, `suffix-rank.ts`):
 
 - no suffix: `0`
 - `bis`: `1`

@@ -1,39 +1,27 @@
 import { cleanup, render, screen } from "@testing-library/react";
 import { afterEach, describe, expect, it } from "vitest";
-import type { AddressLookup } from "./useAddressLookup";
 import { LookupResultBox } from "./LookupResultBox";
 
 afterEach(() => {
   cleanup();
 });
 
-function lookupWith(overrides: Partial<AddressLookup>): AddressLookup {
-  return {
-    result: null,
-    loading: false,
-    error: null,
-    submit: () => {},
-    clear: () => {},
-    ...overrides,
-  };
-}
-
 describe("LookupResultBox", () => {
   it("does not render a conflict badge when conflict is false", () => {
     render(
       <LookupResultBox
-        lookup={lookupWith({
-          result: {
-            conflict: false,
-            matches: [
-              {
-                arrondissement: 6,
-                quartier: "Notre-Dame-des-Champs",
-                ilot: 4121,
-              },
-            ],
-          },
-        })}
+        loading={false}
+        error={null}
+        result={{
+          conflict: false,
+          matches: [
+            {
+              arrondissement: 6,
+              quartier: "Notre-Dame-des-Champs",
+              ilot: 4121,
+            },
+          ],
+        }}
       />
     );
 
@@ -44,23 +32,23 @@ describe("LookupResultBox", () => {
   it("renders a conflict badge alongside matches when conflict is true", () => {
     render(
       <LookupResultBox
-        lookup={lookupWith({
-          result: {
-            conflict: true,
-            matches: [
-              {
-                arrondissement: 6,
-                quartier: "Notre-Dame-des-Champs",
-                ilot: 4121,
-              },
-              {
-                arrondissement: 6,
-                quartier: "Notre-Dame-des-Champs",
-                ilot: 4999,
-              },
-            ],
-          },
-        })}
+        loading={false}
+        error={null}
+        result={{
+          conflict: true,
+          matches: [
+            {
+              arrondissement: 6,
+              quartier: "Notre-Dame-des-Champs",
+              ilot: 4121,
+            },
+            {
+              arrondissement: 6,
+              quartier: "Notre-Dame-des-Champs",
+              ilot: 4999,
+            },
+          ],
+        }}
       />
     );
 
@@ -74,26 +62,26 @@ describe("LookupResultBox", () => {
   it("renders expandable provenance when present on a match", () => {
     render(
       <LookupResultBox
-        lookup={lookupWith({
-          result: {
-            conflict: false,
-            matches: [
-              {
-                arrondissement: 6,
-                quartier: "Notre-Dame-des-Champs",
-                ilot: 4121,
-                provenance: [
-                  {
-                    bobine: 8,
-                    page: 2,
-                    sequence: 1,
-                    raw_text: "Ilot 4121 | rue de Test | 95",
-                  },
-                ],
-              },
-            ],
-          },
-        })}
+        loading={false}
+        error={null}
+        result={{
+          conflict: false,
+          matches: [
+            {
+              arrondissement: 6,
+              quartier: "Notre-Dame-des-Champs",
+              ilot: 4121,
+              provenance: [
+                {
+                  bobine: 8,
+                  page: 2,
+                  sequence: 1,
+                  raw_text: "Ilot 4121 | rue de Test | 95",
+                },
+              ],
+            },
+          ],
+        }}
       />
     );
 
@@ -105,18 +93,18 @@ describe("LookupResultBox", () => {
   it("does not render provenance UI when provenance is absent", () => {
     render(
       <LookupResultBox
-        lookup={lookupWith({
-          result: {
-            conflict: false,
-            matches: [
-              {
-                arrondissement: 6,
-                quartier: "Notre-Dame-des-Champs",
-                ilot: 4121,
-              },
-            ],
-          },
-        })}
+        loading={false}
+        error={null}
+        result={{
+          conflict: false,
+          matches: [
+            {
+              arrondissement: 6,
+              quartier: "Notre-Dame-des-Champs",
+              ilot: 4121,
+            },
+          ],
+        }}
       />
     );
 

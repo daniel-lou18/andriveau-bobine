@@ -23,7 +23,6 @@ export function lookupQueryOptions(
       }
       return result.data;
     },
-    enabled: false,
     staleTime: 60_000,
     retry: false,
   });

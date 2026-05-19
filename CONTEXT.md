@@ -65,7 +65,7 @@ A `(rue, parity, ordered range)` unit. Ranges are **closed** (finite `from`/`to`
 Strictly `odd` or `even`. Range endpoints share parity; singletons inherit from the number. Never `both`.
 
 **Suffix**:
-Ordered sub-position on the house-number axis: none `0`, `bis 1`, `ter 2`, `quater 3`, `quinquies 4`, `sexies 5`, `septies 6`. Tokens beyond `septies` are **not** modeled; if they appear in a source, extraction **skips and logs** (same policy as other unsupported notations). Single source of truth in `apps/api/src/lib/suffix.ts`.
+Ordered sub-position on the house-number axis: none `0`, `bis 1`, `ter 2`, `quater 3`, `quinquies 4`, `sexies 5`, `septies 6`. Tokens beyond `septies` are **not** modeled; if they appear in a source, extraction **skips and logs** (same policy as other unsupported notations). Single source of truth in `packages/lookup` (`suffix-rank.ts`: `SUFFIX_RANK`, `rankOfSuffix`, `suffixOfRank`).
 
 ## Relationships
 

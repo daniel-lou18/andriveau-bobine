@@ -9,6 +9,7 @@
     "dev:api": "npm run dev -w api",
     "build": "npm run build --workspaces --if-present",
     "test:web": "npm run test -w web",
+    "test:lookup": "npm run test -w @andriveau-bobine/lookup",
     "types:api": "npm run types -w api"
   },
   "keywords": [],

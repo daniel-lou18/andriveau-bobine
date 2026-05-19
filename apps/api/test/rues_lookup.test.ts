@@ -473,6 +473,22 @@ describe("GET /api/rues/:rueId/lookup", () => {
     expect(body.error.length).toBeGreaterThan(0);
   });
 
+  it("returns 400 when rueId is not positive", async () => {
+    const resZero = await SELF.fetch(
+      "https://example.com/api/rues/0/lookup?n=10"
+    );
+    expect(resZero.status).toBe(400);
+    const bodyZero = (await resZero.json()) as { error: string };
+    expect(bodyZero.error).toMatch(/rueId must be a positive integer/);
+
+    const resNegative = await SELF.fetch(
+      "https://example.com/api/rues/-1/lookup?n=10"
+    );
+    expect(resNegative.status).toBe(400);
+    const bodyNegative = (await resNegative.json()) as { error: string };
+    expect(bodyNegative.error).toMatch(/rueId must be a positive integer/);
+  });
+
   it("returns 200 with one match when suffix=bis covers (n, rank 1) on an 8 → 8bis segment", async () => {
     const { rueId } = await seedLookupSegment({
       rueTypeCode: "rue",

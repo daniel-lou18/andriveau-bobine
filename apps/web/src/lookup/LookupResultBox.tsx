@@ -1,12 +1,22 @@
-import type { AddressLookup } from "./useAddressLookup";
+import type { LookupResponse } from "@andriveau-bobine/lookup";
+import {
+  formatLookupProvenance,
+  formatLookupTriple,
+  lookupProvenanceKey,
+  lookupTripleKey,
+} from "@andriveau-bobine/lookup";
 
 export type LookupResultBoxProps = {
-  lookup: AddressLookup;
+  result: LookupResponse | null;
+  loading: boolean;
+  error: string | null;
 };
 
-export function LookupResultBox({ lookup }: LookupResultBoxProps) {
-  const { result, loading, error } = lookup;
-
+export function LookupResultBox({
+  result,
+  loading,
+  error,
+}: LookupResultBoxProps) {
   if (loading) {
     return <p role="status">Looking up…</p>;
   }
@@ -44,21 +54,15 @@ export function LookupResultBox({ lookup }: LookupResultBoxProps) {
       ) : null}
       <ul data-testid="lookup-matches" aria-label="Lookup results">
         {result.matches.map((match) => (
-          <li key={`${match.arrondissement}-${match.quartier}-${match.ilot}`}>
-            {match.arrondissement}e — {match.quartier} — îlot {match.ilot}
+          <li key={lookupTripleKey(match)}>
+            {formatLookupTriple(match)}
             {match.provenance && match.provenance.length > 0 ? (
               <details data-testid="lookup-provenance">
                 <summary>Provenance ({match.provenance.length})</summary>
                 <ul>
                   {match.provenance.map((entry) => (
-                    <li
-                      key={`${entry.bobine}-${entry.page}-${entry.sequence}-${entry.raw_text}`}
-                    >
-                      Bobine {entry.bobine}, page {entry.page}
-                      {entry.sequence !== null
-                        ? `, seq ${entry.sequence}`
-                        : ""}
-                      : {entry.raw_text}
+                    <li key={lookupProvenanceKey(entry)}>
+                      {formatLookupProvenance(entry)}
                     </li>
                   ))}
                 </ul>

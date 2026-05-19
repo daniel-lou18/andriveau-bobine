@@ -9,7 +9,7 @@ import {
 } from "../db/schema";
 import { SEGMENT_QUALITY } from "../lib/quality_flags";
 import { normalizeName } from "../lib/normalize";
-import { suffixOfRank } from "../lib/suffix";
+import { suffixOfRank } from "@andriveau-bobine/lookup";
 import { bootstrapGeography } from "./bootstrap";
 import { parseNumerosRaw, parityForToken } from "./parse-numeros";
 import type { ExtractionBatch } from "./schema";

@@ -1,4 +1,4 @@
-import type { SuffixToken } from "@andriveau-bobine/lookup";
+import type { SuffixToken } from "./types";
 
 export const SUFFIX_RANK = {
   "": 0,

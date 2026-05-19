@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { parseLookupInput } from "../src/lookup/parse-input";
+import { parseLookupInput } from "./parse-input";
 
 describe("parseLookupInput", () => {
   it("defaults n_rank to 0 when suffix is omitted", () => {

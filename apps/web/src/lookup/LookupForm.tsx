@@ -4,7 +4,7 @@ import {
   LOOKUP_SUFFIX_TOKENS,
   type LookupSuffixToken,
 } from "@andriveau-bobine/lookup";
-import { canSubmitLookup } from "../rue-suggest/handoff";
+import { canSubmitLookup, rueIdForLookup } from "../rue-suggest/handoff";
 import type { AddressLookup } from "./useAddressLookup";
 
 export type LookupFormProps = {
@@ -24,7 +24,7 @@ export function LookupForm({ resolvedRue, lookup }: LookupFormProps) {
     event.preventDefault();
     if (!canSubmit || resolvedRue === null) return;
     lookup.submit({
-      rueId: resolvedRue.rueId,
+      rueId: rueIdForLookup(resolvedRue),
       n: parsedN,
       suffix: suffix === "" ? undefined : suffix,
       provenance: provenance || undefined,

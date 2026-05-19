@@ -1,49 +1,26 @@
 /**
- * Shared lookup contract (ADR-0002, ADR-0003): request/response types for
- * `GET /api/rues/:rueId/lookup`.
+ * Shared lookup contract and domain projection (ADR-0002, ADR-0003).
  */
 
-/** Canonical suffix tokens on the house-number axis (rank 0–6). */
-export type SuffixToken =
-  | ""
-  | "bis"
-  | "ter"
-  | "quater"
-  | "quinquies"
-  | "sexies"
-  | "septies";
-
-/** Non-empty suffix tokens accepted on `GET …/lookup?suffix=…`. */
-export const LOOKUP_SUFFIX_TOKENS = [
-  "bis",
-  "ter",
-  "quater",
-  "quinquies",
-  "sexies",
-  "septies",
-] as const;
-
-export type LookupSuffixToken = (typeof LOOKUP_SUFFIX_TOKENS)[number];
-
-/** Opt-in provenance row (`?provenance=1`; Slice 4). */
-export type LookupProvenance = {
-  bobine: number;
-  page: number;
-  sequence: number | null;
-  raw_text: string;
-};
-
-/** One administrative triple returned by lookup. */
-export type LookupMatch = {
-  arrondissement: number;
-  quartier: string;
-  ilot: number;
-  /** Present only when `?provenance=1`; deduped per match. */
-  provenance?: LookupProvenance[];
-};
-
-/** Successful lookup response (always a list, never a scalar). */
-export type LookupResponse = {
-  matches: LookupMatch[];
-  conflict: boolean;
-};
+export {
+  assembleLookupResult,
+  type AssembleLookupOptions,
+  type LookupRawRow,
+} from "./assemble";
+export {
+  formatLookupProvenance,
+  formatLookupTriple,
+  lookupProvenanceKey,
+  lookupTripleKey,
+} from "./format";
+export { parseLookupInput, type ParsedLookupInput } from "./parse-input";
+export { rankOfSuffix, suffixOfRank, SUFFIX_RANK } from "./suffix-rank";
+export {
+  LOOKUP_SUFFIX_TOKENS,
+  type LookupMatch,
+  type LookupProvenance,
+  type LookupRequest,
+  type LookupResponse,
+  type LookupSuffixToken,
+  type SuffixToken,
+} from "./types";

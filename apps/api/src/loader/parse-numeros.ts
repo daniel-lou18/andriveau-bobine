@@ -1,4 +1,4 @@
-import { rankOfSuffix } from "../lib/suffix";
+import { rankOfSuffix } from "@andriveau-bobine/lookup";
 import type { ParsedEndpoint, ParsedToken } from "./types";
 import type { SkipReason } from "./types";
 

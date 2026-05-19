@@ -1,4 +1,4 @@
-import { rankOfSuffix } from "../lib/suffix";
+import { rankOfSuffix } from "./suffix-rank";
 
 export type ParsedLookupInput = {
   n: number;

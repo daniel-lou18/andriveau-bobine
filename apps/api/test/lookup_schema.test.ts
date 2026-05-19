@@ -72,4 +72,18 @@ describe("lookupQuerySchema", () => {
       }
     }
   });
+
+  it("parses provenance=1 as true and provenance=0 as false", () => {
+    const on = lookupQuerySchema.safeParse({ n: "95", provenance: "1" });
+    expect(on.success).toBe(true);
+    if (on.success) {
+      expect(on.data.provenance).toBe(true);
+    }
+
+    const off = lookupQuerySchema.safeParse({ n: "95", provenance: "0" });
+    expect(off.success).toBe(true);
+    if (off.success) {
+      expect(off.data.provenance).toBe(false);
+    }
+  });
 });

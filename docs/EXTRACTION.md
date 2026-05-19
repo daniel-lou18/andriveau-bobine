@@ -58,7 +58,7 @@ Ordering example:
 
 Suffixes beyond `septies` are out of scope; treat like any unknown token — **skip + log**, do not persist.
 
-The single source of truth is `apps/api/src/lib/suffix.ts`:
+The single source of truth is `packages/lookup` (`suffix-rank.ts`):
 
 - `SUFFIX_RANK`
 - `rankOfSuffix()`
@@ -318,7 +318,7 @@ The extraction loader (Worker route `POST /api/_loader/extraction`, `apps/api/sr
 | `record.rue.type` | `voie_types.code` → `rues.type_id` | Lookup on **`voie_types.code`** after the same aggressive **`normalizeName`** used for libellés (so e.g. interchange `cité` matches seeded `cite`). Miss → skip row with `UNKNOWN_VOIE_TYPE`. |
 | `record.rue.libelle` | `rues.libelle` + `rues.libelle_normalized` | `INSERT OR IGNORE` keyed on `(type_id, libelle_normalized)`. LLM is responsible for canonical form; loader only normalizes. |
 | `record.rue.inferred: true` | `street_segments.type_inferred = 1` | Applied to **every** segment derived from the record. |
-| `record.numeros_raw` | one or more `street_segments` rows | Tokenize on `,;/`; each token is a singleton or `a -> b` range; suffixes (`bis`, `ter`, …, `septies`) resolve via `apps/api/src/lib/suffix.ts`. **Loader:** hyphen ranges with optional spaces (`75 - 77`, `66-86`) are normalized to `->` before tokenizing (scribe variant of the arrow). See § Source Entry To Row Mapping. |
+| `record.numeros_raw` | one or more `street_segments` rows | Tokenize on `,;/`; each token is a singleton or `a -> b` range; suffixes (`bis`, `ter`, …, `septies`) resolve via `@andriveau-bobine/lookup` (`rankOfSuffix`). **Loader:** hyphen ranges with optional spaces (`75 - 77`, `66-86`) are normalized to `->` before tokenizing (scribe variant of the arrow). See § Source Entry To Row Mapping. |
 | `record.low_confidence: true` | `street_segments.quality_flags \|= SEGMENT_QUALITY.LOW_CONFIDENCE_EXTRACTION` | Applied to **every** segment derived from the record. |
 | `record.raw_text` | `source_entries.raw_text` | Stored verbatim. |
 | `record.page` (optional) | `source_entries.page` | `source_entries.page = record.page ?? record.pdf_page`. |

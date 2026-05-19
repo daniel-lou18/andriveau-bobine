@@ -104,9 +104,9 @@ GET /api/rues/:rueId/lookup?n=…&suffix=…&provenance=…
   → lookup/routes.ts              (Hono sub-app, mounted under /api/rues)
   → jsonErrorValidator            (lookupParamsSchema + lookupQuerySchema)
   → lookupRue(db, rueId, n, suffix, provenance)   (transport-agnostic use case)
-  → parseLookupInput(n, suffix)   (parity + n_rank via lib/suffix.ts)
-  → queryLookupRawRows            (canonical tuple range + joins)
-  → assembleLookupResult(rows, { provenance })    (pure dedupe + conflict + provenance)
+  → parseLookupInput(n, suffix)   (@andriveau-bobine/lookup — parity + n_rank)
+  → queryLookupRawRows            (canonical tuple range + joins — DB adapter)
+  → assembleLookupResult(rows, { provenance })    (@andriveau-bobine/lookup)
   → 200 { matches, conflict }
 ```
 
@@ -121,16 +121,17 @@ app.route("/api/rues", lookupRoutes);
 
 ### Shared package (`packages/lookup`)
 
-Cross-tier contract for lookup JSON:
+Cross-tier contract and domain projection (`@andriveau-bobine/lookup`):
 
 | Export | Role |
 |--------|------|
-| `SuffixToken` | Canonical suffix union including `""` for rank 0 |
-| `LOOKUP_SUFFIX_TOKENS` | Non-empty tokens accepted on `suffix=` query param and SPA `<select>` |
-| `LookupSuffixToken` | Element type of `LOOKUP_SUFFIX_TOKENS` |
-| `LookupProvenance` | `{ bobine, page, sequence, raw_text }` — one register row |
-| `LookupMatch` | One administrative triple; optional `provenance[]` when opt-in |
-| `LookupResponse` | `{ matches, conflict }` — always a list, never a scalar |
+| `SuffixToken`, `LOOKUP_SUFFIX_TOKENS`, `LookupSuffixToken` | House-number suffix axis (tokens + query-param allowlist) |
+| `SUFFIX_RANK`, `rankOfSuffix`, `suffixOfRank` | Canonical suffix ↔ rank 0–6 (loader + lookup) |
+| `parseLookupInput`, `ParsedLookupInput` | `n` + optional suffix → `parity`, `n_rank` |
+| `assembleLookupResult`, `LookupRawRow` | Raw SQL rows → deduped `LookupResponse` (ADR-0003) |
+| `LookupRequest` | Client-side mirror of lookup query params |
+| `LookupProvenance`, `LookupMatch`, `LookupResponse` | Wire JSON types |
+| `formatLookupTriple`, `formatLookupProvenance`, `lookupTripleKey`, `lookupProvenanceKey` | Display helpers for SPA |
 
 Relationship to **`@andriveau-bobine/disambiguation`**: suggest supplies `ResolvedRue` / `rueId`; lookup consumes opaque `rue_id` only. Shared packages do not depend on each other; the web app composes both hooks in `App.tsx`.
 
@@ -146,13 +147,13 @@ useAddressLookup()
 LookupForm({ resolvedRue, lookup })
   → number input, suffix <select>, “Include provenance” checkbox, submit
 
-LookupResultBox({ lookup })
-  → triples list
+LookupResultBox({ result, loading, error })
+  → triples list (via formatLookupTriple)
   → optional “Sources disagree” badge when conflict === true
   → optional <details> provenance per match when present
 ```
 
-`App.tsx` composes `RueSuggestBox` + `LookupForm` + `LookupResultBox`, threading `disambiguation.resolvedRue` into the form.
+`App.tsx` composes `RueSuggestBox` + `LookupForm` + `LookupResultBox`, threading `disambiguation.resolvedRue` into the form. Submit uses `rueIdForLookup(resolvedRue)` (ADR-0002 handoff).
 
 ---
 
@@ -173,22 +174,16 @@ LookupResultBox({ lookup })
 |--------|------|
 | `routes.ts` | `GET /:rueId/lookup` — param + query validation, 404 on missing rue. |
 | `schema.ts` | `lookupParamsSchema`, `lookupQuerySchema` — `n`, optional `suffix`, optional `provenance`. |
-| `parse-input.ts` | `parseLookupInput(n, suffix?)` — parity inference, `n_rank` from suffix. |
-| `query.ts` | `queryLookupRawRows` — Drizzle join + tuple range filter; returns raw rows for assembly. |
-| `assemble.ts` | **`assembleLookupResult(rows, options?)`** — pure dedupe, `conflict`, optional provenance. |
-| `index.ts` | **`lookupRue(db, rueId, n, suffix?, provenance?)`** — existence check, wires query → assemble. |
+| `query.ts` | `queryLookupRawRows` — Drizzle join + tuple range filter (DB adapter). |
+| `index.ts` | **`lookupRue`** — rue existence check; imports `parseLookupInput` + `assembleLookupResult` from `@andriveau-bobine/lookup`. |
 
-### Shared read-path lib
-
-| Module | Role |
-|--------|------|
-| `lib/suffix.ts` | `rankOfSuffix`, `SUFFIX_RANK` — canonical suffix → rank 0–6; shared with extraction/loader. |
+Domain logic (`parseLookupInput`, `assembleLookupResult`, suffix ranks) lives in **`packages/lookup/`** — not under `apps/api`.
 
 ---
 
 ## Matching and assembly pipeline
 
-### 1. Parse input (`parse-input.ts`)
+### 1. Parse input (`packages/lookup/src/parse-input.ts`)
 
 - **`parity`**: `n % 2 === 0 ? "even" : "odd"` ([DOMAIN_MODEL](../DOMAIN_MODEL.md) — suffix does not affect parity).
 - **`n_rank`**: `rankOfSuffix(suffix ?? "")` — omitted suffix ⇒ rank `0`.
@@ -228,7 +223,7 @@ ORDER BY se.bobine, se.page, COALESCE(se.sequence, 0), i.number;
 
 Implemented in Drizzle as row-value comparisons on `street_segments` plus inner joins up the hierarchy. Every matching **`segment_ilots`** row produces one raw row (a **segment** can map to multiple **îlots**).
 
-### 3. Assemble (`assemble.ts`)
+### 3. Assemble (`packages/lookup/src/assemble.ts`)
 
 Pure function — no DB, no HTTP:
 
@@ -267,8 +262,8 @@ With `?provenance=1`, `matches` and `conflict` are identical to the default resp
 | `api.ts` | `fetchLookup(rueId, n, suffix?, provenance?, signal?)` — builds query string; `GET /api/rues/:rueId/lookup` via Vite proxy. |
 | `lookupQuery.ts` | TanStack Query `queryOptions` + `lookupKeys` factory (`staleTime` 60s, `retry: false`; `enabled` driven by hook). |
 | `useAddressLookup.ts` | Submit-on-action hook: `submit(input)` drives query; `clear()` resets; exposes `result`, `loading`, `error`. |
-| `LookupForm.tsx` | Number input, suffix `<select>` from `LOOKUP_SUFFIX_TOKENS`, provenance checkbox; gated by `canSubmitLookup(resolvedRue)` and positive `n`. |
-| `LookupResultBox.tsx` | Lists triples; no-result copy; conflict badge; expandable provenance per match. |
+| `LookupForm.tsx` | Number input, suffix `<select>` from `LOOKUP_SUFFIX_TOKENS`, provenance checkbox; submit via `rueIdForLookup(resolvedRue)`. |
+| `LookupResultBox.tsx` | Props `{ result, loading, error }`; formatters from `@andriveau-bobine/lookup`. |
 | `index.ts` | Barrel exports. |
 
 Query key: `["rues", "lookup", rueId, n, suffix ?? "", provenance]`. Changing suffix or provenance after submit triggers a new fetch. Identical re-submits hit the TanStack cache.
@@ -347,18 +342,26 @@ When behaviour changes, extend **tests first** (or in the same PR), then update 
 From repo root:
 
 ```bash
+npm run test:lookup
 npm run test -w api
 npm run test:watch -w api
 npm run test -w web
 ```
+
+### Package (`packages/lookup/src/`)
+
+| File | What it covers |
+|------|----------------|
+| `assemble.test.ts` | Pure `assembleLookupResult`: dedupe, conflict, provenance attach/omit/dedupe within match. |
+| `parse-input.test.ts` | `parseLookupInput` — parity from `n`, `n_rank` from suffix tokens. |
+| `suffix-rank.test.ts` | `rankOfSuffix`, `suffixOfRank`, `SUFFIX_RANK` round-trips. |
+| `format.test.ts` | `formatLookupTriple`, `formatLookupProvenance`, key helpers. |
 
 ### API (`apps/api/test/`)
 
 | File | What it covers |
 |------|----------------|
 | `rues_lookup.test.ts` | End-to-end HTTP lookup: match, range, empty, 404, 400 validation, suffix axis, conflict (shared edge, disagree, agree+dedupe), provenance opt-in and parity with conflict. |
-| `lookup_assemble.test.ts` | Pure `assembleLookupResult`: dedupe, conflict, provenance attach/omit/dedupe within match. |
-| `lookup_parse_input.test.ts` | `parseLookupInput` — parity from `n`, `n_rank` from suffix tokens. |
 | `lookup_schema.test.ts` | `lookupParamsSchema`, `lookupQuerySchema` — Zod coercion and error messages. |
 | `apply-migrations.ts` | D1 migrations applied once per run (setup). |
 

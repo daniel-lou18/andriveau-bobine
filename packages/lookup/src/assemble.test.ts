@@ -1,8 +1,5 @@
 import { describe, expect, it } from "vitest";
-import {
-  assembleLookupResult,
-  type LookupRawRow,
-} from "../src/lookup/assemble";
+import { assembleLookupResult, type LookupRawRow } from "./assemble";
 
 function row(
   overrides: Partial<LookupRawRow> & Pick<LookupRawRow, "ilot">

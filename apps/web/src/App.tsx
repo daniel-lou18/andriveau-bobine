@@ -14,7 +14,11 @@ function App() {
 
       <section aria-label="Address lookup">
         <LookupForm resolvedRue={disambiguation.resolvedRue} lookup={lookup} />
-        <LookupResultBox lookup={lookup} />
+        <LookupResultBox
+          result={lookup.result}
+          loading={lookup.loading}
+          error={lookup.error}
+        />
       </section>
     </div>
   );

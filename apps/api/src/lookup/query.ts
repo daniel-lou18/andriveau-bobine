@@ -8,8 +8,10 @@ import {
   sourceEntries,
   streetSegments,
 } from "../db/schema";
-import type { LookupRawRow } from "./assemble";
-import type { ParsedLookupInput } from "./parse-input";
+import type {
+  LookupRawRow,
+  ParsedLookupInput,
+} from "@andriveau-bobine/lookup";
 
 export async function queryLookupRawRows(
   db: Database,
