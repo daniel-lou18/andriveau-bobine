@@ -1,7 +1,7 @@
 import {
   formatSuggestionLabel,
   type ResolvedRue,
-} from "@andriveau-bobine/disambiguation";
+} from "@andriveau-bobine/suggest";
 import type { RueDisambiguation } from "./useRueDisambiguation";
 
 export type { ResolvedRue as SelectedRue };

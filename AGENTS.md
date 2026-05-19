@@ -15,7 +15,7 @@ apps/
   web/          # Frontend SPA
   api/          # Worker (Hono)
 packages/
-  disambiguation/   # @andriveau-bobine/disambiguation — suggest contract + handoff types
+  suggest/          # @andriveau-bobine/suggest — suggest contract + handoff types
   lookup/           # @andriveau-bobine/lookup — lookup contract, assembly, suffix ranks
 ```
 Address extraction mapping rules and domain conventions are documented in **`docs/EXTRACTION.md`**.

@@ -27,7 +27,7 @@ The public route stays separate from the authenticated extraction loader (`POST 
 | Cap | 20 rows |
 | Order | `libelle` ascending, tie-break `rue_id` ascending |
 
-Constants `SUGGEST_MIN_LENGTH` and `SUGGEST_MAX_RESULTS` live in **`@andriveau-bobine/disambiguation`** so API and web stay aligned.
+Constants `SUGGEST_MIN_LENGTH` and `SUGGEST_MAX_RESULTS` live in **`@andriveau-bobine/suggest`** so API and web stay aligned.
 
 Local dev: the Vite app proxies `/api` to the Worker; the web slice calls `/api/rues/suggest` with a relative URL.
 
@@ -51,7 +51,7 @@ GET /api/rues/suggest?q=…
 
 The root app mounts the sub-app with `app.route("/api/rues", suggestRoutes)` (`apps/api/src/index.ts`). DB injection remains global middleware (`c.set("db", …)`).
 
-### Shared package (`packages/disambiguation`)
+### Shared package (`packages/suggest`)
 
 Cross-tier contract for ADR-0002 disambiguation:
 
@@ -264,7 +264,7 @@ npm run test -w web
 3. **Article expansion** — libellé prefix OR branches.  
 4. **Full-key branch** — `(code + ' ' + libelle_normalized)` for type-leading queries.  
 5. **Architecture refactor (API)** — layered suggest slice (`schema`, `routes`, `match`, `query`, transport-agnostic `suggestRues`); Hono sub-app; Zod query validation; shared `http/*` error handling with `cause` logging.  
-6. **Shared contract** — `packages/disambiguation` (types, limits, `ResolvedRue`, formatters).  
+6. **Shared contract** — `packages/suggest` / `@andriveau-bobine/suggest` (types, limits, `ResolvedRue`, formatters).  
 7. **Architecture refactor (web)** — `useRueDisambiguation`, `handoff.ts`, presentational `RueSuggestBox`, TanStack Query (`rueSuggestionsQuery.ts`), hook tests.  
 8. **Pure matching depth** — `buildSuggestLikePatterns` separates pattern assembly from Drizzle `query.ts`.  
 9. **Read-path unit tests** — dedicated `normalize` and `displayVoieType` test files.

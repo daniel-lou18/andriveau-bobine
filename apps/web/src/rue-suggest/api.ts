@@ -1,4 +1,4 @@
-import type { RueSuggestion } from "@andriveau-bobine/disambiguation";
+import type { RueSuggestion } from "@andriveau-bobine/suggest";
 
 export type { RueSuggestion };
 

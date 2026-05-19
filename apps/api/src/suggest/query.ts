@@ -1,5 +1,5 @@
 import { asc, eq, or, sql } from "drizzle-orm";
-import { SUGGEST_MAX_RESULTS } from "@andriveau-bobine/disambiguation";
+import { SUGGEST_MAX_RESULTS } from "@andriveau-bobine/suggest";
 import type { Database } from "../db";
 import { rues, voieTypes } from "../db/schema";
 import type { SuggestLikePatterns } from "./match";

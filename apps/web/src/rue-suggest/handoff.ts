@@ -1,4 +1,4 @@
-import type { ResolvedRue } from "@andriveau-bobine/disambiguation";
+import type { ResolvedRue } from "@andriveau-bobine/suggest";
 
 /** True when the user has picked a suggestion and lookup may proceed (ADR-0002). */
 export function canSubmitLookup(resolvedRue: ResolvedRue | null): boolean {

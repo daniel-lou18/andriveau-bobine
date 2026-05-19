@@ -1,5 +1,5 @@
 /**
- * Shared disambiguation contract (ADR-0002): suggest response shape, limits,
+ * Shared suggest contract (ADR-0002): response shape, limits,
  * and client handoff types used before number-bearing lookup.
  */
 

@@ -1,4 +1,4 @@
-import { SUGGEST_MIN_LENGTH } from "@andriveau-bobine/disambiguation";
+import { SUGGEST_MIN_LENGTH } from "@andriveau-bobine/suggest";
 import { z } from "zod";
 import { normalizeName } from "../lib/normalize";
 

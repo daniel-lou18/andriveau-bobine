@@ -5,7 +5,7 @@ import {
   toResolvedRue,
   type ResolvedRue,
   type RueSuggestion,
-} from "@andriveau-bobine/disambiguation";
+} from "@andriveau-bobine/suggest";
 import { useDebouncedValue } from "../lib/useDebouncedValue";
 import { canSubmitLookup } from "./handoff";
 import { rueSuggestionsQueryOptions } from "./rueSuggestionsQuery";

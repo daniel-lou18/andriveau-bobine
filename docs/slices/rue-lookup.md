@@ -133,7 +133,7 @@ Cross-tier contract and domain projection (`@andriveau-bobine/lookup`):
 | `LookupProvenance`, `LookupMatch`, `LookupResponse` | Wire JSON types |
 | `formatLookupTriple`, `formatLookupProvenance`, `lookupTripleKey`, `lookupProvenanceKey` | Display helpers for SPA |
 
-Relationship to **`@andriveau-bobine/disambiguation`**: suggest supplies `ResolvedRue` / `rueId`; lookup consumes opaque `rue_id` only. Shared packages do not depend on each other; the web app composes both hooks in `App.tsx`.
+Relationship to **`@andriveau-bobine/suggest`**: suggest supplies `ResolvedRue` / `rueId`; lookup consumes opaque `rue_id` only. Shared packages do not depend on each other; the web app composes both hooks in `App.tsx`.
 
 ### Web flow
 

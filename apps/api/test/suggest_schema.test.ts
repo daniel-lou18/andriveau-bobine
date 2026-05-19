@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { SUGGEST_MIN_LENGTH } from "@andriveau-bobine/disambiguation";
+import { SUGGEST_MIN_LENGTH } from "@andriveau-bobine/suggest";
 import { suggestQuerySchema } from "../src/suggest/schema";
 
 describe("suggestQuerySchema", () => {

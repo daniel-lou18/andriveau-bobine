@@ -1,5 +1,5 @@
 import { useState, type FormEvent } from "react";
-import type { ResolvedRue } from "@andriveau-bobine/disambiguation";
+import type { ResolvedRue } from "@andriveau-bobine/suggest";
 import {
   LOOKUP_SUFFIX_TOKENS,
   type LookupSuffixToken,

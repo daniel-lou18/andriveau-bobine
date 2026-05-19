@@ -1,10 +1,10 @@
-import type { RueSuggestion } from "@andriveau-bobine/disambiguation";
+import type { RueSuggestion } from "@andriveau-bobine/suggest";
 import type { Database } from "../db";
 import { displayVoieType } from "../lib/voie_type_display";
 import { buildSuggestLikePatterns, buildSuggestMatchSpec } from "./match";
 import { querySuggestRues } from "./query";
 
-export type { RueSuggestion } from "@andriveau-bobine/disambiguation";
+export type { RueSuggestion } from "@andriveau-bobine/suggest";
 export {
   buildSuggestLikePatterns,
   buildSuggestMatchSpec,
