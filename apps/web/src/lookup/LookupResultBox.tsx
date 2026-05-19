@@ -32,12 +32,23 @@ export function LookupResultBox({ lookup }: LookupResultBoxProps) {
   }
 
   return (
-    <ul data-testid="lookup-matches" aria-label="Lookup results">
-      {result.matches.map((match) => (
-        <li key={`${match.arrondissement}-${match.quartier}-${match.ilot}`}>
-          {match.arrondissement}e — {match.quartier} — îlot {match.ilot}
-        </li>
-      ))}
-    </ul>
+    <div data-testid="lookup-result">
+      {result.conflict ? (
+        <p
+          data-testid="lookup-conflict-badge"
+          role="status"
+          title="Multiple bobine sources disagree on the îlot for this address (ADR-0003)."
+        >
+          Sources disagree
+        </p>
+      ) : null}
+      <ul data-testid="lookup-matches" aria-label="Lookup results">
+        {result.matches.map((match) => (
+          <li key={`${match.arrondissement}-${match.quartier}-${match.ilot}`}>
+            {match.arrondissement}e — {match.quartier} — îlot {match.ilot}
+          </li>
+        ))}
+      </ul>
+    </div>
   );
 }

@@ -127,6 +127,207 @@ async function seedLookupSegment(config: SeedSegment): Promise<{ rueId: number }
   return { rueId: rueRow!.id };
 }
 
+type SeedMultiIlotSegment = Omit<SeedSegment, "ilotNumber"> & {
+  ilotNumbers: number[];
+};
+
+async function seedLookupSegmentWithIlots(
+  config: SeedMultiIlotSegment
+): Promise<{ rueId: number }> {
+  await env.DB.prepare(
+    "INSERT INTO arrondissements (number, name) VALUES (?1, ?2)"
+  )
+    .bind(config.arrondissementNumber, `${config.arrondissementNumber}e`)
+    .run();
+
+  const arrRow = await env.DB.prepare(
+    "SELECT id FROM arrondissements WHERE number = ?1"
+  )
+    .bind(config.arrondissementNumber)
+    .first<{ id: number }>();
+
+  await env.DB.prepare(
+    "INSERT INTO quartiers (arrondissement_id, name, name_normalized) VALUES (?1, ?2, ?3)"
+  )
+    .bind(
+      arrRow!.id,
+      config.quartierName,
+      normalizeName(config.quartierName)
+    )
+    .run();
+
+  const quartierRow = await env.DB.prepare(
+    "SELECT id FROM quartiers WHERE name_normalized = ?1"
+  )
+    .bind(normalizeName(config.quartierName))
+    .first<{ id: number }>();
+
+  const ilotIds: number[] = [];
+  for (const ilotNumber of config.ilotNumbers) {
+    await env.DB.prepare(
+      "INSERT INTO ilots (quartier_id, number) VALUES (?1, ?2)"
+    )
+      .bind(quartierRow!.id, ilotNumber)
+      .run();
+
+    const ilotRow = await env.DB.prepare(
+      "SELECT id FROM ilots WHERE number = ?1 AND quartier_id = ?2"
+    )
+      .bind(ilotNumber, quartierRow!.id)
+      .first<{ id: number }>();
+
+    ilotIds.push(ilotRow!.id);
+  }
+
+  await env.DB.prepare(
+    `INSERT INTO rues (type_id, libelle, libelle_normalized)
+     VALUES ((SELECT id FROM voie_types WHERE code = ?1), ?2, ?3)`
+  )
+    .bind(
+      normalizeName(config.rueTypeCode),
+      config.rueLibelle,
+      normalizeName(config.rueLibelle)
+    )
+    .run();
+
+  const rueRow = await env.DB.prepare(
+    "SELECT id FROM rues WHERE libelle = ?1"
+  )
+    .bind(config.rueLibelle)
+    .first<{ id: number }>();
+
+  await env.DB.prepare(
+    `INSERT INTO source_entries (quartier_id, bobine, page, raw_text, sequence)
+     VALUES (?1, ?2, ?3, ?4, ?5)`
+  )
+    .bind(quartierRow!.id, 8, 1, "test raw multi-ilot", 0)
+    .run();
+
+  const sourceRow = await env.DB.prepare(
+    "SELECT id FROM source_entries WHERE bobine = ?1"
+  )
+    .bind(8)
+    .first<{ id: number }>();
+
+  await env.DB.prepare(
+    `INSERT INTO street_segments (
+       source_entry_id, rue_id, parity,
+       from_number, from_suffix_rank, to_number, to_suffix_rank
+     ) VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7)`
+  )
+    .bind(
+      sourceRow!.id,
+      rueRow!.id,
+      config.parity,
+      config.fromNumber,
+      config.fromSuffixRank ?? 0,
+      config.toNumber,
+      config.toSuffixRank ?? 0
+    )
+    .run();
+
+  const segmentRow = await env.DB.prepare(
+    "SELECT id FROM street_segments WHERE rue_id = ?1"
+  )
+    .bind(rueRow!.id)
+    .first<{ id: number }>();
+
+  for (const ilotId of ilotIds) {
+    await env.DB.prepare(
+      "INSERT INTO segment_ilots (segment_id, ilot_id) VALUES (?1, ?2)"
+    )
+      .bind(segmentRow!.id, ilotId)
+      .run();
+  }
+
+  return { rueId: rueRow!.id };
+}
+
+type AdditionalSourceSegment = {
+  rueId: number;
+  bobine: number;
+  parity: "odd" | "even";
+  fromNumber: number;
+  toNumber: number;
+  fromSuffixRank?: number;
+  toSuffixRank?: number;
+  ilotNumber: number;
+  arrondissementNumber: number;
+  quartierName: string;
+};
+
+async function seedAdditionalSourceSegment(
+  config: AdditionalSourceSegment
+): Promise<void> {
+  const quartierRow = await env.DB.prepare(
+    "SELECT id FROM quartiers WHERE name_normalized = ?1"
+  )
+    .bind(normalizeName(config.quartierName))
+    .first<{ id: number }>();
+
+  let ilotRow = await env.DB.prepare(
+    "SELECT id FROM ilots WHERE number = ?1"
+  )
+    .bind(config.ilotNumber)
+    .first<{ id: number }>();
+
+  if (!ilotRow) {
+    await env.DB.prepare(
+      "INSERT INTO ilots (quartier_id, number) VALUES (?1, ?2)"
+    )
+      .bind(quartierRow!.id, config.ilotNumber)
+      .run();
+
+    ilotRow = await env.DB.prepare(
+      "SELECT id FROM ilots WHERE number = ?1"
+    )
+      .bind(config.ilotNumber)
+      .first<{ id: number }>();
+  }
+
+  await env.DB.prepare(
+    `INSERT INTO source_entries (quartier_id, bobine, page, raw_text, sequence)
+     VALUES (?1, ?2, ?3, ?4, ?5)`
+  )
+    .bind(quartierRow!.id, config.bobine, 1, `test raw bobine ${config.bobine}`, 0)
+    .run();
+
+  const sourceRow = await env.DB.prepare(
+    "SELECT id FROM source_entries WHERE bobine = ?1"
+  )
+    .bind(config.bobine)
+    .first<{ id: number }>();
+
+  await env.DB.prepare(
+    `INSERT INTO street_segments (
+       source_entry_id, rue_id, parity,
+       from_number, from_suffix_rank, to_number, to_suffix_rank
+     ) VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7)`
+  )
+    .bind(
+      sourceRow!.id,
+      config.rueId,
+      config.parity,
+      config.fromNumber,
+      config.fromSuffixRank ?? 0,
+      config.toNumber,
+      config.toSuffixRank ?? 0
+    )
+    .run();
+
+  const segmentRow = await env.DB.prepare(
+    "SELECT id FROM street_segments WHERE source_entry_id = ?1"
+  )
+    .bind(sourceRow!.id)
+    .first<{ id: number }>();
+
+  await env.DB.prepare(
+    "INSERT INTO segment_ilots (segment_id, ilot_id) VALUES (?1, ?2)"
+  )
+    .bind(segmentRow!.id, ilotRow!.id)
+    .run();
+}
+
 describe("GET /api/rues/:rueId/lookup", () => {
   beforeEach(resetLookupFixtures);
   afterEach(resetLookupFixtures);
@@ -398,5 +599,100 @@ describe("GET /api/rues/:rueId/lookup", () => {
       expect(body.error).toMatch(/suffix must be one of:/);
       expect(body.error).toMatch(/bis/);
     }
+  });
+
+  it("returns multiple matches with conflict false when one source asserts multiple ilots", async () => {
+    const { rueId } = await seedLookupSegmentWithIlots({
+      rueTypeCode: "rue",
+      rueLibelle: "de Test Shared Edge",
+      parity: "odd",
+      fromNumber: 95,
+      toNumber: 95,
+      ilotNumbers: [4121, 4122],
+      arrondissementNumber: 6,
+      quartierName: "Shared Edge Quartier",
+    });
+
+    const res = await SELF.fetch(
+      `https://example.com/api/rues/${rueId}/lookup?n=95`
+    );
+    expect(res.status).toBe(200);
+
+    const body = (await res.json()) as LookupResponse;
+    expect(body.conflict).toBe(false);
+    expect(body.matches).toHaveLength(2);
+    expect(body.matches.map((m) => m.ilot).sort()).toEqual([4121, 4122]);
+  });
+
+  it("returns conflict true when two sources disagree on ilot for the same address", async () => {
+    const { rueId } = await seedLookupSegment({
+      rueTypeCode: "rue",
+      rueLibelle: "de Test Conflict Disagree",
+      parity: "odd",
+      fromNumber: 95,
+      toNumber: 95,
+      ilotNumber: 4121,
+      arrondissementNumber: 6,
+      quartierName: "Conflict Disagree Quartier",
+    });
+
+    await seedAdditionalSourceSegment({
+      rueId,
+      bobine: 43,
+      parity: "odd",
+      fromNumber: 95,
+      toNumber: 95,
+      ilotNumber: 4999,
+      arrondissementNumber: 6,
+      quartierName: "Conflict Disagree Quartier",
+    });
+
+    const res = await SELF.fetch(
+      `https://example.com/api/rues/${rueId}/lookup?n=95`
+    );
+    expect(res.status).toBe(200);
+
+    const body = (await res.json()) as LookupResponse;
+    expect(body.conflict).toBe(true);
+    expect(body.matches).toHaveLength(2);
+    expect(body.matches.map((m) => m.ilot).sort()).toEqual([4121, 4999]);
+  });
+
+  it("dedupes matching triples and returns conflict true when two sources agree on ilot", async () => {
+    const { rueId } = await seedLookupSegment({
+      rueTypeCode: "rue",
+      rueLibelle: "de Test Conflict Agree",
+      parity: "odd",
+      fromNumber: 95,
+      toNumber: 95,
+      ilotNumber: 4121,
+      arrondissementNumber: 6,
+      quartierName: "Conflict Agree Quartier",
+    });
+
+    await seedAdditionalSourceSegment({
+      rueId,
+      bobine: 43,
+      parity: "odd",
+      fromNumber: 95,
+      toNumber: 95,
+      ilotNumber: 4121,
+      arrondissementNumber: 6,
+      quartierName: "Conflict Agree Quartier",
+    });
+
+    const res = await SELF.fetch(
+      `https://example.com/api/rues/${rueId}/lookup?n=95`
+    );
+    expect(res.status).toBe(200);
+
+    const body = (await res.json()) as LookupResponse;
+    expect(body.conflict).toBe(true);
+    expect(body.matches).toHaveLength(1);
+    expect(body.matches[0]).toEqual({
+      arrondissement: 6,
+      quartier: "Conflict Agree Quartier",
+      ilot: 4121,
+    });
   });
 });
