@@ -658,6 +658,128 @@ describe("GET /api/rues/:rueId/lookup", () => {
     expect(body.matches.map((m) => m.ilot).sort()).toEqual([4121, 4999]);
   });
 
+  it("returns provenance per match when provenance=1", async () => {
+    const { rueId } = await seedLookupSegment({
+      rueTypeCode: "rue",
+      rueLibelle: "de Test Provenance",
+      parity: "odd",
+      fromNumber: 95,
+      toNumber: 95,
+      ilotNumber: 4121,
+      arrondissementNumber: 6,
+      quartierName: "Provenance Quartier",
+    });
+
+    const res = await SELF.fetch(
+      `https://example.com/api/rues/${rueId}/lookup?n=95&provenance=1`
+    );
+    expect(res.status).toBe(200);
+
+    const body = (await res.json()) as LookupResponse;
+    expect(body.conflict).toBe(false);
+    expect(body.matches).toEqual([
+      {
+        arrondissement: 6,
+        quartier: "Provenance Quartier",
+        ilot: 4121,
+        provenance: [
+          {
+            bobine: 8,
+            page: 1,
+            sequence: 0,
+            raw_text: "test raw",
+          },
+        ],
+      },
+    ]);
+  });
+
+  it("omits provenance on matches by default", async () => {
+    const { rueId } = await seedLookupSegment({
+      rueTypeCode: "rue",
+      rueLibelle: "de Test Provenance Default",
+      parity: "odd",
+      fromNumber: 95,
+      toNumber: 95,
+      ilotNumber: 4122,
+      arrondissementNumber: 6,
+      quartierName: "Provenance Default Quartier",
+    });
+
+    const res = await SELF.fetch(
+      `https://example.com/api/rues/${rueId}/lookup?n=95`
+    );
+    expect(res.status).toBe(200);
+
+    const body = (await res.json()) as LookupResponse;
+    expect(body.matches[0]).not.toHaveProperty("provenance");
+  });
+
+  it("returns 400 when provenance is not 0 or 1", async () => {
+    const { rueId } = await seedLookupSegment({
+      rueTypeCode: "rue",
+      rueLibelle: "de Test Bad Provenance",
+      parity: "odd",
+      fromNumber: 95,
+      toNumber: 95,
+      ilotNumber: 4123,
+      arrondissementNumber: 6,
+      quartierName: "Bad Provenance Quartier",
+    });
+
+    for (const value of ["yes", "2", "true"]) {
+      const res = await SELF.fetch(
+        `https://example.com/api/rues/${rueId}/lookup?n=95&provenance=${value}`
+      );
+      expect(res.status).toBe(400);
+      const body = (await res.json()) as { error: string };
+      expect(body.error).toMatch(/provenance must be 0 or 1/);
+    }
+  });
+
+  it("returns the same matches and conflict with or without provenance", async () => {
+    const { rueId } = await seedLookupSegment({
+      rueTypeCode: "rue",
+      rueLibelle: "de Test Provenance Parity",
+      parity: "odd",
+      fromNumber: 95,
+      toNumber: 95,
+      ilotNumber: 4121,
+      arrondissementNumber: 6,
+      quartierName: "Provenance Parity Quartier",
+    });
+
+    await seedAdditionalSourceSegment({
+      rueId,
+      bobine: 43,
+      parity: "odd",
+      fromNumber: 95,
+      toNumber: 95,
+      ilotNumber: 4999,
+      arrondissementNumber: 6,
+      quartierName: "Provenance Parity Quartier",
+    });
+
+    const without = await SELF.fetch(
+      `https://example.com/api/rues/${rueId}/lookup?n=95`
+    );
+    const withProv = await SELF.fetch(
+      `https://example.com/api/rues/${rueId}/lookup?n=95&provenance=1`
+    );
+
+    const bodyWithout = (await without.json()) as LookupResponse;
+    const bodyWith = (await withProv.json()) as LookupResponse;
+
+    expect(bodyWith.conflict).toBe(bodyWithout.conflict);
+    expect(bodyWith.matches.map(({ provenance: _, ...match }) => match)).toEqual(
+      bodyWithout.matches
+    );
+    expect(bodyWith.conflict).toBe(true);
+    expect(bodyWith.matches.every((m) => m.provenance?.length === 1)).toBe(
+      true
+    );
+  });
+
   it("dedupes matching triples and returns conflict true when two sources agree on ilot", async () => {
     const { rueId } = await seedLookupSegment({
       rueTypeCode: "rue",

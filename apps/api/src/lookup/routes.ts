@@ -18,8 +18,8 @@ lookupRoutes.get(
   jsonErrorValidator("query", lookupQuerySchema),
   async (c) => {
     const { rueId } = c.req.valid("param");
-    const { n, suffix } = c.req.valid("query");
-    const result = await lookupRue(c.get("db"), rueId, n, suffix);
+    const { n, suffix, provenance } = c.req.valid("query");
+    const result = await lookupRue(c.get("db"), rueId, n, suffix, provenance);
 
     if (result === "not_found") {
       throw notFound("rue not found");

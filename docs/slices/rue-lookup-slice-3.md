@@ -116,7 +116,7 @@ LookupResultBox
 
 | Behaviour                                             | Slice |
 | ----------------------------------------------------- | ----- |
-| `?provenance=1` and provenance UI                     | 4     |
+| `?provenance=1` and provenance UI                     | [4](./rue-lookup-slice-4.md) |
 | Comprehensive slice doc (`docs/slices/rue-lookup.md`) | 5     |
 
 ---
@@ -194,8 +194,8 @@ npm run test -w web
 
 | Topic                        | Detail                                                                                            |
 | ---------------------------- | ------------------------------------------------------------------------------------------------- |
-| **No provenance**            | QA trace-back deferred to slice 4.                                                                |
+| **No provenance**            | QA trace-back shipped in [slice 4](./rue-lookup-slice-4.md).                                      |
 | **Conflict is source-level** | Two sources agreeing on one îlot still flags conflict; badge wording is generic.                  |
 | **No per-match conflict**    | Flag is top-level only; client cannot see which triple came from which bobine without provenance. |
 
-When slice 4+ lands, extend tests first, then update this file or fold into `docs/slices/rue-lookup.md`.
+Provenance opt-in is documented in [slice 4](./rue-lookup-slice-4.md). Slice 5 will fold slices 1–4 into `docs/slices/rue-lookup.md`.

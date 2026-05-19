@@ -38,7 +38,8 @@ export type LookupMatch = {
   arrondissement: number;
   quartier: string;
   ilot: number;
-  provenance?: LookupProvenance;
+  /** Present only when `?provenance=1`; deduped per match. */
+  provenance?: LookupProvenance[];
 };
 
 /** Successful lookup response (always a list, never a scalar). */

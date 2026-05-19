@@ -15,6 +15,7 @@ export type LookupFormProps = {
 export function LookupForm({ resolvedRue, lookup }: LookupFormProps) {
   const [n, setN] = useState("");
   const [suffix, setSuffix] = useState<LookupSuffixToken | "">("");
+  const [provenance, setProvenance] = useState(false);
   const parsedN = Number(n);
   const hasPositiveN = Number.isInteger(parsedN) && parsedN > 0;
   const canSubmit = canSubmitLookup(resolvedRue) && hasPositiveN;
@@ -26,6 +27,7 @@ export function LookupForm({ resolvedRue, lookup }: LookupFormProps) {
       rueId: resolvedRue.rueId,
       n: parsedN,
       suffix: suffix === "" ? undefined : suffix,
+      provenance: provenance || undefined,
     });
   }
 
@@ -56,6 +58,16 @@ export function LookupForm({ resolvedRue, lookup }: LookupFormProps) {
           </option>
         ))}
       </select>
+
+      <label htmlFor="lookup-provenance-checkbox">
+        <input
+          id="lookup-provenance-checkbox"
+          type="checkbox"
+          checked={provenance}
+          onChange={(e) => setProvenance(e.target.checked)}
+        />
+        Include provenance
+      </label>
 
       <button type="submit" disabled={!canSubmit || lookup.loading}>
         Look up
