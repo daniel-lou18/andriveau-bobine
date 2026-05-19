@@ -1,12 +1,14 @@
-import { useEffect, useRef, useState } from "react";
+import { keepPreviousData, useQuery } from "@tanstack/react-query";
+import { useState } from "react";
 import {
   SUGGEST_MIN_LENGTH,
   toResolvedRue,
   type ResolvedRue,
   type RueSuggestion,
 } from "@andriveau-bobine/disambiguation";
-import { fetchRueSuggestions } from "./api";
+import { useDebouncedValue } from "../lib/useDebouncedValue";
 import { canSubmitLookup } from "./handoff";
+import { rueSuggestionsQueryOptions } from "./rueSuggestionsQuery";
 
 const DEBOUNCE_MS = 150;
 
@@ -38,43 +40,22 @@ export function useRueDisambiguation(
 ): RueDisambiguation {
   const { onResolved } = options;
   const [query, setQueryState] = useState("");
-  const [suggestions, setSuggestions] = useState<RueSuggestion[]>([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
   const [resolvedRue, setResolvedRue] = useState<ResolvedRue | null>(null);
 
-  const requestSeq = useRef(0);
+  const trimmedQuery = query.trim();
+  const debouncedQuery = useDebouncedValue(trimmedQuery, DEBOUNCE_MS);
+  const searchEnabled =
+    resolvedRue === null && debouncedQuery.length >= SUGGEST_MIN_LENGTH;
 
-  useEffect(() => {
-    const trimmed = query.trim();
-    if (trimmed.length < SUGGEST_MIN_LENGTH) {
-      setSuggestions([]);
-      setError(null);
-      setLoading(false);
-      return;
-    }
-
-    const seq = ++requestSeq.current;
-    const controller = new AbortController();
-    const timer = window.setTimeout(async () => {
-      setLoading(true);
-      const result = await fetchRueSuggestions(trimmed, controller.signal);
-      if (seq !== requestSeq.current) return;
-      if (result.ok) {
-        setSuggestions(result.results);
-        setError(null);
-      } else {
-        setSuggestions([]);
-        setError(result.error);
-      }
-      setLoading(false);
-    }, DEBOUNCE_MS);
-
-    return () => {
-      window.clearTimeout(timer);
-      controller.abort();
-    };
-  }, [query]);
+  const {
+    data: suggestions = [],
+    isFetching,
+    error: queryError,
+  } = useQuery({
+    ...rueSuggestionsQueryOptions(debouncedQuery),
+    enabled: searchEnabled,
+    placeholderData: keepPreviousData,
+  });
 
   function setQuery(value: string) {
     setResolvedRue(null);
@@ -85,22 +66,22 @@ export function useRueDisambiguation(
     const rue = toResolvedRue(suggestion);
     setResolvedRue(rue);
     setQueryState(rue.display);
-    setSuggestions([]);
-    setError(null);
     onResolved?.(rue);
   }
 
   function clearResolved() {
     setResolvedRue(null);
-    setSuggestions([]);
-    setError(null);
   }
+
+  const showSuggestions = searchEnabled;
+  const error =
+    showSuggestions && queryError instanceof Error ? queryError.message : null;
 
   return {
     query,
     setQuery,
-    suggestions,
-    loading,
+    suggestions: showSuggestions ? suggestions : [],
+    loading: searchEnabled && isFetching,
     error,
     resolvedRue,
     canSubmitLookup: canSubmitLookup(resolvedRue),

@@ -50,8 +50,11 @@ export const apiErrorHandler: ErrorHandler = (err, c) => {
       return err.getResponse();
     }
 
-    const message =
-      err.message.trim() !== "" ? err.message : "Request failed";
+    const message = err.message.includes("Malformed JSON")
+      ? "invalid JSON body"
+      : err.message.trim() !== ""
+        ? err.message
+        : "Request failed";
     return c.json({ error: message }, err.status);
   }
 

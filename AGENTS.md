@@ -5,7 +5,7 @@ This document describes the **andriveau-bobine** monorepo: layout, commands, and
 ## Stack
 
 - **Monorepo:** npm workspaces (`apps/*`).
-- **`apps/web`:** React 19 + TypeScript + Vite 8.
+- **`apps/web`:** React 19 + TypeScript + Vite 8 + **TanStack Query** (`@tanstack/react-query` v5) for server/async state.
 - **`apps/api`:** Cloudflare Worker with **Hono**, **Wrangler** (v4), TypeScript. Config in **`wrangler.jsonc`** (preferred over TOML for current Wrangler features and schema support).
 
 ## Repository layout
@@ -39,6 +39,7 @@ Domain entities, relations, and lookup optimization are documented in **`docs/DO
 | `npm run dev:web`   | Start Vite dev server for `apps/web`.                           |
 | `npm run dev:api`   | Start `wrangler dev` for `apps/api`.                            |
 | `npm run build`     | Run each workspace’s `build` script if present.                 |
+| `npm run test:web`  | Vitest suite for `apps/web` (happy-dom + Testing Library).      |
 | `npm run types:api` | Regenerate Worker TypeScript types (`wrangler types` in `api`). |
 
 ## Commands (inside each app)
@@ -49,8 +50,10 @@ Domain entities, relations, and lookup optimization are documented in **`docs/DO
 | ----------------- | ---------------------------------------- |
 | `npm run dev`     | Vite dev server (default port **5173**). |
 | `npm run build`   | `tsc -b` then production bundle.         |
-| `npm run lint`    | ESLint.                                  |
-| `npm run preview` | Preview production build locally.        |
+| `npm run lint`        | ESLint.                                  |
+| `npm run preview`     | Preview production build locally.        |
+| `npm run test`        | Vitest (`vitest.config.ts`, happy-dom).  |
+| `npm run test:watch`  | Same suite in watch mode.                |
 
 **`apps/api`**
 
@@ -141,6 +144,31 @@ Some migrations are easier to write or reorder by hand (large rebuilds, seeds in
 - **Env:** Public configuration for the browser should use Vite’s **`import.meta.env`** and variables prefixed with **`VITE_`** when you add them. Do not put secrets in `VITE_*` variables.
 - **Production API URL:** Define how the SPA talks to the Worker in production (e.g. `VITE_API_URL` or same-origin routing on Cloudflare Pages); the Vite proxy applies **only** in dev.
 
+### Server state (TanStack Query)
+
+The SPA uses **TanStack Query v5** for reads from the Worker. **`QueryClientProvider`** wraps the app in **`src/main.tsx`** (global default: **`refetchOnWindowFocus: false`**).
+
+**Layout (per feature slice, e.g. `src/rue-suggest/`):**
+
+| Piece | Role |
+| ----- | ---- |
+| **`api.ts`** | Plain `fetch` to `/api/...` (relative URLs so the Vite proxy applies in dev). Returns a typed result or throws only at the HTTP layer — not React Query yet. |
+| **`*Query.ts`** | **`queryOptions` factory** + hierarchical **`queryKey`** (see `rueSuggestionsQuery.ts`). **`queryFn`** receives **`signal`** from Query and passes it to `fetch`; map API failures to **`throw new Error(...)`** so Query owns error state. Set per-query options here (`staleTime`, `retry: false` for typeahead, etc.). |
+| **Hook** | **`useQuery({ ...featureQueryOptions(arg), enabled, placeholderData })`** plus local React state for UI-only concerns (input text, selection, modals). |
+| **`index.ts`** | Re-export public hooks, components, and query keys/options when other modules need prefetch or tests. |
+
+**Conventions:**
+
+- Prefer **`queryOptions()`** + spread in **`useQuery`** over inline query objects — keeps keys, fetchers, and defaults composable and testable.
+- Use stable **query key factories** (`all` → scoped segments, e.g. `["rues", "suggest", q]`).
+- **Do not** hand-roll `useEffect` + `fetch` for Worker reads; use Query (cancellation via **`signal`**, deduping, cache, error/loading flags).
+- **Debounced search:** React Query has no debounce — pair **`useDebouncedValue`** (`src/lib/useDebouncedValue.ts`) with **`enabled: debouncedInput.length >= min`** (see `useRueDisambiguation.ts`).
+- **Typeahead UX:** **`placeholderData: keepPreviousData`** avoids list flicker while the debounced term changes; hide results with **`enabled`** or derived UI when a choice is resolved (do not rely on clearing cache alone).
+- **Split state:** server lists/errors/loading from Query; resolution, draft input, and “can submit” from the hook’s **`useState`** (ADR-0002 handoff in `rue-suggest/handoff.ts`).
+- New features that only **mutate** server data should use **`useMutation`** with **`queryClient.invalidateQueries`** on the relevant keys (none in the repo yet).
+
+**Reference implementation:** `src/rue-suggest/` (`rueSuggestionsQuery.ts`, `useRueDisambiguation.ts`, `useRueDisambiguation.test.tsx`).
+
 ## TypeScript and code style
 
 - **ES modules:** `"type": "module"` is used where relevant; prefer `import` / `export`.
@@ -153,6 +181,11 @@ Some migrations are easier to write or reorder by hand (large rebuilds, seeds in
 - **Harness:** `apps/api/vitest.config.ts` uses `@cloudflare/vitest-pool-workers`. Tests live under **`apps/api/test/`** and run inside a Workers runtime against an in-memory D1 with `drizzle/*.sql` applied by **`test/apply-migrations.ts`**.
 - **Conventions:** name files `*.test.ts`; reset any seeded rows in `beforeEach`/`afterEach` (the D1 is shared across tests in a file). Use `SELF.fetch("https://example.com/api/...")` to drive the Worker end-to-end.
 - **Adding tests:** prefer integration-style HTTP tests over isolated unit tests; assert public JSON shape and HTTP status rather than internal SQL strings (see `apps/api/test/rues_suggest.test.ts`).
+
+## Testing (Web)
+
+- **Harness:** `apps/web/vitest.config.ts` merges the Vite config; **happy-dom** + **@testing-library/react** (`renderHook`, `waitFor`).
+- **Conventions:** colocate `*.test.tsx` next to the module. For hooks using Query: wrap in **`QueryClientProvider`** with a test **`QueryClient`** (`retry: false`, `gcTime: Infinity`); mock the **`api.ts`** fetcher, not `useQuery`. Use fake timers when testing debounced queries (`vi.useFakeTimers({ shouldAdvanceTime: true })`). See **`src/rue-suggest/useRueDisambiguation.test.tsx`**.
 
 ## Git and ignored files
 
@@ -177,4 +210,5 @@ Single-context: root `CONTEXT.md` and `docs/adr/`. See `docs/agents/domain.md`.
 - Run **`npm install`** from the **root** after dependency changes in any workspace.
 - After editing **`apps/api/wrangler.jsonc`**, run **`npm run types:api`** and commit the updated **`worker-configuration.d.ts`** if bindings or generated types changed.
 - Prefer **root scripts** (`dev:web`, `dev:api`) for consistency unless debugging inside one app.
+- **Web reads:** add Worker `fetch` in `api.ts`, `queryOptions` + keys in a `*Query.ts` file, consume via **`useQuery`** in a hook — follow **`src/rue-suggest/`** and the **Server state (TanStack Query)** section above.
 - Document new env vars, ports, or deploy steps in this file when they become part of normal workflow.
