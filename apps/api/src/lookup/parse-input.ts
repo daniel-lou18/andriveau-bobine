@@ -1,14 +1,19 @@
+import { rankOfSuffix } from "../lib/suffix";
+
 export type ParsedLookupInput = {
   n: number;
-  n_rank: 0;
+  n_rank: number;
   parity: "odd" | "even";
 };
 
-/** Slice 1: parity from `n`; suffix rank fixed at 0 until Slice 2. */
-export function parseLookupInput(n: number): ParsedLookupInput {
+/** Parity from `n`; suffix maps to `n_rank` via the canonical rank table. */
+export function parseLookupInput(
+  n: number,
+  suffix?: string
+): ParsedLookupInput {
   return {
     n,
-    n_rank: 0,
+    n_rank: rankOfSuffix(suffix ?? ""),
     parity: n % 2 === 0 ? "even" : "odd",
   };
 }

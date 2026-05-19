@@ -13,7 +13,8 @@ export type { LookupParams, LookupQuery } from "./schema";
 export async function lookupRue(
   db: Database,
   rueId: number,
-  n: number
+  n: number,
+  suffix?: string
 ): Promise<LookupResponse | "not_found"> {
   const rue = await db
     .select({ id: rues.id })
@@ -25,7 +26,7 @@ export async function lookupRue(
     return "not_found";
   }
 
-  const input = parseLookupInput(n);
+  const input = parseLookupInput(n, suffix);
   const matches = await queryLookupMatches(db, rueId, input);
 
   return { matches, conflict: false };

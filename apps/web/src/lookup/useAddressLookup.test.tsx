@@ -62,13 +62,18 @@ describe("useAddressLookup", () => {
     });
 
     act(() => {
-      result.current.submit({ rueId: 42, n: 95 });
+      result.current.submit({ rueId: 42, n: 95, suffix: undefined });
     });
 
     await waitFor(() => {
       expect(result.current.result).toEqual(sampleResponse);
     });
-    expect(mockFetch).toHaveBeenCalledWith(42, 95, expect.any(AbortSignal));
+    expect(mockFetch).toHaveBeenCalledWith(
+      42,
+      95,
+      undefined,
+      expect.any(AbortSignal)
+    );
     expect(result.current.loading).toBe(false);
     expect(result.current.error).toBeNull();
   });
@@ -102,7 +107,7 @@ describe("useAddressLookup", () => {
     });
 
     act(() => {
-      result.current.submit({ rueId: 42, n: 95 });
+      result.current.submit({ rueId: 42, n: 95, suffix: undefined });
     });
     await waitFor(() => {
       expect(result.current.result).toEqual(sampleResponse);
@@ -125,7 +130,7 @@ describe("useAddressLookup", () => {
     });
 
     act(() => {
-      result.current.submit({ rueId: 42, n: 95 });
+      result.current.submit({ rueId: 42, n: 95, suffix: undefined });
     });
     await waitFor(() => {
       expect(result.current.result).toEqual(sampleResponse);
@@ -136,12 +141,62 @@ describe("useAddressLookup", () => {
       result.current.clear();
     });
     act(() => {
-      result.current.submit({ rueId: 42, n: 95 });
+      result.current.submit({ rueId: 42, n: 95, suffix: undefined });
     });
 
     await waitFor(() => {
       expect(result.current.result).toEqual(sampleResponse);
     });
     expect(mockFetch).toHaveBeenCalledTimes(1);
+  });
+
+  it("submit with a suffix passes it to fetchLookup", async () => {
+    mockFetch.mockResolvedValue({ ok: true, data: sampleResponse });
+
+    const { result } = renderHook(() => useAddressLookup(), {
+      wrapper: createWrapper(),
+    });
+
+    act(() => {
+      result.current.submit({ rueId: 42, n: 8, suffix: "bis" });
+    });
+
+    await waitFor(() => {
+      expect(result.current.result).toEqual(sampleResponse);
+    });
+    expect(mockFetch).toHaveBeenCalledWith(
+      42,
+      8,
+      "bis",
+      expect.any(AbortSignal)
+    );
+  });
+
+  it("fetches again when only the suffix changes", async () => {
+    mockFetch.mockResolvedValue({ ok: true, data: sampleResponse });
+    const { result } = renderHook(() => useAddressLookup(), {
+      wrapper: createWrapper(),
+    });
+
+    act(() => {
+      result.current.submit({ rueId: 42, n: 8, suffix: "bis" });
+    });
+    await waitFor(() => {
+      expect(result.current.result).toEqual(sampleResponse);
+    });
+    expect(mockFetch).toHaveBeenCalledTimes(1);
+
+    act(() => {
+      result.current.submit({ rueId: 42, n: 8, suffix: "ter" });
+    });
+    await waitFor(() => {
+      expect(mockFetch).toHaveBeenCalledTimes(2);
+    });
+    expect(mockFetch).toHaveBeenLastCalledWith(
+      42,
+      8,
+      "ter",
+      expect.any(AbortSignal)
+    );
   });
 });

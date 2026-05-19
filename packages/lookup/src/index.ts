@@ -13,6 +13,18 @@ export type SuffixToken =
   | "sexies"
   | "septies";
 
+/** Non-empty suffix tokens accepted on `GET …/lookup?suffix=…`. */
+export const LOOKUP_SUFFIX_TOKENS = [
+  "bis",
+  "ter",
+  "quater",
+  "quinquies",
+  "sexies",
+  "septies",
+] as const;
+
+export type LookupSuffixToken = (typeof LOOKUP_SUFFIX_TOKENS)[number];
+
 /** Opt-in provenance row (`?provenance=1`; Slice 4). */
 export type LookupProvenance = {
   bobine: number;

@@ -7,9 +7,14 @@ export type LookupFetchResponse =
 export async function fetchLookup(
   rueId: number,
   n: number,
+  suffix: string | undefined,
   signal?: AbortSignal
 ): Promise<LookupFetchResponse> {
-  const url = `/api/rues/${encodeURIComponent(String(rueId))}/lookup?n=${encodeURIComponent(String(n))}`;
+  const params = new URLSearchParams({ n: String(n) });
+  if (suffix !== undefined) {
+    params.set("suffix", suffix);
+  }
+  const url = `/api/rues/${encodeURIComponent(String(rueId))}/lookup?${params}`;
   const res = await fetch(url, { signal });
   if (!res.ok) {
     let error = `HTTP ${res.status}`;

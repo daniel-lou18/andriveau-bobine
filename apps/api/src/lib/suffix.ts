@@ -1,3 +1,5 @@
+import type { SuffixToken } from "@andriveau-bobine/lookup";
+
 export const SUFFIX_RANK = {
   "": 0,
   bis: 1,
@@ -6,9 +8,7 @@ export const SUFFIX_RANK = {
   quinquies: 4,
   sexies: 5,
   septies: 6,
-} as const;
-
-export type SuffixToken = keyof typeof SUFFIX_RANK;
+} as const satisfies Record<SuffixToken, number>;
 
 export function rankOfSuffix(suffix: string | null | undefined): number {
   const key = (suffix ?? "").trim().toLowerCase() as SuffixToken;

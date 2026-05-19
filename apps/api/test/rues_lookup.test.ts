@@ -9,6 +9,8 @@ type SeedSegment = {
   parity: "odd" | "even";
   fromNumber: number;
   toNumber: number;
+  fromSuffixRank?: number;
+  toSuffixRank?: number;
   ilotNumber: number;
   arrondissementNumber: number;
   quartierName: string;
@@ -97,14 +99,16 @@ async function seedLookupSegment(config: SeedSegment): Promise<{ rueId: number }
     `INSERT INTO street_segments (
        source_entry_id, rue_id, parity,
        from_number, from_suffix_rank, to_number, to_suffix_rank
-     ) VALUES (?1, ?2, ?3, ?4, 0, ?5, 0)`
+     ) VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7)`
   )
     .bind(
       sourceRow!.id,
       rueRow!.id,
       config.parity,
       config.fromNumber,
-      config.toNumber
+      config.fromSuffixRank ?? 0,
+      config.toNumber,
+      config.toSuffixRank ?? 0
     )
     .run();
 
@@ -266,5 +270,133 @@ describe("GET /api/rues/:rueId/lookup", () => {
     const body = (await res.json()) as { error: string };
     expect(typeof body.error).toBe("string");
     expect(body.error.length).toBeGreaterThan(0);
+  });
+
+  it("returns 200 with one match when suffix=bis covers (n, rank 1) on an 8 → 8bis segment", async () => {
+    const { rueId } = await seedLookupSegment({
+      rueTypeCode: "rue",
+      rueLibelle: "de Test Suffix Bis",
+      parity: "even",
+      fromNumber: 8,
+      toNumber: 8,
+      fromSuffixRank: 0,
+      toSuffixRank: 1,
+      ilotNumber: 8001,
+      arrondissementNumber: 6,
+      quartierName: "Suffix Quartier",
+    });
+
+    const res = await SELF.fetch(
+      `https://example.com/api/rues/${rueId}/lookup?n=8&suffix=bis`
+    );
+    expect(res.status).toBe(200);
+
+    const body = (await res.json()) as LookupResponse;
+    expect(body.conflict).toBe(false);
+    expect(body.matches).toEqual([
+      {
+        arrondissement: 6,
+        quartier: "Suffix Quartier",
+        ilot: 8001,
+      },
+    ]);
+  });
+
+  it("returns 200 with empty matches when suffix=ter is outside an 8 → 8bis segment", async () => {
+    const { rueId } = await seedLookupSegment({
+      rueTypeCode: "rue",
+      rueLibelle: "de Test Suffix Ter Miss",
+      parity: "even",
+      fromNumber: 8,
+      toNumber: 8,
+      fromSuffixRank: 0,
+      toSuffixRank: 1,
+      ilotNumber: 8002,
+      arrondissementNumber: 6,
+      quartierName: "Suffix Ter Quartier",
+    });
+
+    const res = await SELF.fetch(
+      `https://example.com/api/rues/${rueId}/lookup?n=8&suffix=ter`
+    );
+    expect(res.status).toBe(200);
+
+    const body = (await res.json()) as LookupResponse;
+    expect(body).toEqual({ matches: [], conflict: false });
+  });
+
+  it("returns 200 with empty matches when suffix=bis does not match a singleton 8 segment", async () => {
+    const { rueId } = await seedLookupSegment({
+      rueTypeCode: "rue",
+      rueLibelle: "de Test Singleton Eight",
+      parity: "even",
+      fromNumber: 8,
+      toNumber: 8,
+      fromSuffixRank: 0,
+      toSuffixRank: 0,
+      ilotNumber: 8003,
+      arrondissementNumber: 6,
+      quartierName: "Singleton Eight Quartier",
+    });
+
+    const res = await SELF.fetch(
+      `https://example.com/api/rues/${rueId}/lookup?n=8&suffix=bis`
+    );
+    expect(res.status).toBe(200);
+
+    const body = (await res.json()) as LookupResponse;
+    expect(body).toEqual({ matches: [], conflict: false });
+  });
+
+  it("returns 200 with a match for 10bis but not for 10ter on a 10 → 10bis segment", async () => {
+    const { rueId } = await seedLookupSegment({
+      rueTypeCode: "rue",
+      rueLibelle: "de Test Ten Bis Cap",
+      parity: "even",
+      fromNumber: 10,
+      toNumber: 10,
+      fromSuffixRank: 0,
+      toSuffixRank: 1,
+      ilotNumber: 8010,
+      arrondissementNumber: 6,
+      quartierName: "Ten Bis Quartier",
+    });
+
+    const resBis = await SELF.fetch(
+      `https://example.com/api/rues/${rueId}/lookup?n=10&suffix=bis`
+    );
+    expect(resBis.status).toBe(200);
+    const bodyBis = (await resBis.json()) as LookupResponse;
+    expect(bodyBis.matches).toHaveLength(1);
+
+    const resTer = await SELF.fetch(
+      `https://example.com/api/rues/${rueId}/lookup?n=10&suffix=ter`
+    );
+    expect(resTer.status).toBe(200);
+    const bodyTer = (await resTer.json()) as LookupResponse;
+    expect(bodyTer).toEqual({ matches: [], conflict: false });
+  });
+
+  it("returns 400 when suffix is an unknown token", async () => {
+    const { rueId } = await seedLookupSegment({
+      rueTypeCode: "rue",
+      rueLibelle: "de Test Bad Suffix",
+      parity: "even",
+      fromNumber: 8,
+      toNumber: 8,
+      ilotNumber: 8099,
+      arrondissementNumber: 6,
+      quartierName: "Bad Suffix Quartier",
+    });
+
+    for (const token of ["octies", "foo", "1"]) {
+      const res = await SELF.fetch(
+        `https://example.com/api/rues/${rueId}/lookup?n=8&suffix=${token}`
+      );
+      expect(res.status).toBe(400);
+      const body = (await res.json()) as { error: string };
+      expect(body.error).toMatch(/suffix must be one of:/);
+      expect(body.error).toMatch(/bis/);
+    }
   });
 });
