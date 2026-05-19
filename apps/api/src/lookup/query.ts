@@ -1,5 +1,4 @@
 import { and, eq, sql } from "drizzle-orm";
-import type { LookupMatch } from "@andriveau-bobine/lookup";
 import type { Database } from "../db";
 import {
   arrondissements,
@@ -9,18 +8,20 @@ import {
   sourceEntries,
   streetSegments,
 } from "../db/schema";
+import type { LookupRawRow } from "./assemble";
 import type { ParsedLookupInput } from "./parse-input";
 
-export async function queryLookupMatches(
+export async function queryLookupRawRows(
   db: Database,
   rueId: number,
   input: ParsedLookupInput
-): Promise<LookupMatch[]> {
+): Promise<LookupRawRow[]> {
   const rows = await db
     .select({
       arrondissement: arrondissements.number,
       quartier: quartiers.name,
       ilot: ilots.number,
+      sourceEntryId: streetSegments.sourceEntryId,
       bobine: sourceEntries.bobine,
       page: sourceEntries.page,
       sequence: sourceEntries.sequence,
@@ -53,9 +54,12 @@ export async function queryLookupMatches(
       ilots.number
     );
 
-  return rows.map(({ arrondissement, quartier, ilot }) => ({
-    arrondissement,
-    quartier,
-    ilot,
-  }));
+  return rows.map(
+    ({ arrondissement, quartier, ilot, sourceEntryId }) => ({
+      arrondissement,
+      quartier,
+      ilot,
+      sourceEntryId,
+    })
+  );
 }
