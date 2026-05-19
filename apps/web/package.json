@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@andriveau-bobine/disambiguation": "*",
+    "@andriveau-bobine/lookup": "*",
     "@tanstack/react-query": "^5.100.11",
     "react": "^19.2.5",
     "react-dom": "^19.2.5"

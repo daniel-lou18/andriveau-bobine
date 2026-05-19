@@ -4,6 +4,7 @@ import { cors } from "hono/cors";
 import { createDb, type Database } from "./db";
 import { apiErrorHandler } from "./http/on-error";
 import { loaderRoutes } from "./loader/routes";
+import { lookupRoutes } from "./lookup/routes";
 import { suggestRoutes } from "./suggest/routes";
 
 type AppBindings = Cloudflare.Env;
@@ -33,6 +34,7 @@ app.use("*", async (c, next) => {
 app.get("/api/health", (c) => c.json({ ok: true }));
 
 app.route("/api/rues", suggestRoutes);
+app.route("/api/rues", lookupRoutes);
 app.route("/api/_loader", loaderRoutes);
 
 app.get("/api/db/health", async (c) => {

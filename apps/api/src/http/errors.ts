@@ -40,6 +40,11 @@ export function unauthorized(
   return new HTTPException(401, { message });
 }
 
+/** 404 — resource not found. */
+export function notFound(message: string): HTTPException {
+  return new HTTPException(404, { message });
+}
+
 /** 400 — request body was not valid JSON. */
 export function invalidJsonBody(): HTTPException {
   return new HTTPException(400, { message: "invalid JSON body" });

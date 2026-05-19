@@ -1,0 +1,43 @@
+import type { AddressLookup } from "./useAddressLookup";
+
+export type LookupResultBoxProps = {
+  lookup: AddressLookup;
+};
+
+export function LookupResultBox({ lookup }: LookupResultBoxProps) {
+  const { result, loading, error } = lookup;
+
+  if (loading) {
+    return <p role="status">Looking up…</p>;
+  }
+
+  if (error) {
+    return (
+      <p role="alert" data-testid="lookup-error">
+        {error}
+      </p>
+    );
+  }
+
+  if (result === null) {
+    return null;
+  }
+
+  if (result.matches.length === 0) {
+    return (
+      <p data-testid="lookup-no-result">
+        No segment in the bobines covers this address on the selected rue.
+      </p>
+    );
+  }
+
+  return (
+    <ul data-testid="lookup-matches" aria-label="Lookup results">
+      {result.matches.map((match) => (
+        <li key={`${match.arrondissement}-${match.quartier}-${match.ilot}`}>
+          {match.arrondissement}e — {match.quartier} — îlot {match.ilot}
+        </li>
+      ))}
+    </ul>
+  );
+}
