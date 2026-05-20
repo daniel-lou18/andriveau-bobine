@@ -95,7 +95,7 @@ describe("useAddressLookup", () => {
     });
 
     await waitFor(() => {
-      expect(result.current.error).toBe("rue not found");
+      expect(result.current.error).toBe("Rue introuvable.");
     });
     expect(result.current.result).toBeNull();
   });

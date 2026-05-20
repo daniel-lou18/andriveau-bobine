@@ -5,6 +5,7 @@ import {
   lookupProvenanceKey,
   lookupTripleKey,
 } from "@andriveau-bobine/lookup";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 
 export type LookupResultBoxProps = {
   result: LookupResponse | null;
@@ -23,9 +24,9 @@ export function LookupResultBox({
 
   if (error) {
     return (
-      <p role="alert" data-testid="lookup-error">
-        {error}
-      </p>
+      <Alert variant="destructive" data-testid="lookup-error" role="alert">
+        <AlertDescription>{error}</AlertDescription>
+      </Alert>
     );
   }
 

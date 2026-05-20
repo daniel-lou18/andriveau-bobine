@@ -106,7 +106,9 @@ describe("useRueDisambiguation", () => {
     await advanceDebounce();
 
     await waitFor(() => {
-      expect(result.current.error).toBe("Server error");
+      expect(result.current.error).toBe(
+        "Erreur serveur. Veuillez réessayer plus tard."
+      );
     });
     expect(result.current.suggestions).toEqual([]);
   });

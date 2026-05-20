@@ -1,4 +1,5 @@
 import { queryOptions } from "@tanstack/react-query";
+import { mapApiErrorFr } from "@/lib/mapApiErrorFr";
 import { fetchRueSuggestions } from "./api";
 
 /** Stable query-key factory for rue suggest reads. */
@@ -13,7 +14,7 @@ export function rueSuggestionsQueryOptions(q: string) {
     queryFn: async ({ signal }) => {
       const result = await fetchRueSuggestions(q, signal);
       if (!result.ok) {
-        throw new Error(result.error);
+        throw new Error(mapApiErrorFr(result.error, result.status));
       }
       return result.results;
     },

@@ -1,4 +1,5 @@
 import { queryOptions } from "@tanstack/react-query";
+import { mapApiErrorFr } from "@/lib/mapApiErrorFr";
 import { fetchLookup } from "./api";
 
 /** Stable query-key factory for address lookup reads. */
@@ -19,7 +20,7 @@ export function lookupQueryOptions(
     queryFn: async ({ signal }) => {
       const result = await fetchLookup(rueId, n, suffix, provenance, signal);
       if (!result.ok) {
-        throw new Error(result.error);
+        throw new Error(mapApiErrorFr(result.error, result.status));
       }
       return result.data;
     },
