@@ -15,7 +15,7 @@ apps/
   web/          # Frontend SPA
   api/          # Worker (Hono)
 packages/
-  suggest/          # @andriveau-bobine/suggest — suggest contract + handoff types
+  suggest/          # @andriveau-bobine/suggest — suggest contract, matching, handoff
   lookup/           # @andriveau-bobine/lookup — lookup contract, assembly, suffix ranks
 ```
 Address extraction mapping rules and domain conventions are documented in **`docs/EXTRACTION.md`**.
@@ -42,6 +42,7 @@ Domain entities, relations, and lookup optimization are documented in **`docs/DO
 | `npm run build`     | Run each workspace’s `build` script if present.                 |
 | `npm run test:web`    | Vitest suite for `apps/web` (happy-dom + Testing Library).      |
 | `npm run test:lookup` | Vitest suite for `packages/lookup` (assembly, parse, suffix).   |
+| `npm run test:suggest` | Vitest suite for `packages/suggest` (match, prefix expand).      |
 | `npm run types:api`   | Regenerate Worker TypeScript types (`wrangler types` in `api`). |
 
 ## Commands (inside each app)

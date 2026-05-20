@@ -1,16 +1,12 @@
-import type { RueSuggestion } from "@andriveau-bobine/suggest";
-import type { Database } from "../db";
-import { displayVoieType } from "../lib/voie_type_display";
-import { buildSuggestLikePatterns, buildSuggestMatchSpec } from "./match";
-import { querySuggestRues } from "./query";
-
-export type { RueSuggestion } from "@andriveau-bobine/suggest";
-export {
+import {
   buildSuggestLikePatterns,
   buildSuggestMatchSpec,
-  escapeLikeFragment,
-} from "./match";
-export type { SuggestLikePatterns, SuggestMatchSpec } from "./match";
+  type RueSuggestion,
+} from "@andriveau-bobine/suggest";
+import type { Database } from "../db";
+import { displayVoieType } from "../lib/voie_type_display";
+import { querySuggestRues } from "./query";
+
 export { suggestQuerySchema } from "./schema";
 export type { SuggestQuery } from "./schema";
 
@@ -23,7 +19,7 @@ export type { SuggestQuery } from "./schema";
  *
  * Prefix-matches the normalized column. Common leading French articles
  * (`de`, `du`, …) omitted by the user are handled by OR-ing equivalent
- * prefixes (see `libelle_prefix_expand.ts`).
+ * prefixes (see `@andriveau-bobine/suggest` libelle-prefix-expand).
  *
  * When the query includes the voie **type** token (canonical `code`, e.g.
  * `rue`, `boulevard`, `petite rue`) before the libellé, it also matches the

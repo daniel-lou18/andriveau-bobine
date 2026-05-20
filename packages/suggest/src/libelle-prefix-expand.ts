@@ -1,6 +1,6 @@
 /**
- * Optional leading token chains on Paris voie libellés after {@link normalizeName}
- * (lowercase, accents stripped, apostrophe/hyphen → space).
+ * Optional leading token chains on Paris voie libellés after normalization
+ * (lowercase, accents stripped, apostrophe/hyphen → space; see DOMAIN_MODEL).
  *
  * When the user omits these (e.g. types `vau` for `de Vaugirard` → stored
  * `de vaugirard`), suggest still prefix-matches by OR-ing equivalent prefixes:

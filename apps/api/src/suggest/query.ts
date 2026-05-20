@@ -2,7 +2,7 @@ import { asc, eq, or, sql } from "drizzle-orm";
 import { SUGGEST_MAX_RESULTS } from "@andriveau-bobine/suggest";
 import type { Database } from "../db";
 import { rues, voieTypes } from "../db/schema";
-import type { SuggestLikePatterns } from "./match";
+import type { SuggestLikePatterns } from "@andriveau-bobine/suggest";
 
 export type SuggestQueryRow = {
   rue_id: number;

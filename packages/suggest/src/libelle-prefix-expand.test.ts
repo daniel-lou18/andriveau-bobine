@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import {
   expandNormalizedLibelleSuggestPrefixes,
   LIBELLE_LEADING_ARTICLE_CHAINS,
-} from "../src/suggest/libelle_prefix_expand";
+} from "./libelle-prefix-expand";
 
 describe("expandNormalizedLibelleSuggestPrefixes", () => {
   it("includes the raw fragment plus article-prefixed variants", () => {

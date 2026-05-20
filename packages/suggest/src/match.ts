@@ -1,4 +1,4 @@
-import { expandNormalizedLibelleSuggestPrefixes } from "./libelle_prefix_expand";
+import { expandNormalizedLibelleSuggestPrefixes } from "./libelle-prefix-expand";
 
 /**
  * SQLite `LIKE` treats `%`, `_` and the escape character as wildcards.

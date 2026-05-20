@@ -3,7 +3,7 @@ import {
   buildSuggestLikePatterns,
   buildSuggestMatchSpec,
   escapeLikeFragment,
-} from "../src/suggest/match";
+} from "./match";
 
 describe("escapeLikeFragment", () => {
   it("escapes LIKE metacharacters", () => {

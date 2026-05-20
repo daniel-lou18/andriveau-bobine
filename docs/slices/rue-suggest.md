@@ -44,7 +44,8 @@ GET /api/rues/suggest?q=…
   → suggest/routes.ts     (Hono sub-app)
   → jsonErrorValidator + suggestQuerySchema   (normalize q, min length)
   → suggestRues(db, normalizedQuery)          (use case — no HTTP types)
-  → buildSuggestMatchSpec → buildSuggestLikePatterns → querySuggestRues
+  → buildSuggestMatchSpec → buildSuggestLikePatterns (@andriveau-bobine/suggest)
+  → querySuggestRues (DB adapter)
   → map rows with displayVoieType
   → 200 { results }
 ```
@@ -53,14 +54,15 @@ The root app mounts the sub-app with `app.route("/api/rues", suggestRoutes)` (`a
 
 ### Shared package (`packages/suggest`)
 
-Cross-tier contract for ADR-0002 disambiguation:
+Cross-tier contract and prefix-matching rules (`@andriveau-bobine/suggest`):
 
 | Export | Role |
 |--------|------|
 | `SUGGEST_MIN_LENGTH`, `SUGGEST_MAX_RESULTS` | Limits (API enforces; web gates fetches) |
-| `RueSuggestion` | API JSON row shape (`rue_id`, `type`, `libelle`) |
-| `ResolvedRue` | Client handoff (`rueId`, `display`) after pick |
+| `RueSuggestion`, `ResolvedRue` | Wire + client handoff types |
 | `formatSuggestionLabel`, `toResolvedRue` | Display label + API→client mapping |
+| `buildSuggestMatchSpec`, `buildSuggestLikePatterns`, `escapeLikeFragment` | Pure matching pipeline |
+| `expandNormalizedLibelleSuggestPrefixes`, `LIBELLE_LEADING_ARTICLE_CHAINS` | Article-prefix OR branches |
 
 Both `apps/api` and `apps/web` depend on this workspace package.
 
@@ -95,10 +97,10 @@ RueSuggestBox({ disambiguation })   — presentation only
 |--------|------|
 | `routes.ts` | `GET /suggest` — query validation + `c.json({ results })`. |
 | `schema.ts` | `suggestQuerySchema` — optional `q`, `normalizeName`, min length from shared package. |
-| `index.ts` | **`suggestRues(db, normalizedQuery)`** → `RueSuggestion[]` (transport-agnostic). |
-| `match.ts` | Pure matching: `buildSuggestMatchSpec`, `buildSuggestLikePatterns`, `escapeLikeFragment`. |
-| `libelle_prefix_expand.ts` | Curated article chains + `expandNormalizedLibelleSuggestPrefixes`. |
-| `query.ts` | Drizzle adapter: binds `SuggestLikePatterns` to `LIKE` clauses (no matching rules here). |
+| `query.ts` | Drizzle adapter: binds `SuggestLikePatterns` to `LIKE` clauses. |
+| `index.ts` | **`suggestRues`** — wires package matching → `querySuggestRues` → `displayVoieType`. |
+
+Pure matching (`match.ts`, `libelle-prefix-expand.ts`) lives in **`packages/suggest/`** — not under `apps/api`.
 
 ### Shared read-path lib
 
@@ -109,9 +111,9 @@ RueSuggestBox({ disambiguation })   — presentation only
 
 ### Matching pipeline (pure → SQL)
 
-1. **`buildSuggestMatchSpec(normalizedQuery)`** — `{ libellePrefixes, fullKeyPrefix }` via article expansion.
+1. **`buildSuggestMatchSpec(normalizedQuery)`** (`packages/suggest/src/match.ts`) — `{ libellePrefixes, fullKeyPrefix }` via article expansion.
 2. **`buildSuggestLikePatterns(spec)`** — escaped, prefix-anchored patterns (`…%`) for each branch.
-3. **`querySuggestRues(db, patterns)`** — OR of:
+3. **`querySuggestRues(db, patterns)`** (`apps/api/src/suggest/query.ts`) — OR of:
    - **Libellé-only:** `rues.libelle_normalized LIKE <pattern> ESCAPE '\'`
    - **Full voie key:** `(voie_types.code \|\| ' ' \|\| libelle_normalized) LIKE <pattern> ESCAPE '\'`
 
@@ -199,7 +201,7 @@ Added alongside layering and shared contract work (see Testing table).
 
 **Issue:** Prefix on `libelle_normalized` only; `vau` does not prefix `de vaugirard`.
 
-**Remediation:** `libelle_prefix_expand.ts` + OR of libellé `LIKE` clauses. Tests: `vau` returns **Vauvenargues** and **de Vaugirard**; `gir` still returns nothing on **de Vaugirard**.
+**Remediation:** `packages/suggest` libelle-prefix-expand + OR of libellé `LIKE` clauses. Tests: `vau` returns **Vauvenargues** and **de Vaugirard**; `gir` still returns nothing on **de Vaugirard**.
 
 ### 2. Full phrase and type-leading input (`rue de rennes`, `rue de la …`)
 
@@ -231,10 +233,18 @@ Under plain `LIKE` prefix rules, `rue de la` also prefixes **Rue de Laborde** (`
 From repo root:
 
 ```bash
+npm run test:suggest
 npm run test -w api
 npm run test:watch -w api
 npm run test -w web
 ```
+
+### Package (`packages/suggest/src/`)
+
+| File | What it covers |
+|------|----------------|
+| `match.test.ts` | `buildSuggestMatchSpec`, `buildSuggestLikePatterns`, `escapeLikeFragment`. |
+| `libelle-prefix-expand.test.ts` | Article prefix expansion invariants. |
 
 ### API (`apps/api/test/`)
 
@@ -242,8 +252,6 @@ npm run test -w web
 |------|----------------|
 | `rues_suggest.test.ts` | End-to-end HTTP suggest contract (status, shape, ordering, extensions). |
 | `suggest_schema.test.ts` | `suggestQuerySchema` — min length, normalization, missing `q`. |
-| `suggest_match.test.ts` | `buildSuggestMatchSpec`, `buildSuggestLikePatterns`, `escapeLikeFragment`. |
-| `libelle_prefix_expand.test.ts` | Article prefix expansion invariants. |
 | `normalize.test.ts` | `normalizeName` — DOMAIN_MODEL examples and edge cases. |
 | `voie_type_display.test.ts` | `displayVoieType` — single/multi-word and accented codes. |
 | `http_on_error.test.ts` | `apiErrorHandler` — user-facing message vs logged Zod `cause`. |
@@ -267,6 +275,7 @@ npm run test -w web
 6. **Shared contract** — `packages/suggest` / `@andriveau-bobine/suggest` (types, limits, `ResolvedRue`, formatters).  
 7. **Architecture refactor (web)** — `useRueDisambiguation`, `handoff.ts`, presentational `RueSuggestBox`, TanStack Query (`rueSuggestionsQuery.ts`), hook tests.  
 8. **Pure matching depth** — `buildSuggestLikePatterns` separates pattern assembly from Drizzle `query.ts`.  
-9. **Read-path unit tests** — dedicated `normalize` and `displayVoieType` test files.
+9. **Read-path unit tests** — dedicated `normalize` and `displayVoieType` test files.  
+10. **Package deepening** — `match`, `libelle-prefix-expand`, and unit tests moved into `@andriveau-bobine/suggest`; API suggest slice is routes + schema + query + `suggestRues` only.
 
 When behaviour changes, extend **tests first** (or in the same PR), then update this file if the contract or limitations shift.
