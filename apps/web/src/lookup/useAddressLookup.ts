@@ -1,7 +1,7 @@
 import type { LookupRequest, LookupResponse } from "@andriveau-bobine/lookup";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
-import { lookupKeys, lookupQueryOptions } from "./lookupQuery";
+import { lookupQueryOptions } from "./lookupQuery";
 
 export type LookupSubmitInput = LookupRequest;
 
@@ -13,31 +13,26 @@ export type AddressLookup = {
   clear: () => void;
 };
 
-const idleQueryOptions = {
-  queryKey: lookupKeys.all,
-  queryFn: async (): Promise<LookupResponse> => {
-    throw new Error("lookup query invoked without submitted input");
-  },
-  staleTime: 60_000,
-  retry: false as const,
-};
-
 export function useAddressLookup(): AddressLookup {
   const [submitted, setSubmitted] = useState<LookupSubmitInput | null>(null);
+  const request = submitted ?? {
+    rueId: 0,
+    n: 0,
+    suffix: undefined,
+    provenance: false,
+  };
 
   const {
     data: result = null,
     isFetching,
     error: queryError,
   } = useQuery({
-    ...(submitted
-      ? lookupQueryOptions(
-          submitted.rueId,
-          submitted.n,
-          submitted.suffix,
-          submitted.provenance ?? false
-        )
-      : idleQueryOptions),
+    ...lookupQueryOptions(
+      request.rueId,
+      request.n,
+      request.suffix,
+      request.provenance ?? false
+    ),
     enabled: submitted !== null,
   });
 

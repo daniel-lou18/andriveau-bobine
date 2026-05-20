@@ -1,3 +1,4 @@
+import { AppShell } from "@/components/AppShell";
 import { LookupForm, LookupResultBox, useAddressLookup } from "./lookup";
 import { RueSuggestBox, useRueDisambiguation } from "./rue-suggest";
 
@@ -6,13 +7,10 @@ function App() {
   const lookup = useAddressLookup();
 
   return (
-    <div className="app">
-      <h1>Andriveau-Bobine</h1>
-      <p>Rue suggest + number-bearing lookup — v1 read API slice.</p>
-
+    <AppShell>
       <RueSuggestBox disambiguation={disambiguation} />
 
-      <section aria-label="Address lookup">
+      <section aria-label="Recherche d'adresse" className="flex flex-col gap-6">
         <LookupForm resolvedRue={disambiguation.resolvedRue} lookup={lookup} />
         <LookupResultBox
           result={lookup.result}
@@ -20,7 +18,7 @@ function App() {
           error={lookup.error}
         />
       </section>
-    </div>
+    </AppShell>
   );
 }
 

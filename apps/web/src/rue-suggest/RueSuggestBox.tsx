@@ -2,6 +2,7 @@ import {
   formatSuggestionLabel,
   type ResolvedRue,
 } from "@andriveau-bobine/suggest";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 import type { RueDisambiguation } from "./useRueDisambiguation";
 
 export type { ResolvedRue as SelectedRue };
@@ -23,8 +24,10 @@ export function RueSuggestBox({ disambiguation }: RueSuggestBoxProps) {
   } = disambiguation;
 
   return (
-    <div className="rue-suggest-box">
-      <label htmlFor="rue-suggest-input">Street (libellé)</label>
+    <div className="rue-suggest-box flex flex-col gap-3">
+      <label htmlFor="rue-suggest-input" className="text-sm font-medium">
+        Street (libellé)
+      </label>
       <input
         id="rue-suggest-input"
         type="search"
@@ -32,10 +35,19 @@ export function RueSuggestBox({ disambiguation }: RueSuggestBoxProps) {
         placeholder="Type at least 2 characters…"
         value={query}
         onChange={(e) => setQuery(e.target.value)}
+        className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-xs outline-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50"
       />
 
-      {loading && <p role="status">Searching…</p>}
-      {error && <p role="alert">{error}</p>}
+      {loading && (
+        <p role="status" className="text-sm text-muted-foreground">
+          Searching…
+        </p>
+      )}
+      {error ? (
+        <Alert variant="destructive" role="alert">
+          <AlertDescription>{error}</AlertDescription>
+        </Alert>
+      ) : null}
 
       {suggestions.length > 0 && (
         <ul role="listbox" aria-label="Rue suggestions">

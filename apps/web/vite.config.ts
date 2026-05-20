@@ -1,6 +1,7 @@
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import react from "@vitejs/plugin-react";
+import tailwindcss from "@tailwindcss/vite";
 import { defineConfig } from "vite";
 
 const webDir = fileURLToPath(new URL(".", import.meta.url));
@@ -8,9 +9,10 @@ const webDir = fileURLToPath(new URL(".", import.meta.url));
 const repoRoot = path.resolve(webDir, "../..");
 
 export default defineConfig({
-  plugins: [react()],
+  plugins: [react(), tailwindcss()],
   resolve: {
     alias: {
+      "@": path.resolve(__dirname, "./src"),
       react: path.join(repoRoot, "node_modules/react"),
       "react-dom": path.join(repoRoot, "node_modules/react-dom"),
     },
