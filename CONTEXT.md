@@ -97,6 +97,12 @@ _Avoid_: ambiguous, mismatch.
 - **`data/docs/SOURCE_BOBINE8_NDDC_TABLE_MODEL.md`** — Bobine 8 (6ᵉ NDDC) grid: **PAGE** mislabel, comma-heavy **N°**.
 - **`data/docs/SOURCE_BOBINE43_GRANDES_CARRIERES_TABLE_MODEL.md`** — Bobine 43 (18ᵉ Grandes Carrières): **Ilot** header, **`;`** lists, **`"`** ditto, **`NEANT`**.
 
+## Product conventions (web)
+
+**Interface (UI)**:
+All user-visible copy in the web app is **French** — labels, placeholders, empty states, tooltips, buttons, conflict banners, and error messages shown to the client. Repository code, tests, logs, API JSON `error` strings, and internal documentation stay **English** unless deliberately localized at the API.
+_Avoid_: English chrome in production UI; exposing raw API `error` text to users without French mapping.
+
 ## Flagged ambiguities
 
 - **"Rue" is overloaded.** It means both (a) the table name for all voies, regardless of type, and (b) one specific `type` value. Resolution: the table `rues` covers all voies; the column `type` carries the kind. When a domain expert says "rue", treat it as (a) unless context narrows it.

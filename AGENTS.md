@@ -144,6 +144,7 @@ Some migrations are easier to write or reorder by hand (large rebuilds, seeds in
 
 ## Frontend (`apps/web`)
 
+- **UI redesign (French client, shadcn + Base UI Autocomplete):** see **`docs/slices/web-ui.md`** and **ADR-0007**. User-facing copy is French; code and API errors stay English (map errors in the web app).
 - **Env:** Public configuration for the browser should use Vite’s **`import.meta.env`** and variables prefixed with **`VITE_`** when you add them. Do not put secrets in `VITE_*` variables.
 - **Production API URL:** Define how the SPA talks to the Worker in production (e.g. `VITE_API_URL` or same-origin routing on Cloudflare Pages); the Vite proxy applies **only** in dev.
 
