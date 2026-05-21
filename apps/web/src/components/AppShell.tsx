@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { Separator } from "@/components/ui/separator";
+import { AppNavbar } from "@/components/AppNavbar";
 
 export type AppShellProps = {
   children: ReactNode;
@@ -8,16 +8,17 @@ export type AppShellProps = {
 export function AppShell({ children }: AppShellProps) {
   return (
     <div className="min-h-screen bg-background">
-      <div className="mx-auto flex w-full max-w-2xl flex-col gap-8 px-4 py-10 sm:py-12">
-        <header className="space-y-2">
-          <h1 className="text-2xl font-semibold tracking-tight text-foreground">
-            Andriveau-Bobine
-          </h1>
-          <p className="text-sm text-muted-foreground">
-            Recherche d&apos;adresse dans les registres parisiens des bobines.
-          </p>
-        </header>
-        <Separator />
+      <AppNavbar />
+      <div className="mx-auto flex w-full max-w-2xl flex-col gap-8 px-4 py-8 sm:py-10">
+        <div className="flex flex-col gap-2">
+          <h2 className="font-heading uppercase text-lg font-semibold text-primary sm:text-2xl">
+            Rechercher un numéro d&apos;îlot
+          </h2>
+          <div
+            className="h-0.5 w-18 shrink-0 bg-brand-gold"
+            aria-hidden="true"
+          />
+        </div>
         <main className="flex flex-col gap-8">{children}</main>
       </div>
     </div>

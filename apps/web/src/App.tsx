@@ -10,10 +10,7 @@ function App() {
   return (
     <AppShell>
       <section aria-label="Recherche d'adresse" className="flex flex-col gap-6">
-        <AddressLookupPanel
-          disambiguation={disambiguation}
-          lookup={lookup}
-        />
+        <AddressLookupPanel disambiguation={disambiguation} lookup={lookup} />
         <LookupResultsPanel
           result={lookup.result}
           loading={lookup.loading}

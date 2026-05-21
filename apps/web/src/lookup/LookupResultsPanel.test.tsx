@@ -11,6 +11,9 @@ describe("LookupResultsPanel", () => {
     render(<LookupResultsPanel loading={false} error={null} result={null} />);
 
     expect(
+      screen.queryByRole("heading", { level: 3, name: "Résultats" })
+    ).toBeNull();
+    expect(
       screen.getByText(
         "Choisissez une rue et un numéro, puis lancez la recherche."
       )
@@ -100,6 +103,9 @@ describe("LookupResultsPanel", () => {
       />
     );
 
+    expect(
+      screen.getByRole("heading", { level: 3, name: "Résultats (2)" })
+    ).toBeTruthy();
     expect(screen.getByTestId("lookup-conflict-banner")).toBeTruthy();
     expect(screen.getByText("Conflit")).toBeTruthy();
     expect(
@@ -126,6 +132,9 @@ describe("LookupResultsPanel", () => {
       />
     );
 
+    expect(
+      screen.getByRole("heading", { level: 3, name: "Résultats (1)" })
+    ).toBeTruthy();
     expect(screen.getByText("Îlot 4121")).toBeTruthy();
     expect(
       screen.getByText("6ᵉ arrondissement — Notre-Dame-des-Champs")

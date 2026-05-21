@@ -4,7 +4,7 @@ import {
   type RueSuggestion,
 } from "@andriveau-bobine/suggest";
 import { Autocomplete } from "@base-ui/react/autocomplete";
-import { XIcon } from "lucide-react";
+import { Check, XIcon } from "lucide-react";
 import type { KeyboardEvent } from "react";
 import { Field, FieldError, FieldLabel } from "@/components/ui/field";
 import { cn } from "@/lib/utils";
@@ -19,8 +19,12 @@ export type RueSuggestBoxProps = {
   numberInputId?: string;
 };
 
+const inputGroupClassName = cn(
+  "relative flex w-full items-center rounded-md border border-input bg-transparent shadow-xs transition-[color,box-shadow] outline-none focus-within:border-ring focus-within:ring-3 focus-within:ring-ring/50 has-[:disabled]:pointer-events-none has-[:disabled]:cursor-not-allowed has-[:disabled]:opacity-50"
+);
+
 const inputClassName = cn(
-  "h-9 w-full min-w-0 rounded-md border border-input bg-transparent px-2.5 py-1 text-base shadow-xs transition-[color,box-shadow] outline-none placeholder:text-muted-foreground focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 md:text-sm"
+  "h-9 w-full min-w-0 flex-1 rounded-none border-0 bg-transparent px-2.5 py-1 text-base shadow-none outline-none ring-0 placeholder:text-muted-foreground focus-visible:ring-0 disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 md:text-sm"
 );
 
 const popupClassName = cn(
@@ -56,6 +60,7 @@ export function RueSuggestBox({
     searchActive && !loading && suggestions.length === 0 && !error;
   const showPopup =
     searchActive && (loading || suggestions.length > 0 || showEmptyState);
+  const isResolved = resolvedRue !== null;
 
   function focusNumberInput() {
     queueMicrotask(() => {
@@ -93,7 +98,10 @@ export function RueSuggestBox({
   }
 
   return (
-    <Field data-testid="rue-suggest-field">
+    <Field
+      data-testid="rue-suggest-field"
+      data-resolved={isResolved ? "true" : undefined}
+    >
       <Autocomplete.Root
         items={searchActive ? suggestions : []}
         value={query}
@@ -107,20 +115,32 @@ export function RueSuggestBox({
         <FieldLabel htmlFor="rue-suggest-input">Rue</FieldLabel>
         <Autocomplete.InputGroup
           className={cn(
-            "relative flex w-full items-center",
-            query ? "has-[input]:pr-8" : ""
+            inputGroupClassName,
+            isResolved && "border-primary/35 bg-primary/[0.04]"
           )}
         >
+          {isResolved ? (
+            <span
+              className="pointer-events-none absolute top-1/2 left-2.5 z-10 flex size-7 -translate-y-1/2 items-center justify-center rounded-full bg-primary/10 text-primary"
+              aria-hidden="true"
+            >
+              <Check className="size-3.5" strokeWidth={2.5} />
+            </span>
+          ) : null}
           <Autocomplete.Input
             id="rue-suggest-input"
             autoComplete="off"
             placeholder="Saisir au moins 2 caractères…"
-            className={inputClassName}
+            className={cn(
+              inputClassName,
+              query && "pr-8",
+              isResolved && "pl-11"
+            )}
             onKeyDown={handleInputKeyDown}
           />
           <Autocomplete.Clear
             className={cn(
-              "absolute top-1/2 right-2 flex size-6 -translate-y-1/2 items-center justify-center rounded-sm text-muted-foreground opacity-70 transition-opacity hover:opacity-100",
+              "absolute top-1/2 right-1.5 z-10 flex size-6 -translate-y-1/2 items-center justify-center rounded-sm text-muted-foreground opacity-70 transition-opacity hover:opacity-100",
               "data-[visible=false]:pointer-events-none data-[visible=false]:opacity-0"
             )}
             aria-label="Effacer la rue"
