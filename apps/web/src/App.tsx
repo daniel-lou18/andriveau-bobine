@@ -1,6 +1,7 @@
+import { AddressLookupPanel } from "@/address-lookup";
 import { AppShell } from "@/components/AppShell";
-import { LookupForm, LookupResultBox, useAddressLookup } from "./lookup";
-import { RueSuggestBox, useRueDisambiguation } from "./rue-suggest";
+import { LookupResultBox, useAddressLookup } from "./lookup";
+import { useRueDisambiguation } from "./rue-suggest";
 
 function App() {
   const disambiguation = useRueDisambiguation();
@@ -8,10 +9,11 @@ function App() {
 
   return (
     <AppShell>
-      <RueSuggestBox disambiguation={disambiguation} />
-
       <section aria-label="Recherche d'adresse" className="flex flex-col gap-6">
-        <LookupForm resolvedRue={disambiguation.resolvedRue} lookup={lookup} />
+        <AddressLookupPanel
+          disambiguation={disambiguation}
+          lookup={lookup}
+        />
         <LookupResultBox
           result={lookup.result}
           loading={lookup.loading}

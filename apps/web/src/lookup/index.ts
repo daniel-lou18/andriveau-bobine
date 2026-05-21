@@ -1,6 +1,5 @@
 export { fetchLookup, type LookupFetchResponse } from "./api";
 export { lookupKeys, lookupQueryOptions } from "./lookupQuery";
-export { LookupForm, type LookupFormProps } from "./LookupForm";
 export {
   LookupResultBox,
   type LookupResultBoxProps,
