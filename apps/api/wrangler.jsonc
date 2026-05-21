@@ -12,7 +12,7 @@
     {
       "binding": "DB",
       "database_name": "andriveau-bobine",
-      "database_id": "REPLACE_ME_AFTER_WRANGLER_D1_CREATE",
+      "database_id": "607de0d6-8c8f-4c30-a8b4-89021cebf2ec",
       "migrations_dir": "drizzle"
     }
   ]
