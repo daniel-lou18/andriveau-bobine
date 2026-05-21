@@ -1,7 +1,7 @@
 import { act, renderHook } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { ResolvedRue } from "@andriveau-bobine/suggest";
-import type { AddressLookup } from "../lookup/useAddressLookup";
+import type { AddressLookup, LookupSubmitInput } from "../lookup/useAddressLookup";
 import { useAddressLookupForm } from "./useAddressLookupForm";
 import type { KeyboardEvent, SubmitEvent } from "react";
 
@@ -11,13 +11,13 @@ const resolvedRueDeLaPaix: ResolvedRue = {
 };
 
 function createMockLookup(): AddressLookup & {
-  submit: ReturnType<typeof vi.fn>;
+  submit: ReturnType<typeof vi.fn<(input: LookupSubmitInput) => void>>;
 } {
   return {
     result: null,
     loading: false,
     error: null,
-    submit: vi.fn(),
+    submit: vi.fn<(input: LookupSubmitInput) => void>(),
     clear: vi.fn(),
   };
 }

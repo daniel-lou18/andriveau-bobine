@@ -1,4 +1,5 @@
 import type { LookupResponse } from "@andriveau-bobine/lookup";
+import { apiUrl } from "@/lib/apiBase";
 
 export type LookupFetchResponse =
   | { ok: true; data: LookupResponse }
@@ -18,7 +19,9 @@ export async function fetchLookup(
   if (provenance) {
     params.set("provenance", "1");
   }
-  const url = `/api/rues/${encodeURIComponent(String(rueId))}/lookup?${params}`;
+  const url = apiUrl(
+    `/api/rues/${encodeURIComponent(String(rueId))}/lookup?${params}`
+  );
   const res = await fetch(url, { signal });
   if (!res.ok) {
     let error = `HTTP ${res.status}`;

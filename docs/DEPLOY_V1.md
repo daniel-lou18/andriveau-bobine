@@ -207,50 +207,35 @@ Only if remote migrations match local and you want a byte-for-byte copy.
 
 ---
 
-## 4. Production wiring (required code/config changes)
+## 4. Production wiring (SPA ↔ Worker)
 
 Dev uses Vite’s `/api` → `127.0.0.1:8787` proxy. **Pages has no such proxy** unless you add Pages Functions or a reverse proxy. For v1, point the SPA at the Worker URL.
 
-### 4.1 API base URL in the web app
+**Implemented in the repo:**
 
-1. Add a small helper, e.g. `apps/web/src/lib/apiBase.ts`:
+| Piece | Location |
+|-------|----------|
+| `apiUrl()` + `VITE_API_URL` | `apps/web/src/lib/apiBase.ts` |
+| Fetch callers | `apps/web/src/rue-suggest/api.ts`, `apps/web/src/lookup/api.ts` |
+| Env example | `apps/web/.env.example` |
+| CORS (local + Pages + preview `*.andriveau-bobine-web.pages.dev`) | `apps/api/src/http/cors.ts`, wired in `apps/api/src/index.ts` |
 
-   ```ts
-   /** Trailing slash stripped; empty in dev → relative `/api` (Vite proxy). */
-   export function apiUrl(path: string): string {
-     const base = (import.meta.env.VITE_API_URL as string | undefined)?.replace(/\/$/, "") ?? "";
-     return `${base}${path}`;
-   }
-   ```
+### 4.1 Pages environment variable
 
-2. In `apps/web/src/rue-suggest/api.ts` and `apps/web/src/lookup/api.ts`, replace `` `/api/...` `` with `apiUrl("/api/...")`.
+Set in the Cloudflare Pages project (Production and Preview):
 
-3. Document env in `apps/web/.env.example` (commit example only):
+| Name | Example value |
+|------|----------------|
+| `VITE_API_URL` | `https://andriveau-bobine-api.danielderudder.workers.dev` (no trailing slash) |
 
-   ```
-   # Production Pages: full Worker origin, no trailing slash
-   # VITE_API_URL=https://andriveau-bobine-api.<subdomain>.workers.dev
-   ```
+Local dev: leave unset; relative `/api` still uses the Vite proxy.
 
-### 4.2 CORS on the Worker
+### 4.2 Custom domain or different Pages project name
 
-Update `apps/api/src/index.ts` to allow your **Pages origin(s)**:
+- **Custom domain:** add `https://<hostname>` to `STATIC_ALLOWED_ORIGINS` in `apps/api/src/http/cors.ts`, then redeploy the API.
+- **Different Pages project slug:** update `STATIC_ALLOWED_ORIGINS` and `PAGES_PREVIEW_HOST_SUFFIX` in the same file.
 
-```ts
-cors({
-  origin: [
-    "http://localhost:5173",
-    "http://127.0.0.1:5173",
-    "https://andriveau-bobine-web.pages.dev",           // default Pages subdomain
-    "https://<your-production-pages-hostname>",       // custom domain if any
-  ],
-  // ...
-});
-```
-
-Redeploy API after this change: `npm run deploy -w api`.
-
-Preview deployments use URLs like `https://<hash>.andriveau-bobine-web.pages.dev` — add those origins too if clients test PR previews.
+Redeploy API after CORS edits: `npm run deploy -w api`.
 
 ### 4.3 (Alternative) Same-origin `/api` on Pages
 

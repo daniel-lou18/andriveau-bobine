@@ -1,4 +1,5 @@
 import type { RueSuggestion } from "@andriveau-bobine/suggest";
+import { apiUrl } from "@/lib/apiBase";
 
 export type { RueSuggestion };
 
@@ -7,7 +8,7 @@ export type SuggestResponse =
   | { ok: false; status: number; error: string };
 
 /**
- * Hits the Worker's read endpoint through the Vite `/api` proxy.
+ * Hits the Worker suggest endpoint. Local dev: Vite `/api` proxy when `VITE_API_URL` is unset.
  * The web app never sends queries shorter than the API minimum; callers gate
  * the request on the user's input length before invoking this.
  */
@@ -15,7 +16,7 @@ export async function fetchRueSuggestions(
   q: string,
   signal?: AbortSignal
 ): Promise<SuggestResponse> {
-  const url = `/api/rues/suggest?q=${encodeURIComponent(q)}`;
+  const url = apiUrl(`/api/rues/suggest?q=${encodeURIComponent(q)}`);
   const res = await fetch(url, { signal });
   if (!res.ok) {
     let error = `HTTP ${res.status}`;

@@ -2,6 +2,7 @@ import { sql } from "drizzle-orm";
 import { Hono } from "hono";
 import { cors } from "hono/cors";
 import { createDb, type Database } from "./db";
+import { resolveCorsOrigin } from "./http/cors";
 import { apiErrorHandler } from "./http/on-error";
 import { loaderRoutes } from "./loader/routes";
 import { lookupRoutes } from "./lookup/routes";
@@ -20,7 +21,7 @@ app.onError(apiErrorHandler);
 app.use(
   "/*",
   cors({
-    origin: ["http://localhost:5173", "http://127.0.0.1:5173"],
+    origin: (origin) => resolveCorsOrigin(origin),
     allowMethods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
     allowHeaders: ["Content-Type", "Authorization"],
   })

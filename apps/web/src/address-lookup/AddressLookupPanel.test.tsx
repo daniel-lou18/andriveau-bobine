@@ -286,11 +286,10 @@ describe("AddressLookupPanel", () => {
       expect(loadingButton.offsetWidth).toBe(widthBeforeSubmit);
     });
 
-    expect(screen.getByText("Recherche en cours", { hidden: true })).toBeTruthy();
-
     const loadingButton = screen.getByRole("button", {
       name: /Rechercher/i,
     }) as HTMLButtonElement;
+    expect(loadingButton.textContent).toContain("Recherche en cours");
     expect(loadingButton.disabled).toBe(true);
 
     await act(async () => {
