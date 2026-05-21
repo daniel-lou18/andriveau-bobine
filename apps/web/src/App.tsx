@@ -1,6 +1,6 @@
 import { AddressLookupPanel } from "@/address-lookup";
 import { AppShell } from "@/components/AppShell";
-import { LookupResultBox, useAddressLookup } from "./lookup";
+import { LookupResultsPanel, useAddressLookup } from "./lookup";
 import { useRueDisambiguation } from "./rue-suggest";
 
 function App() {
@@ -14,7 +14,7 @@ function App() {
           disambiguation={disambiguation}
           lookup={lookup}
         />
-        <LookupResultBox
+        <LookupResultsPanel
           result={lookup.result}
           loading={lookup.loading}
           error={lookup.error}

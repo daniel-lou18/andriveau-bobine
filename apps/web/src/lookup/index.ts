@@ -1,9 +1,9 @@
 export { fetchLookup, type LookupFetchResponse } from "./api";
 export { lookupKeys, lookupQueryOptions } from "./lookupQuery";
 export {
-  LookupResultBox,
-  type LookupResultBoxProps,
-} from "./LookupResultBox";
+  LookupResultsPanel,
+  type LookupResultsPanelProps,
+} from "./LookupResultsPanel";
 export {
   useAddressLookup,
   type AddressLookup,
