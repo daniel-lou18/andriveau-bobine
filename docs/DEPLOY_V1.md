@@ -218,7 +218,7 @@ Dev uses Vite’s `/api` → `127.0.0.1:8787` proxy. **Pages has no such proxy**
 | `apiUrl()` + `VITE_API_URL` | `apps/web/src/lib/apiBase.ts` |
 | Fetch callers | `apps/web/src/rue-suggest/api.ts`, `apps/web/src/lookup/api.ts` |
 | Env example | `apps/web/.env.example` |
-| CORS (local + Pages + preview `*.andriveau-bobine-web.pages.dev`) | `apps/api/src/http/cors.ts`, wired in `apps/api/src/index.ts` |
+| CORS (local + Pages + preview `*.andriveau-bobine.pages.dev`) | `apps/api/src/http/cors.ts`, wired in `apps/api/src/index.ts` |
 
 ### 4.1 Pages environment variable
 
@@ -285,7 +285,7 @@ Trigger a deploy after §4 code is on the connected branch.
 ```bash
 npm run build -w web
 cd apps/web
-npx wrangler pages deploy dist --project-name=andriveau-bobine-web
+npx wrangler pages deploy dist --project-name=andriveau-bobine
 ```
 
 Set `VITE_API_URL` in the Pages dashboard for the project (CLI deploy still reads dashboard env at build time if you use Git; for pure CLI, pass build env: `VITE_API_URL=... npm run build -w web`).
@@ -320,7 +320,7 @@ Same as §3A: `loader:run` with `--api-url` pointing at production. Remember eac
 
 ```bash
 cd apps/api && npx wrangler tail
-npx wrangler pages deployment tail --project-name=andriveau-bobine-web
+npx wrangler pages deployment tail --project-name=andriveau-bobine
 ```
 
 ### Backups (remote D1)
