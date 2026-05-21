@@ -14,6 +14,7 @@
   "dependencies": {
     "@andriveau-bobine/lookup": "*",
     "@andriveau-bobine/suggest": "*",
+    "@base-ui/react": "^1.5.0",
     "@fontsource-variable/inter": "^5.2.8",
     "@tailwindcss/vite": "^4.3.0",
     "@tanstack/react-query": "^5.100.11",
