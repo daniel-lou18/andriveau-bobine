@@ -5,6 +5,7 @@ import {
 } from "@andriveau-bobine/suggest";
 import { Autocomplete } from "@base-ui/react/autocomplete";
 import { XIcon } from "lucide-react";
+import type { KeyboardEvent } from "react";
 import { Field, FieldError, FieldLabel } from "@/components/ui/field";
 import { cn } from "@/lib/utils";
 import type { RueDisambiguation } from "./useRueDisambiguation";
@@ -85,6 +86,12 @@ export function RueSuggestBox({
     setQuery(value);
   }
 
+  function handleInputKeyDown(event: KeyboardEvent<HTMLInputElement>) {
+    if (event.key === "Enter" && !showPopup) {
+      event.preventDefault();
+    }
+  }
+
   return (
     <Field data-testid="rue-suggest-field">
       <Autocomplete.Root
@@ -109,6 +116,7 @@ export function RueSuggestBox({
             autoComplete="off"
             placeholder="Saisir au moins 2 caractères…"
             className={inputClassName}
+            onKeyDown={handleInputKeyDown}
           />
           <Autocomplete.Clear
             className={cn(

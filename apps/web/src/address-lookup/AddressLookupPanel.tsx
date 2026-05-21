@@ -1,4 +1,5 @@
 import { LOOKUP_SUFFIX_TOKENS } from "@andriveau-bobine/lookup";
+import { Loader2Icon, SearchIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -85,9 +86,23 @@ export function AddressLookupPanel({
             <Button
               type="submit"
               disabled={!form.canSubmit || lookup.loading}
+              aria-busy={lookup.loading || undefined}
               className="w-full sm:w-auto sm:self-end"
             >
+              <span
+                className="inline-flex size-4 shrink-0 items-center justify-center"
+                aria-hidden
+              >
+                {lookup.loading ? (
+                  <Loader2Icon className="size-4 animate-spin" />
+                ) : (
+                  <SearchIcon className="size-4" />
+                )}
+              </span>
               Rechercher
+              {lookup.loading ? (
+                <span className="sr-only">Recherche en cours</span>
+              ) : null}
             </Button>
           </div>
 

@@ -2,6 +2,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import {
   act,
   cleanup,
+  createEvent,
   fireEvent,
   render,
   screen,
@@ -193,6 +194,38 @@ describe("AddressLookupPanel", () => {
     });
   });
 
+  it("does not submit lookup when Enter is pressed in the rue field with the list closed", async () => {
+    mockSuggestFetch.mockResolvedValue({ ok: true, results: [rueDeLaPaix] });
+    mockLookupFetch.mockResolvedValue({ ok: true, data: sampleResponse });
+
+    render(<AddressLookupHarness />, { wrapper: createWrapper() });
+
+    await resolveRue();
+
+    fireEvent.change(screen.getByLabelText("Numéro"), {
+      target: { value: "95" },
+    });
+
+    const rueInput = screen.getByLabelText("Rue");
+    rueInput.focus();
+    expect(screen.queryByRole("option")).toBeNull();
+
+    const enterEvent = createEvent.keyDown(rueInput, {
+      key: "Enter",
+      bubbles: true,
+      cancelable: true,
+    });
+    fireEvent(rueInput, enterEvent);
+
+    expect(enterEvent.defaultPrevented).toBe(true);
+
+    await act(async () => {
+      await vi.advanceTimersByTimeAsync(0);
+    });
+
+    expect(mockLookupFetch).not.toHaveBeenCalled();
+  });
+
   it("passes provenance=1 when the provenance checkbox is checked", async () => {
     mockSuggestFetch.mockResolvedValue({ ok: true, results: [rueDeLaPaix] });
     mockLookupFetch.mockResolvedValue({ ok: true, data: sampleResponse });
@@ -217,6 +250,59 @@ describe("AddressLookupPanel", () => {
         true,
         expect.any(AbortSignal)
       );
+    });
+  });
+
+  it("shows French loading feedback on Rechercher while lookup runs", async () => {
+    mockSuggestFetch.mockResolvedValue({ ok: true, results: [rueDeLaPaix] });
+    let resolveLookup!: (value: Awaited<ReturnType<typeof fetchLookup>>) => void;
+    mockLookupFetch.mockImplementation(
+      () =>
+        new Promise<Awaited<ReturnType<typeof fetchLookup>>>((resolve) => {
+          resolveLookup = resolve;
+        })
+    );
+
+    render(<AddressLookupHarness />, { wrapper: createWrapper() });
+
+    await resolveRue();
+
+    fireEvent.change(screen.getByLabelText("Numéro"), {
+      target: { value: "95" },
+    });
+
+    const submitButton = screen.getByRole("button", {
+      name: "Rechercher",
+    }) as HTMLButtonElement;
+    expect(submitButton.querySelector(".lucide-search")).toBeTruthy();
+    const widthBeforeSubmit = submitButton.offsetWidth;
+    fireEvent.click(submitButton);
+
+    await waitFor(() => {
+      const loadingButton = screen.getByRole("button", { name: /Rechercher/i });
+      expect(loadingButton.textContent).toContain("Rechercher");
+      expect(loadingButton.getAttribute("aria-busy")).toBe("true");
+      expect(loadingButton.querySelector(".animate-spin")).toBeTruthy();
+      expect(loadingButton.offsetWidth).toBe(widthBeforeSubmit);
+    });
+
+    expect(screen.getByText("Recherche en cours", { hidden: true })).toBeTruthy();
+
+    const loadingButton = screen.getByRole("button", {
+      name: /Rechercher/i,
+    }) as HTMLButtonElement;
+    expect(loadingButton.disabled).toBe(true);
+
+    await act(async () => {
+      resolveLookup({ ok: true, data: sampleResponse });
+      await vi.advanceTimersByTimeAsync(0);
+    });
+
+    await waitFor(() => {
+      const idleButton = screen.getByRole("button", { name: "Rechercher" });
+      expect(idleButton.getAttribute("aria-busy")).toBeNull();
+      expect(idleButton.querySelector(".animate-spin")).toBeNull();
+      expect(idleButton.querySelector(".lucide-search")).toBeTruthy();
     });
   });
 });
